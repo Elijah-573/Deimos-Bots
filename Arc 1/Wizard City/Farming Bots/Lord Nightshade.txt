@@ -1,0 +1,174 @@
+###deimos_expertmode
+block load {
+    if playercount 1 {
+        loop {
+            if not p1 loading {
+                sleep 0.5
+                break
+            }
+        }
+    } elif playercount 2 {
+        loop {
+            if not p1 loading {
+                sleep 0.5
+                break
+            }
+        }
+        loop {
+            if not p2 loading {
+                sleep 0.5
+                break
+            }
+        }
+    } elif playercount 3 {
+        loop {
+            if not p1 loading {
+                sleep 0.5
+                break
+            }
+        }
+        loop {
+            if not p2 loading {
+                sleep 0.5
+                break
+            }
+        }
+        loop {
+            if not p3 loading {
+                sleep 0.5
+                break
+            }
+        }
+    } elif playercount 4 {
+        loop {
+            if not p1 loading {
+                sleep 0.5
+                break
+            }
+        }
+        loop {
+            if not p2 loading {
+                sleep 0.5
+                break
+            }
+        }
+        loop {
+            if not p3 loading {
+                sleep 0.5
+                break
+            }
+        }
+        loop {
+            if not p4 loading {
+                sleep 0.5
+                break
+            }
+        }
+    }
+}
+block popup {
+    times 10 {
+        except p1 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton']  
+      }
+}
+
+block friendtp {
+    except p1 friendtp matthew
+    sleep 7
+    call popup
+    call load
+    call popup
+}
+
+# Sigil
+loop {
+    if p1 inzone WizardCity/WC_Streets/Interiors/WC_HauntedCave_T1 { 
+        break
+    }
+    if p1 inzone WizardCity/WC_Streets/WC_HauntedCave { 
+        p1 tp XYZ(9698.0712890625, 10954.4423828125, -133.66085815429688)
+    }
+    if p1 inzone WizardCity/WC_Streets/WC_HauntedCave {  
+       p1 tp XYZ(9284.357421875, 11476.3564453125, -133.63217163085938)
+    }
+    while p1 windowvisible ['WorldView', 'windowHUD', 'windowForTopRowButtons', 'containerForTeamUp', 'btnTeamUp'] {
+        p1 sendkey X, 0.1
+    }
+    sleep 2
+    call load
+}
+sleep 1
+
+# Teleport 
+if not playercount 1 {
+    if p1 inzone WizardCity/WC_Streets/Interiors/WC_HauntedCave_T1 {
+        call friendtp
+    }
+}
+
+# Sameplace Check
+if p1 inzone WizardCity/WC_Streets/Interiors/WC_HauntedCave_T1 {
+    if not sameplace {
+        loop {
+            if p1 inzone WizardCity/WC_Streets/WC_HauntedCave {
+                break
+            }
+            if p1 inzone WizardCity/WC_Streets/Interiors/WC_HauntedCave_T1 {
+                p1 tp XYZ(-1011.760009765625, 4.424914836883545, 4.499969482421875)
+            }
+            if p1 inzone WizardCity/WC_Streets/Interiors/WC_HauntedCave_T1 {
+                p1 tp XYZ(-1311.7640380859375, 4.510248184204102, 4.499969482421875)
+                sleep 1
+            }
+        }
+        call load
+    }
+}
+
+# Dungeon 
+if inzone WizardCity/WC_Streets/Interiors/WC_HauntedCave_T1 {
+    if sameplace {
+       if playercount 1 {
+        while not p1 incombat {
+            p1 tp XYZ(195.18716430664062, 67.65653991699219, 4.499969482421875)
+        }
+        if p1 incombat {
+            p1 waitforcombat completion
+            sleep 1
+        }
+       }
+       if not playercount 1 {
+        while not except p1 incombat {
+            except p1 tp XYZ(195.18716430664062, 67.65653991699219, 4.499969482421875)
+       }
+       while except p1 incombat {
+        while not p1 incombat {
+            p1 tp XYZ(195.18716430664062, 67.65653991699219, 4.499969482421875)
+        }
+       }
+       if incombat {
+        waitforcombat completion
+        sleep 1
+       }
+       entitytp Mana 
+       sleep 0.5
+       entitytp Mana 
+       sleep 0.5
+       entitytp Health
+       sleep 0.5
+       }
+        loop {
+            if p1 inzone WizardCity/WC_Streets/WC_HauntedCave {
+                break
+            }
+            if p1 inzone WizardCity/WC_Streets/Interiors/WC_HauntedCave_T1 {
+                p1 tp XYZ(-1011.760009765625, 4.424914836883545, 4.499969482421875)
+            }
+            if p1 inzone WizardCity/WC_Streets/Interiors/WC_HauntedCave_T1 {
+                p1 tp XYZ(-1311.7640380859375, 4.510248184204102, 4.499969482421875)
+                sleep 1
+            }
+        }
+        call load
+    }
+}

@@ -1,0 +1,270 @@
+#Sigil
+mass tp XYZ(-3094.042724609375, -2871.328125, 28.588836669921875)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7 
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+
+#Glurrup
+p1 tp quest
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+sleep 2
+
+#Vortex
+p1 walkto XYZ(-0.2865108251571655, 1295.6405029296875, -2.191925048828125)
+sleep 1
+
+#Panel
+p1 tp XYZ(-531.8331909179688, 1565.3702392578125, -2.1729736328125)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+sleep 1
+
+#Door
+p1 tp XYZ(-1283.88623046875, 54.39327621459961, -2.152984619140625)
+p1 walkto XYZ(-1623.0023193359375, 64.78468322753906, -2.146209716796875)
+sleep 1
+p1 tp XYZ(-2302.783935546875, 59.76271438598633, -2.144805908203125)
+p1 waitforzonechange completion
+except p1 tp XYZ(-2302.783935546875, 59.76271438598633, -2.144805908203125)
+except p1 waitforzonechange completion
+sleep 1
+
+#First Mob Combat
+except p1 tp closestmob
+except p1 waitforcombat
+p1 tp closestmob
+mass waitforcombat completion
+sleep 1
+
+#Lever Room
+p1 tp quest
+p1 waitforzonechange completion
+except p1 tp quest
+except p1 waitforzonechange completion
+sleep 1
+
+#Second Mob Combat
+except p1 tp closestmob
+except p1 waitforcombat
+p1 tp closestmob
+mass waitforcombat completion
+sleep 1
+
+#First Lever
+p1 tp XYZ(-1121.5181884765625, -221.0887451171875, -48.924713134765625)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+sleep 1
+
+#Exit
+mass tp quest
+mass waitforzonechange completion
+sleep 1
+mass tp quest
+mass waitforzonechange completion
+sleep 1
+
+#Clam Room
+except p1 tp quest
+except p1 waitforzonechange completion
+sleep 1
+
+#Clam Puzzle Fail
+except p1 tp XYZ(6.771483421325684, 1666.4874267578125, -48.11810302734375)
+except p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+except p1 sendkey X, 0.1
+except p1 waitforcombat
+p1 tp quest
+p1 waitforzonechange completion
+sleep 0.5
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+
+#Luska Room/Spawn
+p1 tp quest
+p1 waitforzonechange completion
+sleep 1
+except p1 tp quest
+except p1 waitforzonechange completion
+sleep 1
+p1 walkto XYZ(6.766003608703613, -1112.6260986328125, -82.77413940429688)
+sleep 0.2
+mass tp XYZ(-16.66580581665039, -2551.23486328125, -98.26925659179688)
+
+#Luska Combat
+except p1 tp closestmob
+except p1 waitforcombat
+p1 tp closestmob
+mass waitforcombat completion
+sleep 1
+
+#Second Lever
+p1 tp XYZ(273.3926086425781, -5027.939453125, -104.97079467773438)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+sleep 1
+
+#Exit
+mass tp quest
+mass waitforzonechange completion
+sleep 1
+mass tp quest
+mass waitforzonechange completion
+sleep 1
+
+#Room
+p1 tp quest
+p1 waitforzonechange completion
+except p1 tp quest
+except p1 waitforzonechange completion
+sleep 1
+
+#Fourth Mob Combat
+except p1 tp closestmob
+except p1 waitforcombat
+p1 tp closestmob
+mass waitforcombat completion
+sleep 1
+
+#Lever Room
+p1 tp quest
+p1 waitforzonechange completion
+except p1 tp quest
+except p1 waitforzonechange completion
+sleep 1
+
+#Fifth Mob Combat
+except p1 tp closestmob
+except p1 waitforcombat
+p1 tp closestmob
+mass waitforcombat completion
+sleep 1
+
+#Third Lever
+p1 tp XYZ(-1265.4151611328125, -199.41610717773438, -48.924835205078125)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+sleep 1
+
+#Exit
+mass tp quest
+mass waitforzonechange completion
+sleep 1
+mass tp quest
+mass waitforzonechange completion
+sleep 1
+
+#Lever Puzzle Room
+mass tp quest
+mass waitforzonechange completion
+sleep 1
+
+#Lever Puzzle
+p1 tp XYZ(923.9703369140625, -903.5765991210938, -48.03033447265625)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+sleep 3
+p1 tp XYZ(19.583152770996094, -1177.9984130859375, -48.118072509765625)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+sleep 3
+p1 tp XYZ(1120.718994140625, 124.44969177246094, -48.118072509765625)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+sleep 3
+p1 tp XYZ(-72.44757843017578, 1104.361328125, -48.118072509765625)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+p1 sendkey X, 0.1
+sleep 1
+
+#Health
+mass entitytp health
+sleep 1
+mass entitytp health
+sleep 1
+mass entitytp health
+sleep 1
+mass entitytp health
+
+#Lever Room
+p1 tp quest
+p1 waitforzonechange completion
+except p1 tp quest
+except p1 waitforzonechange completion
+sleep 1
+
+#Sixth Mob Combat
+except p1 tp closestmob
+except p1 waitforcombat
+p1 tp closestmob
+mass waitforcombat completion
+sleep 1
+
+#Forth Lever
+p1 tp XYZ(-1208.513427734375, -255.05764770507812, -48.924713134765625)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+sleep 1
+
+#Exit
+mass tp quest
+mass waitforzonechange completion
+sleep 1
+
+#Health
+mass entitytp health
+sleep 1
+mass entitytp health
+sleep 1
+mass entitytp health
+sleep 1
+mass entitytp health
+
+#Exit
+mass tp quest
+mass waitforzonechange completion
+sleep 1
+
+#Panel
+p1 tp XYZ(-531.8331909179688, 1565.3702392578125, -2.1729736328125)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+sleep 2
+
+#Final Fight
+except p1 entitytp Tri-Gauntlet-Angler
+except p1 waitforcombat
+p1 entitytp Tri-Gauntlet-Angler
+mass waitforcombat completion
+sleep 1 
+
+#Exit Instance
+mass tp XYZ(50.38622283935547, -1481.5484619140625, -2.145050048828125)
+mass waitforzonechange completion
+sleep 1

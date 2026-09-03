@@ -1,0 +1,86 @@
+#Sigil
+mass tp XYZ(12988.0, -15520.0, 180.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+
+#First Dialogue
+p1 walkto XYZ(-10.678157806396484, -4566.33544921875, 539.5009765625)
+sleep 0.5
+
+#First Mob Combat
+except p4 tp closestmob
+except p4 waitforcombat
+p4 tp closestmob
+mass waitforcombat completion
+sleep 1
+
+#Combat Protection
+mass sendkey D, 0.3
+mass sendkey A, 0.3
+sleep 4
+
+#Second Dialogue
+mass tp XYZ(13.959006309509277, -1988.253173828125, 539.5010375976562)
+sleep 0.5
+mass walkto XYZ(44.216922760009766, -1584.9832763671875, 539.5009765625)
+sleep 1
+
+#Second Mob Combat
+except p4 tp closestmob
+except p4 waitforcombat
+p4 tp closestmob
+mass waitforcombat completion
+sleep 1
+
+#Third Dialogue
+p1 tp XYZ(-942.2161865234375, 742.45947265625, 0.4000244140625)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+p1 sendkey X, 0.1
+sleep 2
+
+#Boss Room
+p1 tp XYZ(13.378578186035156, 1128.447509765625, 0.400054931640625)
+p1 waitforzonechange completion
+sleep 1
+except p1 tp XYZ(13.378578186035156, 1128.447509765625, 0.400054931640625)
+except p1 waitforzonechange completion
+sleep 1
+
+#Boss Dialogue
+mass sendkey W, 0.5
+sleep 3
+
+#Boss Combat
+except p4 tp closestmob
+except p4 waitforcombat
+p4 tp closestmob
+mass waitforcombat completion
+sleep 1
+
+#Commons
+mass sendkey END, 0.1
+mass sendkey END, 0.1
+mass waitforzonechange completion
+sleep 3
+
+#Golem Court
+mass tp XYZ(-6322.68798828125, 2662.13330078125, 229.00079345703125)
+sleep 0.1
+mass tp XYZ(-6322.68798828125, 2662.13330078125, 229.00079345703125)
+mass waitforzonechange completion
+sleep 3
+
+#Drains
+mass tp XYZ(-3496.45166015625, 1978.750732421875, 50.558990478515625)
+mass tp XYZ(-3496.45166015625, 1978.750732421875, 50.558990478515625)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1

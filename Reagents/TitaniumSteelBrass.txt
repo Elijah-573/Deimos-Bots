@@ -1,0 +1,326 @@
+#This takes you to Constance Windsong from Dorm Room
+#Have no houses equipped, this ports to the dorm for you
+
+#Go home
+mass sendkey HOME, 0.1
+mass sendkey HOME, 0.1
+mass sendkey HOME, 0.1
+mass waitforzonechange completion
+sleep 1
+
+#Exit dorm
+mass sendkey S, 0.5
+mass waitforzonechange completion
+sleep 1
+
+#Commons
+mass tp XYZ(20.454635620117188, -2026.936767578125, -128.88677978515625)
+mass waitforzonechange completion
+sleep 1
+
+#Shopping district
+mass tp XYZ(1422.15478515625, -3766.53662109375, -27.992279052734375)
+mass waitforzonechange completion
+sleep 1
+
+#Shoes shop
+mass tp XYZ(3715.47265625, -4728.65869140625, -0.06341552734375)
+mass waitforzonechange completion
+sleep 1
+
+#Constance
+mass tp XYZ(-4.5583038330078125, 519.8451538085938, 1.149627685546875)
+
+#Open shop
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+
+#Select 19gold shoes
+mass waitforpath ['WorldView', 'shopGUI']
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'shoplist1', 'RentalIcon']
+
+#Buy shoes 10x
+mass waitforpath ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+sleep 0.25
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+sleep 0.25
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+sleep 0.25
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+sleep 0.25
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+sleep 0.25
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+sleep 0.25
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+sleep 0.25
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+sleep 0.25
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+sleep 0.25
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'buyAction']
+
+#Exit shop
+mass waitforpath ['WorldView', 'shopGUI', 'buyWindow', 'exit']
+mass clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'exit']
+
+#Open backpack
+#Have shoes tab selected prior to running bot or it will fail
+mass waitforpath ['WorldView', 'windowHUD', 'btnSpellbook']
+mass clickwindow ['WorldView', 'windowHUD', 'btnSpellbook']
+
+#Feed pet 10x
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+mass waitforpath ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG']
+mass clickwindow ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+sleep 0.3
+mass waitforpath ['WorldView', 'windowHUD', 'btnSpellbook']
+mass clickwindow ['WorldView', 'windowHUD', 'btnSpellbook']

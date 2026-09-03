@@ -1,0 +1,5785 @@
+###deimos_expertmode
+###Last Update: 11/1/2024
+
+############################
+###     Wizard City      ###
+############################
+
+block WizardCity_Main_Quest_Tree {
+
+############################
+###      Settings        ###
+############################
+
+block Main_Account_Teleport_P2 {
+	p1 friendtp CHANGENAME					# Change to the name of the account on client P2 (If not using client P2, just leave as-is)
+}
+block Main_Account_Teleport_P3 {
+	p1 friendtp CHANGENAME					# Change to the name of the account on client P3 (If not using client P3, just leave as-is)
+}
+block Main_Account_Teleport_P4 {
+	p1 friendtp CHANGENAME					# Change to the name of the account on client P4 (If not using client P4, just leave as-is)
+}
+block SpeedDelay {
+	sleep 1							# Change "1" to however fast you'll like the bot to run. Between ( .1 - 2 ) is best for most 
+}
+########## Playstyle Editor Below ##########################################################
+# For questions on how to setup a playstyle within this script, please refer to this link. #
+# https://discord.com/channels/912917467792281600/912927606070988810/1294315527572946944   #
+############################################################################################
+
+#Please use the default combat tab for setting up a playstyle.
+
+################ ******************************** ######################
+################ ***DON'T TOUCH ANYTHING BELOW*** ######################
+################ ******************************** ######################
+#_______________________________________________________________________
+############################
+### Functional Blocks    ###
+############################
+############################
+# Other Functional Blocks  #	
+############################
+block X_Interact_MASS {
+	sleep 3
+	times 20 {
+		sendkey X, .1
+	}
+	sleep 2
+}
+block ZoneChange_MASS {
+	waitforzonechange completion
+	sleep 2
+}
+block Waiting_All_Arrival_Message {
+	print "Waiting for all clients to reach this sigil."
+}
+block Combat_Dungeon_Complete_MASS {
+	waitforcombat completion
+	times 4 {
+		entitytp Health
+		entitytp Mana
+	}
+}
+block Dungeon_X_Key_SOLO {
+	sleep 3
+	sendkey X, .5
+}
+block Dungeon_X_Key_MASS {
+	sleep 5
+	until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	sleep 1
+	sendkey X, .5
+}
+block Exit_Quest_Menu {
+	times 10 {
+	clickwindow ['WorldView', 'NPCServicesWin', 'wndDialogMain', 'Exit']
+	}
+}
+block Main_Is_Busy_On_Off {
+	if p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+		until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+			p1 sendkey F, .25
+			sleep .5
+		}
+	} else {
+		until p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+			p1 sendkey F, .25
+			sleep .5
+		}
+	}
+}
+block Teleport_Main_To_Help_P1 {
+	sleep .1
+}
+block Teleport_Main_To_Help_P2 {
+	while p1 loading {
+		sleep 2
+	}
+	sleep 1
+	if NOT p1 loading {
+		if NOT p1 incombat {
+			until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+				sleep .1
+			}
+			if NOT p1:p2 sameplace {
+				if NOT p1:p2 samezone {
+					call Main_Account_Teleport_P2
+					sleep 2
+				} else {
+					call Main_Account_Teleport_P2
+					while NOT p1:p2 sameplace {
+						sleep 2
+					}
+				}
+			}
+		}
+	}
+}
+block Teleport_Main_To_Help_P3 {
+	while p1 loading {
+		sleep 2
+	}
+	sleep 1
+	if NOT p1 loading {
+		if NOT p1 incombat {
+			until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+				sleep .1
+			}
+			if NOT p1:p3 sameplace {
+				if NOT p1:p3 samezone {
+					call Main_Account_Teleport_P3
+					sleep 2
+				} else {
+					call Main_Account_Teleport_P3
+					while NOT p1:p3 sameplace {
+						sleep 2
+					}
+				}
+			}
+		}
+	}
+}		
+block Teleport_Main_To_Help_P4 {
+	while p1 loading {
+		sleep 2
+	}
+	sleep 1
+	if NOT p1 loading {
+		if NOT p1 incombat {
+			until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+				sleep .1
+			}
+			if NOT p1:p4 sameplace {
+				if NOT p1:p4 samezone {
+					call Main_Account_Teleport_P4
+					sleep 2
+				} else {
+					call Main_Account_Teleport_P4
+					while NOT p1:p4 sameplace {
+						sleep 2
+					}
+				}
+			}
+		}
+	}
+}
+############################
+### P1 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P1 {
+	if NOT p1 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p1 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p1 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p1 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p1 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p1 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p1 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p1 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P1 {
+	until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p1 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P1 {
+	sleep 2
+	while p1 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P1 {
+	p1 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P1 {
+	p1 waitforcombat completion
+	times 2 {
+		p1 entitytp Health
+		sleep .2
+		p1 entitytp Mana
+		sleep .2
+	}
+}
+############################
+### P2 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P2 {
+	if NOT p2 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p2 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p2 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p2 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p2 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p2 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p2 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p2 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P2 {
+	until p2 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p2 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P2 {
+	sleep 2
+	while p2 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P2 {
+	p2 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P2 {
+	p2 waitforcombat completion
+	times 2 {
+		p2 entitytp Health
+		sleep .2
+		p2 entitytp Mana
+		sleep .2
+	}
+	until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+		sleep .1
+	}
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+}
+############################
+### P3 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P3 {
+	if NOT p3 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p3 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p3 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p3 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p3 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p3 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p3 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p3 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P3 {
+	until p3 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p3 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P3 {
+	sleep 2
+	while p3 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P3 {
+	p3 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P3 {
+	p3 waitforcombat completion
+	times 2 {
+		p3 entitytp Health
+		sleep .2
+		p3 entitytp Mana
+		sleep .2
+	}
+	until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+		sleep .1
+	}
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+}
+############################
+### P4 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P4 {
+	if NOT p4 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p4 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p4 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p4 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p4 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p4 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p4 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p4 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P4 {
+	until p4 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p4 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P4 {
+	sleep 2
+	while p4 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P4 {
+	p4 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P4 {
+	p4 waitforcombat completion
+	times 2 {
+		p4 entitytp Health
+		sleep .2
+		p4 entitytp Mana
+		sleep .2
+	}
+	until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+		sleep .1
+	}
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+}
+########################################################################
+########################################################################
+########################################################################
+#_______________________________________________________________________
+#_______________________________________________________________________
+#_______________________________________________________________________
+block P1QuestsHandler {
+	if p1 tracking_quest "unicorn way" {
+		if p1 tracking_goal "talk to private connelly in unicorn way" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+		}
+		return
+	}
+	if p1 tracking_quest "ghost hunters" {
+		while p1 tracking_goal "defeat lost soul in unicorn way" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to private connelly in unicorn way" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to ceren nightchant in unicorn way" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "skeleton crew" {
+		while p1 tracking_goal "defeat skeletal pirate in unicorn way" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to ceren nightchant in unicorn way" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "monsters and mazes" {
+		if p1 tracking_goal "talk to lady oriel in hedge maze" {
+			p1 tp XYZ(-29535.61328125, 19512.814453125, 162.430908203125)
+			call ZoneChange_P1
+			p1 tp quest
+			sleep 5
+			return
+		}
+	}
+	if p1 tracking_quest "finding out why" {
+		if p1 tracking_goal "open bone cage in unicorn way" {
+			if p1 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_HedgeMaze {
+				p1 tp XYZ(590.72412109375, -3612.44189453125, 162.33966064453125)
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			call X_Interact_P1
+			sleep 2
+			p1 tp quest
+			call X_Interact_P1
+			sleep 2
+			return
+		}
+		while p1 tracking_goal "defeat dark fairy and collect fairy dust in unicorn way" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "open bone cage in unicorn way" {
+			until NOT p1 tracking_goal "open bone cage in unicorn way" {
+				p1 tp quest
+				call X_Interact_P1
+				sleep 2
+				p1 tp quest
+				call X_Interact_P1
+				sleep 2
+				return
+			}
+		}	
+		if p1 tracking_goal "go to lady oriel in hedge maze" {
+			if p1 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p1 tp XYZ(-29534.01953125, 19524.4765625, 162.430908203125)
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			sleep 5
+			return
+		}
+	}
+	if p1 tracking_quest "who could it be now?" {
+		if p1 tracking_goal "talk to ceren nightchant in unicorn way" {
+			if p1 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_HedgeMaze {
+				p1 tp XYZ(586.7002563476562, -3612.484619140625, 162.33963012695312)
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "sinister skeleton" {
+		if p1 tracking_goal "search for rattlebones in the archives" {
+			if p1 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p1 tp XYZ(-16480.1640625, 19092.314453125, 33.497833251953125)
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			sleep 2
+			p1 tp quest
+			p1 waitforcombat completion
+			call SpeedDelay
+			return
+		}
+		if p1 tracking_goal "return to ceren nightchant in unicorn way" {
+			if p1 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_T2 {
+				p1 tp XYZ(-0.4653470516204834, -1236.4381103515625, 1.621368408203125)
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "grim tales" {
+		if p1 tracking_goal "talk to harold argleston in wizard city library" {
+			if p1 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p1 tp XYZ(-32.61481475830078, -1245.7261962890625, 0.188079833984375)
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			call ZoneChange_P1
+			if p1 inzone WizardCity/Interiors/WC_Library {
+				p1 tp XYZ(-15.209894180297852, 181.59719848632812, 1.500213623046875)
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+			}
+			return
+		}
+		if p1 tracking_goal "talk to merle ambrose in the commons" {
+			if p1 inzone WizardCity/Interiors/WC_Library {
+				p1 tp XYZ(-16.186782836914062, -613.2186279296875, 104.7139892578125)
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/WC_Hub {
+				p1 tp XYZ(-962.8184204101562, -2483.33251953125, 124.8660888671875)
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			}
+		}
+	}
+	if p1 tracking_quest "to ravenwood!" {
+		if p1 tracking_goal "talk to mr. lincoln in ravenwood" {	
+			if p1 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p1 tp XYZ(0.3852711319923401, -741.53076171875, -3.0517578125e-05)
+				call ZoneChange_P1
+			} 
+			if p1 inzone WizardCity/WC_Hub {
+				p1 tp XYZ(-52.7937126159668, 1896.044189453125, -27.992279052734375)
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/WC_Ravenwood_Lite {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				print "Please talk to your school teacher then talk to Mr. Lincoln"				
+				until p1 tracking_goal "talk to merle ambrose in the commons" {
+					sleep .1
+				}
+				sleep 1
+				return
+			}
+		}
+		if p1 tracking_goal "talk to merle ambrose in the commons" {
+			if p1 inzone WizardCity/WC_Ravenwood {
+				p1 tp XYZ(-7.09287691116333, -2041.01171875, -131.169189453125)
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/WC_Hub {
+				p1 tp XYZ(-950.8075561523438, -2489.005615234375, 124.86572265625)
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			}
+		}
+	}
+	if p1 tracking_quest "panic in three streets!" {
+		if p1 tracking_goal "talk to sergeant muldoon in olde town" {
+			if p1 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p1 tp XYZ(-3.989445447921753, -767.4963989257812, -3.0517578125e-05)
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/WC_Hub {
+				p1 tp XYZ(1340.8729248046875, -3591.072265625, -27.9923095703125)
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/WC_Shop_Area {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				sleep 5
+				p1 tp quest
+				sleep 2
+				return
+			}
+		}
+	}
+	if p1 tracking_quest "secret strife of pets" {
+		if p1 tracking_goal "search tower in caretaker's tower" {
+			if p1 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p1 tp XYZ(-5300.736328125, -4279.70751953125, -1615.8829345703125)
+				call ZoneChange_P1
+			}
+			return
+		}
+		if p1 tracking_goal "defeat old judd in caretaker's tower" {
+			if p1 inzone WizardCity/WC_Streets/Interiors/WC_OldeTown_T1 { 
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P1
+				print "Complete all quests in the pet tower. Once completed, activate all quest with Muldoon in Olde Town."
+				print "Once all quests available are activated, follow the firecat alley quest and the bot will continue on."
+				until p1 tracking_goal "find private quinn in firecat alley" {
+					sleep .1
+				}
+				return
+			}
+		}
+	}
+	if p1 tracking_quest "trouble on triton avenue" {
+		if p1 tracking_goal "go to entrance in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+		}
+		if p1 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			}
+		}
+	}
+	if p1 tracking_quest "menacing minions" {
+		while p1 tracking_goal "defeat haunted minion in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P1
+				call Combat_Complete_P1
+			}
+		}
+		if p1 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			}
+		}
+	}
+	if p1 tracking_quest "the shadow of death magic" {
+		if p1 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp quest
+				sleep 1
+				p1 turncam 0.56
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			}
+		}
+		while p1 tracking_goal "defeat electric eel and collect suzie's wand in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P1
+				call Combat_Complete_P1
+			}
+		}
+		if p1 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			}
+		}
+	}
+	if p1 tracking_quest "quest for clues" {
+		while p1 tracking_goal "defeat rotting fodder and collect storm amulets in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P1
+				call Combat_Complete_P1
+			}
+		}
+		if p1 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				sleep 2
+				return
+			}
+		}
+	}
+	if p1 tracking_quest "catching a glimpse" {
+		if p1 tracking_goal "talk to blad raveneye in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			}
+		}
+	}
+	if p1 tracking_quest "clear as crystal" {
+		while p1 tracking_goal "collect cog in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp XYZ(-18168.541015625, -6170.3623046875, -0.161163330078125)
+				p1 turncam 1.54
+				call X_Interact_P1
+				sleep 1
+				p1 tp XYZ(-19603.81640625, -9185.392578125, -87.59417724609375)
+				p1 turncam 1.54
+				call X_Interact_P1
+				sleep 1
+				p1 tp XYZ(-24251.439453125, -7422.0283203125, 13.479278564453125)
+				p1 turncam 4.83
+				call X_Interact_P1
+				sleep 1
+				return
+			}
+		}
+		while p1 tracking_goal "defeat scarlet screamer and collect primary coil in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P1
+				call Combat_Complete_P1
+			}
+		}
+		if p1 tracking_goal "talk to blad raveneye in triton avenue" {	
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			}
+		}
+		if p1 tracking_goal "go to mill wheel in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp XYZ(-19020.595703125, -1619.918701171875, -91.28900146484375)
+				sleep 2
+				return
+			}
+		}
+		if p1 tracking_goal "use lever in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp XYZ(-18837.0234375, -831.0691528320312, 0.270904541015625) 
+				call X_Interact_P1
+				sleep 2
+				return
+			}
+		}
+		if p1 tracking_goal "talk to blad raveneye in triton avenue" {
+			if p1 inzone WizardCity/WC_Streets/WC_Triton {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			}
+		}
+	}
+	if p1 tracking_quest "luminate" {
+		if p1 tracking_goal "talk to duncan grimwater in triton avenue" {	
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "the enemy revealed" {
+		if p1 tracking_goal "go to galvanost tower in triton avenue" {	
+			p1 tp XYZ(-37037.6953125, -7164.7451171875, 44.51300048828125)
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p1 sendkey X, .5
+				call ZoneChange_P1
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P1
+				p1 tp XYZ(1.1826798915863037, -1217.988525390625, 1.821197509765625)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						tp XYZ(-37037.6953125, -7164.7451171875, 44.51300048828125)
+						sleep 1
+						tp XYZ(-36950.2265625, -6686.55517578125, 33.202545166015625)
+					}
+					sleep 1
+					sendkey X, .2
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp XYZ(-222.2279052734375, -105.85432434082031, 1.785247802734375)
+						sleep 1
+						tp XYZ(220.56802368164062, 256.41265869140625, 1.7919921875)
+						sleep 1
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					sleep .5
+					tp XYZ(1.1826798915863037, -1217.988525390625, 1.821197509765625)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to reach sigil."
+					call SpeedDelay
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to suzie gryphonbane in triton avenue" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "to tame a tempest" {
+		if p1 tracking_goal "talk to halston balestrom in ravenwood" {
+			until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			p1 sendkey END, .2
+			p1 sendkey END, .2
+			p1 sendkey END, .2
+			call ZoneChange_P1
+			p1 tp XYZ(-98.20452880859375, 1875.415771484375, -27.992340087890625)
+			call ZoneChange_P1
+			p1 tp XYZ(2898.00244140625, 649.6361083984375, 1.7139892578125)
+			call ZoneChange_P1
+			p1 tp XYZ(863.784423828125, -6.598143577575684, 100.0)
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "use tempest nexus in triton avenue" {
+			p1 tp XYZ(-253.27108764648438, 10.52061939239502, 0.0)
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp XYZ(-10791.41015625, -6018.97998046875, 137.4951171875)
+			call X_Interact_P1
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "talk to suzie gryphonbane in triton avenue" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}	
+	}
+	if p1 tracking_quest "triton report" {
+		if p1 tracking_goal "talk to sergeant muldoon in olde town" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "a good day to cyclops" {
+		if p1 tracking_goal "explore cyclops lane in cyclops lane" {
+			p1 tp quest
+			call ZoneChange_P1
+			return
+		}
+		if p1 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p1 tp XYZ(-8268.681640625, 12723.099609375, 0.899993896484375)
+			p1 turncam 3.55
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "a stroll with trolls" {
+		while p1 tracking_goal "defeat lumbering troll in cyclops lane" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p1 tp XYZ(-8268.681640625, 12723.099609375, 0.899993896484375)
+			p1 turncam 3.55
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "run and done" { 
+		if p1 tracking_goal "talk to cyrus drake in ravenwood" {
+			until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			p1 sendkey END, .2
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp XYZ(-3535.075439453125, 3913.077392578125, 1.714202880859375)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+		if p1 tracking_goal "talk to victor darkwood in wizard city robe shop" {
+			p1 tp XYZ(-238.4073944091797, 6.298223495483398, 0.0)
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp XYZ(-3407.02001953125, -3844.63427734375, -0.08575439453125)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to merle ambrose in the commons" {
+			p1 tp XYZ(-242.70016479492188, 30.541893005371094, 0.0)
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp XYZ(-906.7512817382812, -2475.822265625, 124.86410522460938)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p1 tp XYZ(-242.47421264648438, -4.941687107086182, 0.0)
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp XYZ(-8260.935546875, 12719.7705078125, 0.899993896484375)
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "the cave escape" {
+		while p1 tracking_goal "defeat cyclops legionnaire in cyclops lane" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "go to the entrance in dark cave" {
+			p1 tp quest
+			call ZoneChange_P1
+			return
+		}
+		while p1 tracking_goal "defeat rotting fodder and collect talisman in dark cave" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		while p1 tracking_goal "dispel bubble in dark cave" {
+			p1 tp quest
+			call X_Interact_P1
+			sleep 2
+			p1 tp quest
+			call X_Interact_P1
+			sleep 2
+			p1 tp quest
+			call X_Interact_P1
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "talk to electra stormcloud in cyclops lane" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "oh me, oh minotaur" {
+		while p1 tracking_goal "defeat warhorn in cyclops lane" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to romulus in cyclops lane" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "akilles' deal" {
+		if p1 tracking_goal "go to akilles keep in cyclops lane" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				call SpeedDelay
+				p1 sendkey X, .5
+				call ZoneChange_P1
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P1
+				p1 tp quest
+				call X_Interact_P1
+				sleep 2
+				p1 tp XYZ(1629.27880859375, -5444.38818359375, -3166.10009765625)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					call SpeedDelay
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(1973.35888671875, -2947.704345703125, -3166.14892578125)
+						sleep 1
+						tp XYZ(1320.6558837890625, -2689.28076171875, -3166.14892578125)
+						sleep 1
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					sleep 3
+					sendkey X, .2
+					sendkey X, .2
+					sendkey X, .2
+					sleep 2
+					tp XYZ(1629.27880859375, -5444.38818359375, -3166.10009765625)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Please bring all clients together to this sigil."
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p1 tp XYZ(-8281.875, 12719.779296875, 0.899993896484375)
+			p1 turncam 3.59
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to sergeant muldoon in olde town" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}			
+	if p1 tracking_quest "putting out the fire!" {
+		if p1 tracking_goal "find private quinn in firecat alley" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "talk to private quinn in firecat alley" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		while p1 tracking_goal "defeat haunted minion in firecat alley" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+			p1 tp XYZ(-453.1996765136719, -244.73696899414062, 1.000732421875)
+		}
+	}
+	if p1 tracking_quest "she ran crying wildfire" {
+		if p1 tracking_goal "talk to lizzo firespitter in firecat alley" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		while p1 tracking_goal "defeat fire elf hunter in firecat alley" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to lizzo firespitter in firecat alley" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "which hunt?" {
+		if p1 tracking_goal "talk to shelus gruffheart in firecat alley" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		while p1 tracking_goal "defeat fire elf pathfinder in firecat alley" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to shelus gruffheart in firecat alley" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "go to hermit's house in firecat alley" {
+			p1 tp XYZ(-11174.419921875, -4799.40966796875, -69.00054931640625)
+			call ZoneChange_P1
+			return
+		}
+		while p1 tracking_goal "defeat magma man and collect magma in firecat alley" {
+			if p1 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p1 tp XYZ(-215.4639892578125, 57.16264343261719, 1.9991455078125)
+				call SpeedDelay
+				p1 tp XYZ(619.2958984375, -11.2720308303833, 1.975433349609375)
+				loop {
+					if p1 loading {
+						sleep .1
+					} else {
+						sleep 5
+						break
+					}
+				}
+			}
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p1 tp XYZ(-11146.1083984375, -4801.904296875, -69.00057983398438)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			sleep 2
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "100% not that witch" {
+		while p1 tracking_goal "defeat rotting fodder and collect herkimer stone in dark cave" {
+			if p1 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p1 tp XYZ(612.8089599609375, -19.827547073364258, 1.975830078125)
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/WC_Streets/WC_Firecat {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			if p1 inzone WizardCity/WC_Streets/WC_DarkCave {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+			p1 tp XYZ(-11145.6640625, -4803.7275390625, -69.00053405761719)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "go to prima donna's tower in firecat alley" {
+			if p1 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p1 tp XYZ(622.115234375, -7.755098342895508, 1.97528076171875)
+				call ZoneChange_P1
+				return
+			}
+			p1 tp XYZ(-25481.654296875, 5590.171875, 34.4913330078125)
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p1 sendkey X, .5
+				call ZoneChange_P1 
+				until p1 incombat {
+					p1 tp XYZ(101.85369873046875, 52.24358367919922, 1.782684326171875)
+					sleep .1
+				}
+				call Combat_Complete_P1
+				p1 tp XYZ(2.066659927368164, -1213.80615234375, 1.82098388671875)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(101.85369873046875, 52.24358367919922, 1.782684326171875)
+						call SpeedDelay
+						tp XYZ(117.63252258300781, 38.98086166381836, 1.78289794921875)
+						call SpeedDelay
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					call SpeedDelay
+					tp XYZ(2.066659927368164, -1213.80615234375, 1.82098388671875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to be at this sigil."
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p1 tp XYZ(-11159.166015625, -4797.787109375, -69.00053405761719)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			return
+		}
+	}
+	if p1 tracking_quest "which craft?" {
+		if p1 tracking_goal "talk to gloria krendell in olde town" {
+			if p1 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p1 tp XYZ(618.755859375, -18.46615982055664, 1.975494384765625)
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			if NOT p1 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p1 tp quest
+				call ZoneChange_P1
+				p1 tp XYZ(-11177.708984375, -4797.10986328125, -69.00053405761719)
+				call ZoneChange_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			} else {
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				return
+			}
+		}
+		if p1 tracking_goal "set up alchemy table in firecat alley" {
+			p1 tp XYZ(284.5107421875, 503.2889709472656, 2.00140380859375)
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "use alchemy table in firecat alley" {
+			p1 tp XYZ(254.77674865722656, -50.91396713256836, 3.628509521484375)
+			call SpeedDelay
+			p1 tp XYZ(284.3500061035156, 500.2933044433594, 1.99688720703125)
+			call X_Interact_P1
+			sleep 2
+			return
+		}	
+	}
+	if p1 tracking_quest "the cure" {
+		if p1 tracking_goal "go to the fire globe theater in fireglobe theatre" {
+			if p1 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p1 tp XYZ(627.1634521484375, -9.174460411071777, 1.974945068359375)
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p1 sendkey X, .5
+				call ZoneChange_P1
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(-7.215136528015137, -2847.97216796875, 2.020538330078125)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(-52.90824890136719, -37.128753662109375, -298.0)
+						call SpeedDelay
+						tp XYZ(-390.4020080566406, -7.799186706542969, -298.0000305175781)
+						call SpeedDelay
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					sleep 2
+					sendkey X, .2
+					sendkey X, .2
+					sendkey X, .2
+					sleep 2
+					tp XYZ(-7.215136528015137, -2847.97216796875, 2.020538330078125)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to reach this sigil."
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p1 tp XYZ(-11148.4560546875, -4798.11669921875, -69.00053405761719)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "firecat's in the bag" {
+		if p1 tracking_goal "talk to private quinn in firecat alley" {
+			if p1 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p1 tp XYZ(621.2803955078125, -11.477575302124023, 1.975311279296875)
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to sergeant muldoon in olde town" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call SpeedDelay
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "a brief history of the spiral" {
+		if p1 tracking_goal "talk to merle ambrose in the commons" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp XYZ(-920.0267944335938, -2501.96923828125, 124.86471557617188)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+		if p1 tracking_goal "go to bartleby in ravenwood" {
+			p1 tp XYZ(-27.034482955932617, -701.9182739257812, -3.0517578125e-05)
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "go to sapphyra's tower in olde town" {
+			if p1 inzone WizardCity/WC_Ravenwood {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/WC_Hub {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+			if p1 inzone WizardCity/WC_Shop_Area {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+			p1 tp XYZ(-9653.6962890625, -5162.63916015625, -2167.28466796875)
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p1 sendkey X, .5
+				call ZoneChange_P1
+				p1 tp XYZ(75.34483337402344, -201.77210998535156, 1.607635498046875)
+				call Combat_Complete_P1
+				p1 tp XYZ(-9.92377758026123, -1206.6373291015625, 1.61981201171875)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					sleep 3
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					tp XYZ(75.34483337402344, -201.77210998535156, 1.607635498046875)
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp XYZ(-9.92377758026123, -1206.6373291015625, 1.61981201171875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "go to the entrance in haunted cave" {	
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			return
+		}
+		if p1 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "throwing nightshade" {
+		if p1 tracking_goal "go to stormdrain tower in haunted cave" {	
+			p1 tp XYZ(9318.8896484375, 11379.744140625, -133.6364288330078)
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p1 sendkey X, .5
+				call ZoneChange_P1
+				p1 tp XYZ(-17.627853393554688, 21.830955505371094, 4.500030517578125)
+				call Combat_Complete_P1
+				p1 tp XYZ(-1302.7425537109375, -18.75533676147461, 4.499969482421875)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					tp XYZ(-17.627853393554688, 21.830955505371094, 4.500030517578125)
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp XYZ(-1302.7425537109375, -18.75533676147461, 4.499969482421875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}			
+	if p1 tracking_quest "things and stuff" {
+		while p1 tracking_goal "defeat field guard and collect pumpkin heads in haunted cave" {	
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to merle ambrose in the commons" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p1 tracking_quest "take a walk on the nightside" {
+		if p1 tracking_goal "scout area in nightside" {
+			if p1 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p1 tp XYZ(-21.81713104248047, -711.3167724609375, -3.0517578125e-05)
+				call ZoneChange_P1
+			}
+			p1 tp XYZ(2652.615234375, 5009.22216796875, 2.51263427734375)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "go to death school in nightside" {
+			p1 tp XYZ(527.04150390625, 20.76665496826172, 93.44625854492188)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to merle ambrose in the commons" {
+			p1 tp XYZ(-218.2695770263672, 10.178104400634766, 5.57305908203125)
+			call ZoneChange_P1
+			p1 tp XYZ(611.7841796875, -2747.8134765625, 139.41943359375)
+			call ZoneChange_P1
+			p1 tp XYZ(-956.08056640625, -2473.01611328125, 124.86581420898438)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "a whole new world" {
+		if p1 tracking_goal "go to bartleby in ravenwood" {
+			p1 tp XYZ(-20.45465087890625, -614.9901123046875, 0.0)
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "go to spiral chamber in the oasis" {
+			p1 tp XYZ(20.087583541870117, 1938.824951171875, 79.35800170898438)
+			call ZoneChange_P1
+			p1 tp XYZ(5.033364295959473, -52.24725341796875, 89.21310424804688)
+			call X_Interact_P1
+			sleep 3
+			until NOT p1 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p1 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P1
+			call SpeedDelay
+			return
+		}
+	}
+} #End of P1 Quest Handler
+block P2QuestsHandler {
+	if p2 tracking_quest "unicorn way" {
+		if p2 tracking_goal "talk to private connelly in unicorn way" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+		}
+		return
+	}
+	if p2 tracking_quest "ghost hunters" {
+		while p2 tracking_goal "defeat lost soul in unicorn way" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to private connelly in unicorn way" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to ceren nightchant in unicorn way" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "skeleton crew" {
+		while p2 tracking_goal "defeat skeletal pirate in unicorn way" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to ceren nightchant in unicorn way" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "monsters and mazes" {
+		if p2 tracking_goal "talk to lady oriel in hedge maze" {
+			p2 tp XYZ(-29535.61328125, 19512.814453125, 162.430908203125)
+			call ZoneChange_P2
+			p2 tp quest
+			sleep 5
+			return
+		}
+	}
+	if p2 tracking_quest "finding out why" {
+		if p2 tracking_goal "open bone cage in unicorn way" {
+			if p2 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_HedgeMaze {
+				p2 tp XYZ(590.72412109375, -3612.44189453125, 162.33966064453125)
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			call X_Interact_P2
+			sleep 2
+			p2 tp quest
+			call X_Interact_P2
+			sleep 2
+			return
+		}
+		while p2 tracking_goal "defeat dark fairy and collect fairy dust in unicorn way" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "open bone cage in unicorn way" {
+			until NOT p2 tracking_goal "open bone cage in unicorn way" {
+				p2 tp quest
+				call X_Interact_P2
+				sleep 2
+				p2 tp quest
+				call X_Interact_P2
+				sleep 2
+				return
+			}
+		}	
+		if p2 tracking_goal "go to lady oriel in hedge maze" {
+			if p2 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p2 tp XYZ(-29534.01953125, 19524.4765625, 162.430908203125)
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			sleep 5
+			return
+		}
+	}
+	if p2 tracking_quest "who could it be now?" {
+		if p2 tracking_goal "talk to ceren nightchant in unicorn way" {
+			if p2 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_HedgeMaze {
+				p2 tp XYZ(586.7002563476562, -3612.484619140625, 162.33963012695312)
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "sinister skeleton" {
+		if p2 tracking_goal "search for rattlebones in the archives" {
+			if p2 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p2 tp XYZ(-16480.1640625, 19092.314453125, 33.497833251953125)
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			sleep 2
+			p2 tp quest
+			p2 waitforcombat completion
+			call SpeedDelay
+			return
+		}
+		if p2 tracking_goal "return to ceren nightchant in unicorn way" {
+			if p2 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_T2 {
+				p2 tp XYZ(-0.4653470516204834, -1236.4381103515625, 1.621368408203125)
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "grim tales" {
+		if p2 tracking_goal "talk to harold argleston in wizard city library" {
+			if p2 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p2 tp XYZ(-32.61481475830078, -1245.7261962890625, 0.188079833984375)
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			call ZoneChange_P2
+			if p2 inzone WizardCity/Interiors/WC_Library {
+				p2 tp XYZ(-15.209894180297852, 181.59719848632812, 1.500213623046875)
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+			}
+			return
+		}
+		if p2 tracking_goal "talk to merle ambrose in the commons" {
+			if p2 inzone WizardCity/Interiors/WC_Library {
+				p2 tp XYZ(-16.186782836914062, -613.2186279296875, 104.7139892578125)
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/WC_Hub {
+				p2 tp XYZ(-962.8184204101562, -2483.33251953125, 124.8660888671875)
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			}
+		}
+	}
+	if p2 tracking_quest "to ravenwood!" {
+		if p2 tracking_goal "talk to mr. lincoln in ravenwood" {	
+			if p2 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p2 tp XYZ(0.3852711319923401, -741.53076171875, -3.0517578125e-05)
+				call ZoneChange_P2
+			} 
+			if p2 inzone WizardCity/WC_Hub {
+				p2 tp XYZ(-52.7937126159668, 1896.044189453125, -27.992279052734375)
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/WC_Ravenwood_Lite {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				print "Please talk to your school teacher then talk to Mr. Lincoln"				
+				until p2 tracking_goal "talk to merle ambrose in the commons" {
+					sleep .1
+				}
+				sleep 1
+				return
+			}
+		}
+		if p2 tracking_goal "talk to merle ambrose in the commons" {
+			if p2 inzone WizardCity/WC_Ravenwood {
+				p2 tp XYZ(-7.09287691116333, -2041.01171875, -131.169189453125)
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/WC_Hub {
+				p2 tp XYZ(-950.8075561523438, -2489.005615234375, 124.86572265625)
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			}
+		}
+	}
+	if p2 tracking_quest "panic in three streets!" {
+		if p2 tracking_goal "talk to sergeant muldoon in olde town" {
+			if p2 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p2 tp XYZ(-3.989445447921753, -767.4963989257812, -3.0517578125e-05)
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/WC_Hub {
+				p2 tp XYZ(1340.8729248046875, -3591.072265625, -27.9923095703125)
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/WC_Shop_Area {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				sleep 5
+				p2 tp quest
+				sleep 2
+				return
+			}
+		}
+	}
+	if p2 tracking_quest "secret strife of pets" {
+		if p2 tracking_goal "search tower in caretaker's tower" {
+			if p2 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p2 tp XYZ(-5300.736328125, -4279.70751953125, -1615.8829345703125)
+				call ZoneChange_P2
+			}
+			return
+		}
+		if p2 tracking_goal "defeat old judd in caretaker's tower" {
+			if p2 inzone WizardCity/WC_Streets/Interiors/WC_OldeTown_T1 { 
+				until p2 incombat {
+					p2 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P2
+				print "Complete all quests in the pet tower. Once completed, activate all quest with Muldoon in Olde Town."
+				print "Once all quests available are activated, follow the firecat alley quest and the bot will continue on."
+				until p2 tracking_goal "find private quinn in firecat alley" {
+					sleep .1
+				}
+				return
+			}
+		}
+	}
+	if p2 tracking_quest "trouble on triton avenue" {
+		if p2 tracking_goal "go to entrance in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+		}
+		if p2 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			}
+		}
+	}
+	if p2 tracking_quest "menacing minions" {
+		while p2 tracking_goal "defeat haunted minion in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				until p2 incombat {
+					p2 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P2
+				call Combat_Complete_P2
+			}
+		}
+		if p2 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			}
+		}
+	}
+	if p2 tracking_quest "the shadow of death magic" {
+		if p2 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp quest
+				sleep 1
+				p2 turncam 0.56
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			}
+		}
+		while p2 tracking_goal "defeat electric eel and collect suzie's wand in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				until p2 incombat {
+					p2 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P2
+				call Combat_Complete_P2
+			}
+		}
+		if p2 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			}
+		}
+	}
+	if p2 tracking_quest "quest for clues" {
+		while p2 tracking_goal "defeat rotting fodder and collect storm amulets in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				until p2 incombat {
+					p2 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P2
+				call Combat_Complete_P2
+			}
+		}
+		if p2 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				sleep 2
+				return
+			}
+		}
+	}
+	if p2 tracking_quest "catching a glimpse" {
+		if p2 tracking_goal "talk to blad raveneye in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			}
+		}
+	}
+	if p2 tracking_quest "clear as crystal" {
+		while p2 tracking_goal "collect cog in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp XYZ(-18168.541015625, -6170.3623046875, -0.161163330078125)
+				p2 turncam 1.54
+				call X_Interact_P2
+				sleep 1
+				p2 tp XYZ(-19603.81640625, -9185.392578125, -87.59417724609375)
+				p2 turncam 1.54
+				call X_Interact_P2
+				sleep 1
+				p2 tp XYZ(-24251.439453125, -7422.0283203125, 13.479278564453125)
+				p2 turncam 4.83
+				call X_Interact_P2
+				sleep 1
+				return
+			}
+		}
+		while p2 tracking_goal "defeat scarlet screamer and collect primary coil in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				until p2 incombat {
+					p2 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P2
+				call Combat_Complete_P2
+			}
+		}
+		if p2 tracking_goal "talk to blad raveneye in triton avenue" {	
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			}
+		}
+		if p2 tracking_goal "go to mill wheel in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp XYZ(-19020.595703125, -1619.918701171875, -91.28900146484375)
+				sleep 2
+				return
+			}
+		}
+		if p2 tracking_goal "use lever in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp XYZ(-18837.0234375, -831.0691528320312, 0.270904541015625) 
+				call X_Interact_P2
+				sleep 2
+				return
+			}
+		}
+		if p2 tracking_goal "talk to blad raveneye in triton avenue" {
+			if p2 inzone WizardCity/WC_Streets/WC_Triton {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			}
+		}
+	}
+	if p2 tracking_quest "luminate" {
+		if p2 tracking_goal "talk to duncan grimwater in triton avenue" {	
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "the enemy revealed" {
+		if p2 tracking_goal "go to galvanost tower in triton avenue" {	
+			p2 tp XYZ(-37037.6953125, -7164.7451171875, 44.51300048828125)
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				until p2 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p2 sendkey X, .5
+				call ZoneChange_P2
+				until p2 incombat {
+					p2 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P2
+				p2 tp XYZ(1.1826798915863037, -1217.988525390625, 1.821197509765625)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						tp XYZ(-37037.6953125, -7164.7451171875, 44.51300048828125)
+						sleep 1
+						tp XYZ(-36950.2265625, -6686.55517578125, 33.202545166015625)
+					}
+					sleep 1
+					sendkey X, .2
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp XYZ(-222.2279052734375, -105.85432434082031, 1.785247802734375)
+						sleep 1
+						tp XYZ(220.56802368164062, 256.41265869140625, 1.7919921875)
+						sleep 1
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					sleep .5
+					tp XYZ(1.1826798915863037, -1217.988525390625, 1.821197509765625)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to reach sigil."
+					call SpeedDelay
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to suzie gryphonbane in triton avenue" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "to tame a tempest" {
+		if p2 tracking_goal "talk to halston balestrom in ravenwood" {
+			until NOT p2 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			p2 sendkey END, .2
+			p2 sendkey END, .2
+			p2 sendkey END, .2
+			call ZoneChange_P2
+			p2 tp XYZ(-98.20452880859375, 1875.415771484375, -27.992340087890625)
+			call ZoneChange_P2
+			p2 tp XYZ(2898.00244140625, 649.6361083984375, 1.7139892578125)
+			call ZoneChange_P2
+			p2 tp XYZ(863.784423828125, -6.598143577575684, 100.0)
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "use tempest nexus in triton avenue" {
+			p2 tp XYZ(-253.27108764648438, 10.52061939239502, 0.0)
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp XYZ(-10791.41015625, -6018.97998046875, 137.4951171875)
+			call X_Interact_P2
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "talk to suzie gryphonbane in triton avenue" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}	
+	}
+	if p2 tracking_quest "triton report" {
+		if p2 tracking_goal "talk to sergeant muldoon in olde town" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "a good day to cyclops" {
+		if p2 tracking_goal "explore cyclops lane in cyclops lane" {
+			p2 tp quest
+			call ZoneChange_P2
+			return
+		}
+		if p2 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p2 tp XYZ(-8268.681640625, 12723.099609375, 0.899993896484375)
+			p2 turncam 3.55
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "a stroll with trolls" {
+		while p2 tracking_goal "defeat lumbering troll in cyclops lane" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p2 tp XYZ(-8268.681640625, 12723.099609375, 0.899993896484375)
+			p2 turncam 3.55
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "run and done" { 
+		if p2 tracking_goal "talk to cyrus drake in ravenwood" {
+			until NOT p2 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			p2 sendkey END, .2
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp XYZ(-3535.075439453125, 3913.077392578125, 1.714202880859375)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+		if p2 tracking_goal "talk to victor darkwood in wizard city robe shop" {
+			p2 tp XYZ(-238.4073944091797, 6.298223495483398, 0.0)
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp XYZ(-3407.02001953125, -3844.63427734375, -0.08575439453125)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to merle ambrose in the commons" {
+			p2 tp XYZ(-242.70016479492188, 30.541893005371094, 0.0)
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp XYZ(-906.7512817382812, -2475.822265625, 124.86410522460938)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p2 tp XYZ(-242.47421264648438, -4.941687107086182, 0.0)
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp XYZ(-8260.935546875, 12719.7705078125, 0.899993896484375)
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "the cave escape" {
+		while p2 tracking_goal "defeat cyclops legionnaire in cyclops lane" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "go to the entrance in dark cave" {
+			p2 tp quest
+			call ZoneChange_P2
+			return
+		}
+		while p2 tracking_goal "defeat rotting fodder and collect talisman in dark cave" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		while p2 tracking_goal "dispel bubble in dark cave" {
+			p2 tp quest
+			call X_Interact_P2
+			sleep 2
+			p2 tp quest
+			call X_Interact_P2
+			sleep 2
+			p2 tp quest
+			call X_Interact_P2
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "talk to electra stormcloud in cyclops lane" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "oh me, oh minotaur" {
+		while p2 tracking_goal "defeat warhorn in cyclops lane" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to romulus in cyclops lane" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "akilles' deal" {
+		if p2 tracking_goal "go to akilles keep in cyclops lane" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				call SpeedDelay
+				p1 sendkey X, .5
+				call ZoneChange_P1
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P1
+				p1 tp quest
+				call X_Interact_P1
+				sleep 2
+				p1 tp XYZ(1629.27880859375, -5444.38818359375, -3166.10009765625)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					call SpeedDelay
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(1973.35888671875, -2947.704345703125, -3166.14892578125)
+						sleep 1
+						tp XYZ(1320.6558837890625, -2689.28076171875, -3166.14892578125)
+						sleep 1
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					sleep 3
+					sendkey X, .2
+					sendkey X, .2
+					sendkey X, .2
+					sleep 2
+					tp XYZ(1629.27880859375, -5444.38818359375, -3166.10009765625)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Please bring all clients together to this sigil."
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p2 tp XYZ(-8281.875, 12719.779296875, 0.899993896484375)
+			p2 turncam 3.59
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to sergeant muldoon in olde town" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}			
+	if p2 tracking_quest "putting out the fire!" {
+		if p2 tracking_goal "find private quinn in firecat alley" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "talk to private quinn in firecat alley" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		while p2 tracking_goal "defeat haunted minion in firecat alley" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+			p2 tp XYZ(-453.1996765136719, -244.73696899414062, 1.000732421875)
+		}
+	}
+	if p2 tracking_quest "she ran crying wildfire" {
+		if p2 tracking_goal "talk to lizzo firespitter in firecat alley" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		while p2 tracking_goal "defeat fire elf hunter in firecat alley" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to lizzo firespitter in firecat alley" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "which hunt?" {
+		if p2 tracking_goal "talk to shelus gruffheart in firecat alley" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		while p2 tracking_goal "defeat fire elf pathfinder in firecat alley" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to shelus gruffheart in firecat alley" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "go to hermit's house in firecat alley" {
+			p2 tp XYZ(-11174.419921875, -4799.40966796875, -69.00054931640625)
+			call ZoneChange_P2
+			return
+		}
+		while p2 tracking_goal "defeat magma man and collect magma in firecat alley" {
+			if p2 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p2 tp XYZ(-215.4639892578125, 57.16264343261719, 1.9991455078125)
+				call SpeedDelay
+				p2 tp XYZ(619.2958984375, -11.2720308303833, 1.975433349609375)
+				loop {
+					if p2 loading {
+						sleep .1
+					} else {
+						sleep 5
+						break
+					}
+				}
+			}
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p2 tp XYZ(-11146.1083984375, -4801.904296875, -69.00057983398438)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			sleep 2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "100% not that witch" {
+		while p2 tracking_goal "defeat rotting fodder and collect herkimer stone in dark cave" {
+			if p2 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p2 tp XYZ(612.8089599609375, -19.827547073364258, 1.975830078125)
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/WC_Streets/WC_Firecat {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			if p2 inzone WizardCity/WC_Streets/WC_DarkCave {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+			p2 tp XYZ(-11145.6640625, -4803.7275390625, -69.00053405761719)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "go to prima donna's tower in firecat alley" {
+			if p2 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p2 tp XYZ(622.115234375, -7.755098342895508, 1.97528076171875)
+				call ZoneChange_P2
+				return
+			}
+			p2 tp XYZ(-25481.654296875, 5590.171875, 34.4913330078125)
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				until p2 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p2 sendkey X, .5
+				call ZoneChange_P2 
+				until p2 incombat {
+					p2 tp XYZ(101.85369873046875, 52.24358367919922, 1.782684326171875)
+					sleep .1
+				}
+				call Combat_Complete_P2
+				p2 tp XYZ(2.066659927368164, -1213.80615234375, 1.82098388671875)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(101.85369873046875, 52.24358367919922, 1.782684326171875)
+						call SpeedDelay
+						tp XYZ(117.63252258300781, 38.98086166381836, 1.78289794921875)
+						call SpeedDelay
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					call SpeedDelay
+					tp XYZ(2.066659927368164, -1213.80615234375, 1.82098388671875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to be at this sigil."
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p2 tp XYZ(-11159.166015625, -4797.787109375, -69.00053405761719)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			return
+		}
+	}
+	if p2 tracking_quest "which craft?" {
+		if p2 tracking_goal "talk to gloria krendell in olde town" {
+			if p2 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p2 tp XYZ(618.755859375, -18.46615982055664, 1.975494384765625)
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			if NOT p2 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p2 tp quest
+				call ZoneChange_P2
+				p2 tp XYZ(-11177.708984375, -4797.10986328125, -69.00053405761719)
+				call ZoneChange_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			} else {
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				return
+			}
+		}
+		if p2 tracking_goal "set up alchemy table in firecat alley" {
+			p2 tp XYZ(284.5107421875, 503.2889709472656, 2.00140380859375)
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "use alchemy table in firecat alley" {
+			p2 tp XYZ(254.77674865722656, -50.91396713256836, 3.628509521484375)
+			call SpeedDelay
+			p2 tp XYZ(284.3500061035156, 500.2933044433594, 1.99688720703125)
+			call X_Interact_P2
+			sleep 2
+			return
+		}	
+	}
+	if p2 tracking_quest "the cure" {
+		if p2 tracking_goal "go to the fire globe theater in fireglobe theatre" {
+			if p2 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p2 tp XYZ(627.1634521484375, -9.174460411071777, 1.974945068359375)
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				until p2 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p2 sendkey X, .5
+				call ZoneChange_P2
+				until p2 incombat {
+					p2 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(-7.215136528015137, -2847.97216796875, 2.020538330078125)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(-52.90824890136719, -37.128753662109375, -298.0)
+						call SpeedDelay
+						tp XYZ(-390.4020080566406, -7.799186706542969, -298.0000305175781)
+						call SpeedDelay
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					sleep 2
+					sendkey X, .2
+					sendkey X, .2
+					sendkey X, .2
+					sleep 2
+					tp XYZ(-7.215136528015137, -2847.97216796875, 2.020538330078125)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to reach this sigil."
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p2 tp XYZ(-11148.4560546875, -4798.11669921875, -69.00053405761719)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "firecat's in the bag" {
+		if p2 tracking_goal "talk to private quinn in firecat alley" {
+			if p2 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p2 tp XYZ(621.2803955078125, -11.477575302124023, 1.975311279296875)
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to sergeant muldoon in olde town" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call SpeedDelay
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "a brief history of the spiral" {
+		if p2 tracking_goal "talk to merle ambrose in the commons" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp XYZ(-920.0267944335938, -2501.96923828125, 124.86471557617188)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+		if p2 tracking_goal "go to bartleby in ravenwood" {
+			p2 tp XYZ(-27.034482955932617, -701.9182739257812, -3.0517578125e-05)
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "go to sapphyra's tower in olde town" {
+			if p2 inzone WizardCity/WC_Ravenwood {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/WC_Hub {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+			if p2 inzone WizardCity/WC_Shop_Area {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+			p2 tp XYZ(-9653.6962890625, -5162.63916015625, -2167.28466796875)
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				until p2 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p2 sendkey X, .5
+				call ZoneChange_P2
+				p2 tp XYZ(75.34483337402344, -201.77210998535156, 1.607635498046875)
+				call Combat_Complete_P2
+				p2 tp XYZ(-9.92377758026123, -1206.6373291015625, 1.61981201171875)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					sleep 3
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					tp XYZ(75.34483337402344, -201.77210998535156, 1.607635498046875)
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp XYZ(-9.92377758026123, -1206.6373291015625, 1.61981201171875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "go to the entrance in haunted cave" {	
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			return
+		}
+		if p2 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "throwing nightshade" {
+		if p2 tracking_goal "go to stormdrain tower in haunted cave" {	
+			p2 tp XYZ(9318.8896484375, 11379.744140625, -133.6364288330078)
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				until p2 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p2 sendkey X, .5
+				call ZoneChange_P2
+				p2 tp XYZ(-17.627853393554688, 21.830955505371094, 4.500030517578125)
+				call Combat_Complete_P2
+				p2 tp XYZ(-1302.7425537109375, -18.75533676147461, 4.499969482421875)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					tp XYZ(-17.627853393554688, 21.830955505371094, 4.500030517578125)
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp XYZ(-1302.7425537109375, -18.75533676147461, 4.499969482421875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}			
+	if p2 tracking_quest "things and stuff" {
+		while p2 tracking_goal "defeat field guard and collect pumpkin heads in haunted cave" {	
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to merle ambrose in the commons" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p2 tracking_quest "take a walk on the nightside" {
+		if p2 tracking_goal "scout area in nightside" {
+			if p2 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p2 tp XYZ(-21.81713104248047, -711.3167724609375, -3.0517578125e-05)
+				call ZoneChange_P2
+			}
+			p2 tp XYZ(2652.615234375, 5009.22216796875, 2.51263427734375)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "go to death school in nightside" {
+			p2 tp XYZ(527.04150390625, 20.76665496826172, 93.44625854492188)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to merle ambrose in the commons" {
+			p2 tp XYZ(-218.2695770263672, 10.178104400634766, 5.57305908203125)
+			call ZoneChange_P2
+			p2 tp XYZ(611.7841796875, -2747.8134765625, 139.41943359375)
+			call ZoneChange_P2
+			p2 tp XYZ(-956.08056640625, -2473.01611328125, 124.86581420898438)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "a whole new world" {
+		if p2 tracking_goal "go to bartleby in ravenwood" {
+			p2 tp XYZ(-20.45465087890625, -614.9901123046875, 0.0)
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "go to spiral chamber in the oasis" {
+			p2 tp XYZ(20.087583541870117, 1938.824951171875, 79.35800170898438)
+			call ZoneChange_P2
+			p2 tp XYZ(5.033364295959473, -52.24725341796875, 89.21310424804688)
+			call X_Interact_P2
+			sleep 3
+			until NOT p2 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p2 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P2
+			call SpeedDelay
+			return
+		}
+	}
+} #End of P2 Quest Handler
+block P3QuestsHandler {
+	if p3 tracking_quest "unicorn way" {
+		if p3 tracking_goal "talk to private connelly in unicorn way" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+		}
+		return
+	}
+	if p3 tracking_quest "ghost hunters" {
+		while p3 tracking_goal "defeat lost soul in unicorn way" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to private connelly in unicorn way" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to ceren nightchant in unicorn way" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "skeleton crew" {
+		while p3 tracking_goal "defeat skeletal pirate in unicorn way" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to ceren nightchant in unicorn way" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "monsters and mazes" {
+		if p3 tracking_goal "talk to lady oriel in hedge maze" {
+			p3 tp XYZ(-29535.61328125, 19512.814453125, 162.430908203125)
+			call ZoneChange_P3
+			p3 tp quest
+			sleep 5
+			return
+		}
+	}
+	if p3 tracking_quest "finding out why" {
+		if p3 tracking_goal "open bone cage in unicorn way" {
+			if p3 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_HedgeMaze {
+				p3 tp XYZ(590.72412109375, -3612.44189453125, 162.33966064453125)
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			call X_Interact_P3
+			sleep 2
+			p3 tp quest
+			call X_Interact_P3
+			sleep 2
+			return
+		}
+		while p3 tracking_goal "defeat dark fairy and collect fairy dust in unicorn way" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "open bone cage in unicorn way" {
+			until NOT p3 tracking_goal "open bone cage in unicorn way" {
+				p3 tp quest
+				call X_Interact_P3
+				sleep 2
+				p3 tp quest
+				call X_Interact_P3
+				sleep 2
+				return
+			}
+		}	
+		if p3 tracking_goal "go to lady oriel in hedge maze" {
+			if p3 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p3 tp XYZ(-29534.01953125, 19524.4765625, 162.430908203125)
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			sleep 5
+			return
+		}
+	}
+	if p3 tracking_quest "who could it be now?" {
+		if p3 tracking_goal "talk to ceren nightchant in unicorn way" {
+			if p3 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_HedgeMaze {
+				p3 tp XYZ(586.7002563476562, -3612.484619140625, 162.33963012695312)
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "sinister skeleton" {
+		if p3 tracking_goal "search for rattlebones in the archives" {
+			if p3 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p3 tp XYZ(-16480.1640625, 19092.314453125, 33.497833251953125)
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			sleep 2
+			p3 tp quest
+			p3 waitforcombat completion
+			call SpeedDelay
+			return
+		}
+		if p3 tracking_goal "return to ceren nightchant in unicorn way" {
+			if p3 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_T2 {
+				p3 tp XYZ(-0.4653470516204834, -1236.4381103515625, 1.621368408203125)
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "grim tales" {
+		if p3 tracking_goal "talk to harold argleston in wizard city library" {
+			if p3 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p3 tp XYZ(-32.61481475830078, -1245.7261962890625, 0.188079833984375)
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			call ZoneChange_P3
+			if p3 inzone WizardCity/Interiors/WC_Library {
+				p3 tp XYZ(-15.209894180297852, 181.59719848632812, 1.500213623046875)
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+			}
+			return
+		}
+		if p3 tracking_goal "talk to merle ambrose in the commons" {
+			if p3 inzone WizardCity/Interiors/WC_Library {
+				p3 tp XYZ(-16.186782836914062, -613.2186279296875, 104.7139892578125)
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/WC_Hub {
+				p3 tp XYZ(-962.8184204101562, -2483.33251953125, 124.8660888671875)
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			}
+		}
+	}
+	if p3 tracking_quest "to ravenwood!" {
+		if p3 tracking_goal "talk to mr. lincoln in ravenwood" {	
+			if p3 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p3 tp XYZ(0.3852711319923401, -741.53076171875, -3.0517578125e-05)
+				call ZoneChange_P3
+			} 
+			if p3 inzone WizardCity/WC_Hub {
+				p3 tp XYZ(-52.7937126159668, 1896.044189453125, -27.992279052734375)
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/WC_Ravenwood_Lite {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				print "Please talk to your school teacher then talk to Mr. Lincoln"				
+				until p3 tracking_goal "talk to merle ambrose in the commons" {
+					sleep .1
+				}
+				sleep 1
+				return
+			}
+		}
+		if p3 tracking_goal "talk to merle ambrose in the commons" {
+			if p3 inzone WizardCity/WC_Ravenwood {
+				p3 tp XYZ(-7.09287691116333, -2041.01171875, -131.169189453125)
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/WC_Hub {
+				p3 tp XYZ(-950.8075561523438, -2489.005615234375, 124.86572265625)
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			}
+		}
+	}
+	if p3 tracking_quest "panic in three streets!" {
+		if p3 tracking_goal "talk to sergeant muldoon in olde town" {
+			if p3 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p3 tp XYZ(-3.989445447921753, -767.4963989257812, -3.0517578125e-05)
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/WC_Hub {
+				p3 tp XYZ(1340.8729248046875, -3591.072265625, -27.9923095703125)
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/WC_Shop_Area {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				sleep 5
+				p3 tp quest
+				sleep 2
+				return
+			}
+		}
+	}
+	if p3 tracking_quest "secret strife of pets" {
+		if p3 tracking_goal "search tower in caretaker's tower" {
+			if p3 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p3 tp XYZ(-5300.736328125, -4279.70751953125, -1615.8829345703125)
+				call ZoneChange_P3
+			}
+			return
+		}
+		if p3 tracking_goal "defeat old judd in caretaker's tower" {
+			if p3 inzone WizardCity/WC_Streets/Interiors/WC_OldeTown_T1 { 
+				until p3 incombat {
+					p3 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P3
+				print "Complete all quests in the pet tower. Once completed, activate all quest with Muldoon in Olde Town."
+				print "Once all quests available are activated, follow the firecat alley quest and the bot will continue on."
+				until p3 tracking_goal "find private quinn in firecat alley" {
+					sleep .1
+				}
+				return
+			}
+		}
+	}
+	if p3 tracking_quest "trouble on triton avenue" {
+		if p3 tracking_goal "go to entrance in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+		}
+		if p3 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			}
+		}
+	}
+	if p3 tracking_quest "menacing minions" {
+		while p3 tracking_goal "defeat haunted minion in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				until p3 incombat {
+					p3 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P3
+				call Combat_Complete_P3
+			}
+		}
+		if p3 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			}
+		}
+	}
+	if p3 tracking_quest "the shadow of death magic" {
+		if p3 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp quest
+				sleep 1
+				p3 turncam 0.56
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			}
+		}
+		while p3 tracking_goal "defeat electric eel and collect suzie's wand in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				until p3 incombat {
+					p3 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P3
+				call Combat_Complete_P3
+			}
+		}
+		if p3 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			}
+		}
+	}
+	if p3 tracking_quest "quest for clues" {
+		while p3 tracking_goal "defeat rotting fodder and collect storm amulets in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				until p3 incombat {
+					p3 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P3
+				call Combat_Complete_P3
+			}
+		}
+		if p3 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				sleep 2
+				return
+			}
+		}
+	}
+	if p3 tracking_quest "catching a glimpse" {
+		if p3 tracking_goal "talk to blad raveneye in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			}
+		}
+	}
+	if p3 tracking_quest "clear as crystal" {
+		while p3 tracking_goal "collect cog in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp XYZ(-18168.541015625, -6170.3623046875, -0.161163330078125)
+				p3 turncam 1.54
+				call X_Interact_P3
+				sleep 1
+				p3 tp XYZ(-19603.81640625, -9185.392578125, -87.59417724609375)
+				p3 turncam 1.54
+				call X_Interact_P3
+				sleep 1
+				p3 tp XYZ(-24251.439453125, -7422.0283203125, 13.479278564453125)
+				p3 turncam 4.83
+				call X_Interact_P3
+				sleep 1
+				return
+			}
+		}
+		while p3 tracking_goal "defeat scarlet screamer and collect primary coil in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				until p3 incombat {
+					p3 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P3
+				call Combat_Complete_P3
+			}
+		}
+		if p3 tracking_goal "talk to blad raveneye in triton avenue" {	
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			}
+		}
+		if p3 tracking_goal "go to mill wheel in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp XYZ(-19020.595703125, -1619.918701171875, -91.28900146484375)
+				sleep 2
+				return
+			}
+		}
+		if p3 tracking_goal "use lever in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp XYZ(-18837.0234375, -831.0691528320312, 0.270904541015625) 
+				call X_Interact_P3
+				sleep 2
+				return
+			}
+		}
+		if p3 tracking_goal "talk to blad raveneye in triton avenue" {
+			if p3 inzone WizardCity/WC_Streets/WC_Triton {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			}
+		}
+	}
+	if p3 tracking_quest "luminate" {
+		if p3 tracking_goal "talk to duncan grimwater in triton avenue" {	
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "the enemy revealed" {
+		if p3 tracking_goal "go to galvanost tower in triton avenue" {	
+			p3 tp XYZ(-37037.6953125, -7164.7451171875, 44.51300048828125)
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				until p3 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p3 sendkey X, .5
+				call ZoneChange_P3
+				until p3 incombat {
+					p3 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P3
+				p3 tp XYZ(1.1826798915863037, -1217.988525390625, 1.821197509765625)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						tp XYZ(-37037.6953125, -7164.7451171875, 44.51300048828125)
+						sleep 1
+						tp XYZ(-36950.2265625, -6686.55517578125, 33.202545166015625)
+					}
+					sleep 1
+					sendkey X, .2
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp XYZ(-222.2279052734375, -105.85432434082031, 1.785247802734375)
+						sleep 1
+						tp XYZ(220.56802368164062, 256.41265869140625, 1.7919921875)
+						sleep 1
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					sleep .5
+					tp XYZ(1.1826798915863037, -1217.988525390625, 1.821197509765625)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to reach sigil."
+					call SpeedDelay
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to suzie gryphonbane in triton avenue" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "to tame a tempest" {
+		if p3 tracking_goal "talk to halston balestrom in ravenwood" {
+			until NOT p3 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			p3 sendkey END, .2
+			p3 sendkey END, .2
+			p3 sendkey END, .2
+			call ZoneChange_P3
+			p3 tp XYZ(-98.20452880859375, 1875.415771484375, -27.992340087890625)
+			call ZoneChange_P3
+			p3 tp XYZ(2898.00244140625, 649.6361083984375, 1.7139892578125)
+			call ZoneChange_P3
+			p3 tp XYZ(863.784423828125, -6.598143577575684, 100.0)
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "use tempest nexus in triton avenue" {
+			p3 tp XYZ(-253.27108764648438, 10.52061939239502, 0.0)
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp XYZ(-10791.41015625, -6018.97998046875, 137.4951171875)
+			call X_Interact_P3
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "talk to suzie gryphonbane in triton avenue" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}	
+	}
+	if p3 tracking_quest "triton report" {
+		if p3 tracking_goal "talk to sergeant muldoon in olde town" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "a good day to cyclops" {
+		if p3 tracking_goal "explore cyclops lane in cyclops lane" {
+			p3 tp quest
+			call ZoneChange_P3
+			return
+		}
+		if p3 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p3 tp XYZ(-8268.681640625, 12723.099609375, 0.899993896484375)
+			p3 turncam 3.55
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "a stroll with trolls" {
+		while p3 tracking_goal "defeat lumbering troll in cyclops lane" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p3 tp XYZ(-8268.681640625, 12723.099609375, 0.899993896484375)
+			p3 turncam 3.55
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "run and done" { 
+		if p3 tracking_goal "talk to cyrus drake in ravenwood" {
+			until NOT p3 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			p3 sendkey END, .2
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp XYZ(-3535.075439453125, 3913.077392578125, 1.714202880859375)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+		if p3 tracking_goal "talk to victor darkwood in wizard city robe shop" {
+			p3 tp XYZ(-238.4073944091797, 6.298223495483398, 0.0)
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp XYZ(-3407.02001953125, -3844.63427734375, -0.08575439453125)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to merle ambrose in the commons" {
+			p3 tp XYZ(-242.70016479492188, 30.541893005371094, 0.0)
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp XYZ(-906.7512817382812, -2475.822265625, 124.86410522460938)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p3 tp XYZ(-242.47421264648438, -4.941687107086182, 0.0)
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp XYZ(-8260.935546875, 12719.7705078125, 0.899993896484375)
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "the cave escape" {
+		while p3 tracking_goal "defeat cyclops legionnaire in cyclops lane" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "go to the entrance in dark cave" {
+			p3 tp quest
+			call ZoneChange_P3
+			return
+		}
+		while p3 tracking_goal "defeat rotting fodder and collect talisman in dark cave" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		while p3 tracking_goal "dispel bubble in dark cave" {
+			p3 tp quest
+			call X_Interact_P3
+			sleep 2
+			p3 tp quest
+			call X_Interact_P3
+			sleep 2
+			p3 tp quest
+			call X_Interact_P3
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "talk to electra stormcloud in cyclops lane" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "oh me, oh minotaur" {
+		while p3 tracking_goal "defeat warhorn in cyclops lane" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to romulus in cyclops lane" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "akilles' deal" {
+		if p3 tracking_goal "go to akilles keep in cyclops lane" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				call SpeedDelay
+				p1 sendkey X, .5
+				call ZoneChange_P1
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P1
+				p1 tp quest
+				call X_Interact_P1
+				sleep 2
+				p1 tp XYZ(1629.27880859375, -5444.38818359375, -3166.10009765625)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					call SpeedDelay
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(1973.35888671875, -2947.704345703125, -3166.14892578125)
+						sleep 1
+						tp XYZ(1320.6558837890625, -2689.28076171875, -3166.14892578125)
+						sleep 1
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					sleep 3
+					sendkey X, .2
+					sendkey X, .2
+					sendkey X, .2
+					sleep 2
+					tp XYZ(1629.27880859375, -5444.38818359375, -3166.10009765625)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Please bring all clients together to this sigil."
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p3 tp XYZ(-8281.875, 12719.779296875, 0.899993896484375)
+			p3 turncam 3.59
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to sergeant muldoon in olde town" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}			
+	if p3 tracking_quest "putting out the fire!" {
+		if p3 tracking_goal "find private quinn in firecat alley" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "talk to private quinn in firecat alley" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		while p3 tracking_goal "defeat haunted minion in firecat alley" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+			p3 tp XYZ(-453.1996765136719, -244.73696899414062, 1.000732421875)
+		}
+	}
+	if p3 tracking_quest "she ran crying wildfire" {
+		if p3 tracking_goal "talk to lizzo firespitter in firecat alley" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		while p3 tracking_goal "defeat fire elf hunter in firecat alley" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to lizzo firespitter in firecat alley" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "which hunt?" {
+		if p3 tracking_goal "talk to shelus gruffheart in firecat alley" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		while p3 tracking_goal "defeat fire elf pathfinder in firecat alley" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to shelus gruffheart in firecat alley" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "go to hermit's house in firecat alley" {
+			p3 tp XYZ(-11174.419921875, -4799.40966796875, -69.00054931640625)
+			call ZoneChange_P3
+			return
+		}
+		while p3 tracking_goal "defeat magma man and collect magma in firecat alley" {
+			if p3 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p3 tp XYZ(-215.4639892578125, 57.16264343261719, 1.9991455078125)
+				call SpeedDelay
+				p3 tp XYZ(619.2958984375, -11.2720308303833, 1.975433349609375)
+				loop {
+					if p3 loading {
+						sleep .1
+					} else {
+						sleep 5
+						break
+					}
+				}
+			}
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p3 tp XYZ(-11146.1083984375, -4801.904296875, -69.00057983398438)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			sleep 2
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "100% not that witch" {
+		while p3 tracking_goal "defeat rotting fodder and collect herkimer stone in dark cave" {
+			if p3 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p3 tp XYZ(612.8089599609375, -19.827547073364258, 1.975830078125)
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/WC_Streets/WC_Firecat {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			if p3 inzone WizardCity/WC_Streets/WC_DarkCave {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+			p3 tp XYZ(-11145.6640625, -4803.7275390625, -69.00053405761719)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "go to prima donna's tower in firecat alley" {
+			if p3 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p3 tp XYZ(622.115234375, -7.755098342895508, 1.97528076171875)
+				call ZoneChange_P3
+				return
+			}
+			p3 tp XYZ(-25481.654296875, 5590.171875, 34.4913330078125)
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				until p3 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p3 sendkey X, .5
+				call ZoneChange_P3 
+				until p3 incombat {
+					p3 tp XYZ(101.85369873046875, 52.24358367919922, 1.782684326171875)
+					sleep .1
+				}
+				call Combat_Complete_P3
+				p3 tp XYZ(2.066659927368164, -1213.80615234375, 1.82098388671875)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(101.85369873046875, 52.24358367919922, 1.782684326171875)
+						call SpeedDelay
+						tp XYZ(117.63252258300781, 38.98086166381836, 1.78289794921875)
+						call SpeedDelay
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					call SpeedDelay
+					tp XYZ(2.066659927368164, -1213.80615234375, 1.82098388671875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to be at this sigil."
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p3 tp XYZ(-11159.166015625, -4797.787109375, -69.00053405761719)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			return
+		}
+	}
+	if p3 tracking_quest "which craft?" {
+		if p3 tracking_goal "talk to gloria krendell in olde town" {
+			if p3 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p3 tp XYZ(618.755859375, -18.46615982055664, 1.975494384765625)
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			if NOT p3 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p3 tp quest
+				call ZoneChange_P3
+				p3 tp XYZ(-11177.708984375, -4797.10986328125, -69.00053405761719)
+				call ZoneChange_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			} else {
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				return
+			}
+		}
+		if p3 tracking_goal "set up alchemy table in firecat alley" {
+			p3 tp XYZ(284.5107421875, 503.2889709472656, 2.00140380859375)
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "use alchemy table in firecat alley" {
+			p3 tp XYZ(254.77674865722656, -50.91396713256836, 3.628509521484375)
+			call SpeedDelay
+			p3 tp XYZ(284.3500061035156, 500.2933044433594, 1.99688720703125)
+			call X_Interact_P3
+			sleep 2
+			return
+		}	
+	}
+	if p3 tracking_quest "the cure" {
+		if p3 tracking_goal "go to the fire globe theater in fireglobe theatre" {
+			if p3 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p3 tp XYZ(627.1634521484375, -9.174460411071777, 1.974945068359375)
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				until p3 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p3 sendkey X, .5
+				call ZoneChange_P3
+				until p3 incombat {
+					p3 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(-7.215136528015137, -2847.97216796875, 2.020538330078125)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(-52.90824890136719, -37.128753662109375, -298.0)
+						call SpeedDelay
+						tp XYZ(-390.4020080566406, -7.799186706542969, -298.0000305175781)
+						call SpeedDelay
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					sleep 2
+					sendkey X, .2
+					sendkey X, .2
+					sendkey X, .2
+					sleep 2
+					tp XYZ(-7.215136528015137, -2847.97216796875, 2.020538330078125)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to reach this sigil."
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p3 tp XYZ(-11148.4560546875, -4798.11669921875, -69.00053405761719)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "firecat's in the bag" {
+		if p3 tracking_goal "talk to private quinn in firecat alley" {
+			if p3 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p3 tp XYZ(621.2803955078125, -11.477575302124023, 1.975311279296875)
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to sergeant muldoon in olde town" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call SpeedDelay
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "a brief history of the spiral" {
+		if p3 tracking_goal "talk to merle ambrose in the commons" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp XYZ(-920.0267944335938, -2501.96923828125, 124.86471557617188)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+		if p3 tracking_goal "go to bartleby in ravenwood" {
+			p3 tp XYZ(-27.034482955932617, -701.9182739257812, -3.0517578125e-05)
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "go to sapphyra's tower in olde town" {
+			if p3 inzone WizardCity/WC_Ravenwood {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/WC_Hub {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+			if p3 inzone WizardCity/WC_Shop_Area {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+			p3 tp XYZ(-9653.6962890625, -5162.63916015625, -2167.28466796875)
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				until p3 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p3 sendkey X, .5
+				call ZoneChange_P3
+				p3 tp XYZ(75.34483337402344, -201.77210998535156, 1.607635498046875)
+				call Combat_Complete_P3
+				p3 tp XYZ(-9.92377758026123, -1206.6373291015625, 1.61981201171875)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					sleep 3
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					tp XYZ(75.34483337402344, -201.77210998535156, 1.607635498046875)
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp XYZ(-9.92377758026123, -1206.6373291015625, 1.61981201171875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "go to the entrance in haunted cave" {	
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			return
+		}
+		if p3 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "throwing nightshade" {
+		if p3 tracking_goal "go to stormdrain tower in haunted cave" {	
+			p3 tp XYZ(9318.8896484375, 11379.744140625, -133.6364288330078)
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				until p3 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p3 sendkey X, .5
+				call ZoneChange_P3
+				p3 tp XYZ(-17.627853393554688, 21.830955505371094, 4.500030517578125)
+				call Combat_Complete_P3
+				p3 tp XYZ(-1302.7425537109375, -18.75533676147461, 4.499969482421875)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					tp XYZ(-17.627853393554688, 21.830955505371094, 4.500030517578125)
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp XYZ(-1302.7425537109375, -18.75533676147461, 4.499969482421875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}			
+	if p3 tracking_quest "things and stuff" {
+		while p3 tracking_goal "defeat field guard and collect pumpkin heads in haunted cave" {	
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to merle ambrose in the commons" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p3 tracking_quest "take a walk on the nightside" {
+		if p3 tracking_goal "scout area in nightside" {
+			if p3 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p3 tp XYZ(-21.81713104248047, -711.3167724609375, -3.0517578125e-05)
+				call ZoneChange_P3
+			}
+			p3 tp XYZ(2652.615234375, 5009.22216796875, 2.51263427734375)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "go to death school in nightside" {
+			p3 tp XYZ(527.04150390625, 20.76665496826172, 93.44625854492188)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to merle ambrose in the commons" {
+			p3 tp XYZ(-218.2695770263672, 10.178104400634766, 5.57305908203125)
+			call ZoneChange_P3
+			p3 tp XYZ(611.7841796875, -2747.8134765625, 139.41943359375)
+			call ZoneChange_P3
+			p3 tp XYZ(-956.08056640625, -2473.01611328125, 124.86581420898438)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "a whole new world" {
+		if p3 tracking_goal "go to bartleby in ravenwood" {
+			p3 tp XYZ(-20.45465087890625, -614.9901123046875, 0.0)
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "go to spiral chamber in the oasis" {
+			p3 tp XYZ(20.087583541870117, 1938.824951171875, 79.35800170898438)
+			call ZoneChange_P3
+			p3 tp XYZ(5.033364295959473, -52.24725341796875, 89.21310424804688)
+			call X_Interact_P3
+			sleep 3
+			until NOT p3 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p3 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P3
+			call SpeedDelay
+			return
+		}
+	}
+} #End of P3 Quest Handler
+block P4QuestsHandler {
+	if p4 tracking_quest "unicorn way" {
+		if p4 tracking_goal "talk to private connelly in unicorn way" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+		}
+		return
+	}
+	if p4 tracking_quest "ghost hunters" {
+		while p4 tracking_goal "defeat lost soul in unicorn way" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to private connelly in unicorn way" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to ceren nightchant in unicorn way" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "skeleton crew" {
+		while p4 tracking_goal "defeat skeletal pirate in unicorn way" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to ceren nightchant in unicorn way" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "monsters and mazes" {
+		if p4 tracking_goal "talk to lady oriel in hedge maze" {
+			p4 tp XYZ(-29535.61328125, 19512.814453125, 162.430908203125)
+			call ZoneChange_P4
+			p4 tp quest
+			sleep 5
+			return
+		}
+	}
+	if p4 tracking_quest "finding out why" {
+		if p4 tracking_goal "open bone cage in unicorn way" {
+			if p4 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_HedgeMaze {
+				p4 tp XYZ(590.72412109375, -3612.44189453125, 162.33966064453125)
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			call X_Interact_P4
+			sleep 2
+			p4 tp quest
+			call X_Interact_P4
+			sleep 2
+			return
+		}
+		while p4 tracking_goal "defeat dark fairy and collect fairy dust in unicorn way" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "open bone cage in unicorn way" {
+			until NOT p4 tracking_goal "open bone cage in unicorn way" {
+				p4 tp quest
+				call X_Interact_P4
+				sleep 2
+				p4 tp quest
+				call X_Interact_P4
+				sleep 2
+				return
+			}
+		}	
+		if p4 tracking_goal "go to lady oriel in hedge maze" {
+			if p4 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p4 tp XYZ(-29534.01953125, 19524.4765625, 162.430908203125)
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			sleep 5
+			return
+		}
+	}
+	if p4 tracking_quest "who could it be now?" {
+		if p4 tracking_goal "talk to ceren nightchant in unicorn way" {
+			if p4 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_HedgeMaze {
+				p4 tp XYZ(586.7002563476562, -3612.484619140625, 162.33963012695312)
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "sinister skeleton" {
+		if p4 tracking_goal "search for rattlebones in the archives" {
+			if p4 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p4 tp XYZ(-16480.1640625, 19092.314453125, 33.497833251953125)
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			sleep 2
+			p4 tp quest
+			p4 waitforcombat completion
+			call SpeedDelay
+			return
+		}
+		if p4 tracking_goal "return to ceren nightchant in unicorn way" {
+			if p4 inzone WizardCity/WC_Streets/Interiors/WC_Unicorn_T2 {
+				p4 tp XYZ(-0.4653470516204834, -1236.4381103515625, 1.621368408203125)
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "grim tales" {
+		if p4 tracking_goal "talk to harold argleston in wizard city library" {
+			if p4 inzone WizardCity/WC_Streets/WC_Unicorn {
+				p4 tp XYZ(-32.61481475830078, -1245.7261962890625, 0.188079833984375)
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			call ZoneChange_P4
+			if p4 inzone WizardCity/Interiors/WC_Library {
+				p4 tp XYZ(-15.209894180297852, 181.59719848632812, 1.500213623046875)
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+			}
+			return
+		}
+		if p4 tracking_goal "talk to merle ambrose in the commons" {
+			if p4 inzone WizardCity/Interiors/WC_Library {
+				p4 tp XYZ(-16.186782836914062, -613.2186279296875, 104.7139892578125)
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/WC_Hub {
+				p4 tp XYZ(-962.8184204101562, -2483.33251953125, 124.8660888671875)
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			}
+		}
+	}
+	if p4 tracking_quest "to ravenwood!" {
+		if p4 tracking_goal "talk to mr. lincoln in ravenwood" {	
+			if p4 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p4 tp XYZ(0.3852711319923401, -741.53076171875, -3.0517578125e-05)
+				call ZoneChange_P4
+			} 
+			if p4 inzone WizardCity/WC_Hub {
+				p4 tp XYZ(-52.7937126159668, 1896.044189453125, -27.992279052734375)
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/WC_Ravenwood_Lite {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				print "Please talk to your school teacher then talk to Mr. Lincoln"				
+				until p4 tracking_goal "talk to merle ambrose in the commons" {
+					sleep .1
+				}
+				sleep 1
+				return
+			}
+		}
+		if p4 tracking_goal "talk to merle ambrose in the commons" {
+			if p4 inzone WizardCity/WC_Ravenwood {
+				p4 tp XYZ(-7.09287691116333, -2041.01171875, -131.169189453125)
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/WC_Hub {
+				p4 tp XYZ(-950.8075561523438, -2489.005615234375, 124.86572265625)
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			}
+		}
+	}
+	if p4 tracking_quest "panic in three streets!" {
+		if p4 tracking_goal "talk to sergeant muldoon in olde town" {
+			if p4 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p4 tp XYZ(-3.989445447921753, -767.4963989257812, -3.0517578125e-05)
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/WC_Hub {
+				p4 tp XYZ(1340.8729248046875, -3591.072265625, -27.9923095703125)
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/WC_Shop_Area {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				sleep 5
+				p4 tp quest
+				sleep 2
+				return
+			}
+		}
+	}
+	if p4 tracking_quest "secret strife of pets" {
+		if p4 tracking_goal "search tower in caretaker's tower" {
+			if p4 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p4 tp XYZ(-5300.736328125, -4279.70751953125, -1615.8829345703125)
+				call ZoneChange_P4
+			}
+			return
+		}
+		if p4 tracking_goal "defeat old judd in caretaker's tower" {
+			if p4 inzone WizardCity/WC_Streets/Interiors/WC_OldeTown_T1 { 
+				until p4 incombat {
+					p4 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P4
+				print "Complete all quests in the pet tower. Once completed, activate all quest with Muldoon in Olde Town."
+				print "Once all quests available are activated, follow the firecat alley quest and the bot will continue on."
+				until p4 tracking_goal "find private quinn in firecat alley" {
+					sleep .1
+				}
+				return
+			}
+		}
+	}
+	if p4 tracking_quest "trouble on triton avenue" {
+		if p4 tracking_goal "go to entrance in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_OldeTown {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+		}
+		if p4 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			}
+		}
+	}
+	if p4 tracking_quest "menacing minions" {
+		while p4 tracking_goal "defeat haunted minion in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				until p4 incombat {
+					p4 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P4
+				call Combat_Complete_P4
+			}
+		}
+		if p4 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			}
+		}
+	}
+	if p4 tracking_quest "the shadow of death magic" {
+		if p4 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp quest
+				sleep 1
+				p4 turncam 0.56
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			}
+		}
+		while p4 tracking_goal "defeat electric eel and collect suzie's wand in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				until p4 incombat {
+					p4 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P4
+				call Combat_Complete_P4
+			}
+		}
+		if p4 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			}
+		}
+	}
+	if p4 tracking_quest "quest for clues" {
+		while p4 tracking_goal "defeat rotting fodder and collect storm amulets in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				until p4 incombat {
+					p4 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P4
+				call Combat_Complete_P4
+			}
+		}
+		if p4 tracking_goal "talk to duncan grimwater in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				sleep 2
+				return
+			}
+		}
+	}
+	if p4 tracking_quest "catching a glimpse" {
+		if p4 tracking_goal "talk to blad raveneye in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			}
+		}
+	}
+	if p4 tracking_quest "clear as crystal" {
+		while p4 tracking_goal "collect cog in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp XYZ(-18168.541015625, -6170.3623046875, -0.161163330078125)
+				p4 turncam 1.54
+				call X_Interact_P4
+				sleep 1
+				p4 tp XYZ(-19603.81640625, -9185.392578125, -87.59417724609375)
+				p4 turncam 1.54
+				call X_Interact_P4
+				sleep 1
+				p4 tp XYZ(-24251.439453125, -7422.0283203125, 13.479278564453125)
+				p4 turncam 4.83
+				call X_Interact_P4
+				sleep 1
+				return
+			}
+		}
+		while p4 tracking_goal "defeat scarlet screamer and collect primary coil in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				until p4 incombat {
+					p4 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P4
+				call Combat_Complete_P4
+			}
+		}
+		if p4 tracking_goal "talk to blad raveneye in triton avenue" {	
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			}
+		}
+		if p4 tracking_goal "go to mill wheel in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp XYZ(-19020.595703125, -1619.918701171875, -91.28900146484375)
+				sleep 2
+				return
+			}
+		}
+		if p4 tracking_goal "use lever in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp XYZ(-18837.0234375, -831.0691528320312, 0.270904541015625) 
+				call X_Interact_P4
+				sleep 2
+				return
+			}
+		}
+		if p4 tracking_goal "talk to blad raveneye in triton avenue" {
+			if p4 inzone WizardCity/WC_Streets/WC_Triton {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			}
+		}
+	}
+	if p4 tracking_quest "luminate" {
+		if p4 tracking_goal "talk to duncan grimwater in triton avenue" {	
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "the enemy revealed" {
+		if p4 tracking_goal "go to galvanost tower in triton avenue" {	
+			p4 tp XYZ(-37037.6953125, -7164.7451171875, 44.51300048828125)
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				until p4 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p4 sendkey X, .5
+				call ZoneChange_P4
+				until p4 incombat {
+					p4 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P4
+				p4 tp XYZ(1.1826798915863037, -1217.988525390625, 1.821197509765625)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						tp XYZ(-37037.6953125, -7164.7451171875, 44.51300048828125)
+						sleep 1
+						tp XYZ(-36950.2265625, -6686.55517578125, 33.202545166015625)
+					}
+					sleep 1
+					sendkey X, .2
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp XYZ(-222.2279052734375, -105.85432434082031, 1.785247802734375)
+						sleep 1
+						tp XYZ(220.56802368164062, 256.41265869140625, 1.7919921875)
+						sleep 1
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					sleep .5
+					tp XYZ(1.1826798915863037, -1217.988525390625, 1.821197509765625)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to reach sigil."
+					call SpeedDelay
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to suzie gryphonbane in triton avenue" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "to tame a tempest" {
+		if p4 tracking_goal "talk to halston balestrom in ravenwood" {
+			until NOT p4 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			p4 sendkey END, .2
+			p4 sendkey END, .2
+			p4 sendkey END, .2
+			call ZoneChange_P4
+			p4 tp XYZ(-98.20452880859375, 1875.415771484375, -27.992340087890625)
+			call ZoneChange_P4
+			p4 tp XYZ(2898.00244140625, 649.6361083984375, 1.7139892578125)
+			call ZoneChange_P4
+			p4 tp XYZ(863.784423828125, -6.598143577575684, 100.0)
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "use tempest nexus in triton avenue" {
+			p4 tp XYZ(-253.27108764648438, 10.52061939239502, 0.0)
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp XYZ(-10791.41015625, -6018.97998046875, 137.4951171875)
+			call X_Interact_P4
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "talk to suzie gryphonbane in triton avenue" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to artur gryphonbane in triton avenue" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}	
+	}
+	if p4 tracking_quest "triton report" {
+		if p4 tracking_goal "talk to sergeant muldoon in olde town" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "a good day to cyclops" {
+		if p4 tracking_goal "explore cyclops lane in cyclops lane" {
+			p4 tp quest
+			call ZoneChange_P4
+			return
+		}
+		if p4 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p4 tp XYZ(-8268.681640625, 12723.099609375, 0.899993896484375)
+			p4 turncam 3.55
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "a stroll with trolls" {
+		while p4 tracking_goal "defeat lumbering troll in cyclops lane" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p4 tp XYZ(-8268.681640625, 12723.099609375, 0.899993896484375)
+			p4 turncam 3.55
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "run and done" { 
+		if p4 tracking_goal "talk to cyrus drake in ravenwood" {
+			until NOT p4 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			p4 sendkey END, .2
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp XYZ(-3535.075439453125, 3913.077392578125, 1.714202880859375)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+		if p4 tracking_goal "talk to victor darkwood in wizard city robe shop" {
+			p4 tp XYZ(-238.4073944091797, 6.298223495483398, 0.0)
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp XYZ(-3407.02001953125, -3844.63427734375, -0.08575439453125)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to merle ambrose in the commons" {
+			p4 tp XYZ(-242.70016479492188, 30.541893005371094, 0.0)
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp XYZ(-906.7512817382812, -2475.822265625, 124.86410522460938)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p4 tp XYZ(-242.47421264648438, -4.941687107086182, 0.0)
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp XYZ(-8260.935546875, 12719.7705078125, 0.899993896484375)
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "the cave escape" {
+		while p4 tracking_goal "defeat cyclops legionnaire in cyclops lane" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "go to the entrance in dark cave" {
+			p4 tp quest
+			call ZoneChange_P4
+			return
+		}
+		while p4 tracking_goal "defeat rotting fodder and collect talisman in dark cave" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		while p4 tracking_goal "dispel bubble in dark cave" {
+			p4 tp quest
+			call X_Interact_P4
+			sleep 2
+			p4 tp quest
+			call X_Interact_P4
+			sleep 2
+			p4 tp quest
+			call X_Interact_P4
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "talk to electra stormcloud in cyclops lane" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "oh me, oh minotaur" {
+		while p4 tracking_goal "defeat warhorn in cyclops lane" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to romulus in cyclops lane" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "akilles' deal" {
+		if p4 tracking_goal "go to akilles keep in cyclops lane" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				call SpeedDelay
+				p1 sendkey X, .5
+				call ZoneChange_P1
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P1
+				p1 tp quest
+				call X_Interact_P1
+				sleep 2
+				p1 tp XYZ(1629.27880859375, -5444.38818359375, -3166.10009765625)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					call SpeedDelay
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(1973.35888671875, -2947.704345703125, -3166.14892578125)
+						sleep 1
+						tp XYZ(1320.6558837890625, -2689.28076171875, -3166.14892578125)
+						sleep 1
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					sleep 3
+					sendkey X, .2
+					sendkey X, .2
+					sendkey X, .2
+					sleep 2
+					tp XYZ(1629.27880859375, -5444.38818359375, -3166.10009765625)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Please bring all clients together to this sigil."
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to nolan stormgate in cyclops lane" {
+			p4 tp XYZ(-8281.875, 12719.779296875, 0.899993896484375)
+			p4 turncam 3.59
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to sergeant muldoon in olde town" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}			
+	if p4 tracking_quest "putting out the fire!" {
+		if p4 tracking_goal "find private quinn in firecat alley" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "talk to private quinn in firecat alley" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		while p4 tracking_goal "defeat haunted minion in firecat alley" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+			p4 tp XYZ(-453.1996765136719, -244.73696899414062, 1.000732421875)
+		}
+	}
+	if p4 tracking_quest "she ran crying wildfire" {
+		if p4 tracking_goal "talk to lizzo firespitter in firecat alley" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		while p4 tracking_goal "defeat fire elf hunter in firecat alley" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to lizzo firespitter in firecat alley" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "which hunt?" {
+		if p4 tracking_goal "talk to shelus gruffheart in firecat alley" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		while p4 tracking_goal "defeat fire elf pathfinder in firecat alley" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to shelus gruffheart in firecat alley" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "go to hermit's house in firecat alley" {
+			p4 tp XYZ(-11174.419921875, -4799.40966796875, -69.00054931640625)
+			call ZoneChange_P4
+			return
+		}
+		while p4 tracking_goal "defeat magma man and collect magma in firecat alley" {
+			if p4 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p4 tp XYZ(-215.4639892578125, 57.16264343261719, 1.9991455078125)
+				call SpeedDelay
+				p4 tp XYZ(619.2958984375, -11.2720308303833, 1.975433349609375)
+				loop {
+					if p4 loading {
+						sleep .1
+					} else {
+						sleep 5
+						break
+					}
+				}
+			}
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p4 tp XYZ(-11146.1083984375, -4801.904296875, -69.00057983398438)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			sleep 2
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "100% not that witch" {
+		while p4 tracking_goal "defeat rotting fodder and collect herkimer stone in dark cave" {
+			if p4 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p4 tp XYZ(612.8089599609375, -19.827547073364258, 1.975830078125)
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/WC_Streets/WC_Firecat {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			if p4 inzone WizardCity/WC_Streets/WC_DarkCave {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+			p4 tp XYZ(-11145.6640625, -4803.7275390625, -69.00053405761719)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "go to prima donna's tower in firecat alley" {
+			if p4 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p4 tp XYZ(622.115234375, -7.755098342895508, 1.97528076171875)
+				call ZoneChange_P4
+				return
+			}
+			p4 tp XYZ(-25481.654296875, 5590.171875, 34.4913330078125)
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				until p4 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p4 sendkey X, .5
+				call ZoneChange_P4 
+				until p4 incombat {
+					p4 tp XYZ(101.85369873046875, 52.24358367919922, 1.782684326171875)
+					sleep .1
+				}
+				call Combat_Complete_P4
+				p4 tp XYZ(2.066659927368164, -1213.80615234375, 1.82098388671875)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(101.85369873046875, 52.24358367919922, 1.782684326171875)
+						call SpeedDelay
+						tp XYZ(117.63252258300781, 38.98086166381836, 1.78289794921875)
+						call SpeedDelay
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					call SpeedDelay
+					tp XYZ(2.066659927368164, -1213.80615234375, 1.82098388671875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to be at this sigil."
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p4 tp XYZ(-11159.166015625, -4797.787109375, -69.00053405761719)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			return
+		}
+	}
+	if p4 tracking_quest "which craft?" {
+		if p4 tracking_goal "talk to gloria krendell in olde town" {
+			if p4 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p4 tp XYZ(618.755859375, -18.46615982055664, 1.975494384765625)
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			if NOT p4 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p4 tp quest
+				call ZoneChange_P4
+				p4 tp XYZ(-11177.708984375, -4797.10986328125, -69.00053405761719)
+				call ZoneChange_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			} else {
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				return
+			}
+		}
+		if p4 tracking_goal "set up alchemy table in firecat alley" {
+			p4 tp XYZ(284.5107421875, 503.2889709472656, 2.00140380859375)
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "use alchemy table in firecat alley" {
+			p4 tp XYZ(254.77674865722656, -50.91396713256836, 3.628509521484375)
+			call SpeedDelay
+			p4 tp XYZ(284.3500061035156, 500.2933044433594, 1.99688720703125)
+			call X_Interact_P4
+			sleep 2
+			return
+		}	
+	}
+	if p4 tracking_quest "the cure" {
+		if p4 tracking_goal "go to the fire globe theater in fireglobe theatre" {
+			if p4 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p4 tp XYZ(627.1634521484375, -9.174460411071777, 1.974945068359375)
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				until p4 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p4 sendkey X, .5
+				call ZoneChange_P4
+				until p4 incombat {
+					p4 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(-7.215136528015137, -2847.97216796875, 2.020538330078125)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					until incombat {
+						tp XYZ(-52.90824890136719, -37.128753662109375, -298.0)
+						call SpeedDelay
+						tp XYZ(-390.4020080566406, -7.799186706542969, -298.0000305175781)
+						call SpeedDelay
+					}
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					sleep 2
+					sendkey X, .2
+					sendkey X, .2
+					sendkey X, .2
+					sleep 2
+					tp XYZ(-7.215136528015137, -2847.97216796875, 2.020538330078125)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				} else {
+					print "Waiting for all clients to reach this sigil."
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to gretta darkkettle in firecat alley" {
+			p4 tp XYZ(-11148.4560546875, -4798.11669921875, -69.00053405761719)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "firecat's in the bag" {
+		if p4 tracking_goal "talk to private quinn in firecat alley" {
+			if p4 inzone WizardCity/WC_Streets/Interiors/WC_Firecat_H2 {
+				p4 tp XYZ(621.2803955078125, -11.477575302124023, 1.975311279296875)
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to sergeant muldoon in olde town" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call SpeedDelay
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "a brief history of the spiral" {
+		if p4 tracking_goal "talk to merle ambrose in the commons" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp XYZ(-920.0267944335938, -2501.96923828125, 124.86471557617188)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+		if p4 tracking_goal "go to bartleby in ravenwood" {
+			p4 tp XYZ(-27.034482955932617, -701.9182739257812, -3.0517578125e-05)
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "go to sapphyra's tower in olde town" {
+			if p4 inzone WizardCity/WC_Ravenwood {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/WC_Hub {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+			if p4 inzone WizardCity/WC_Shop_Area {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+			p4 tp XYZ(-9653.6962890625, -5162.63916015625, -2167.28466796875)
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				until p4 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p4 sendkey X, .5
+				call ZoneChange_P4
+				p4 tp XYZ(75.34483337402344, -201.77210998535156, 1.607635498046875)
+				call Combat_Complete_P4
+				p4 tp XYZ(-9.92377758026123, -1206.6373291015625, 1.61981201171875)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					sleep 3
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					tp XYZ(75.34483337402344, -201.77210998535156, 1.607635498046875)
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp XYZ(-9.92377758026123, -1206.6373291015625, 1.61981201171875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "go to the entrance in haunted cave" {	
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			return
+		}
+		if p4 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "throwing nightshade" {
+		if p4 tracking_goal "go to stormdrain tower in haunted cave" {	
+			p4 tp XYZ(9318.8896484375, 11379.744140625, -133.6364288330078)
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				until p4 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p4 sendkey X, .5
+				call ZoneChange_P4
+				p4 tp XYZ(-17.627853393554688, 21.830955505371094, 4.500030517578125)
+				call Combat_Complete_P4
+				p4 tp XYZ(-1302.7425537109375, -18.75533676147461, 4.499969482421875)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Main_Is_Busy_On_Off
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					call SpeedDelay
+					tp XYZ(-17.627853393554688, 21.830955505371094, 4.500030517578125)
+					waitforcombat completion
+					call Main_Is_Busy_On_Off
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp XYZ(-1302.7425537109375, -18.75533676147461, 4.499969482421875)
+					waitforzonechange completion
+					call SpeedDelay
+					call Main_Is_Busy_On_Off
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}			
+	if p4 tracking_quest "things and stuff" {
+		while p4 tracking_goal "defeat field guard and collect pumpkin heads in haunted cave" {	
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to daisy willowmancer in haunted cave" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to merle ambrose in the commons" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p4 tracking_quest "take a walk on the nightside" {
+		if p4 tracking_goal "scout area in nightside" {
+			if p4 inzone WizardCity/Interiors/WC_Headmistress_House {
+				p4 tp XYZ(-21.81713104248047, -711.3167724609375, -3.0517578125e-05)
+				call ZoneChange_P4
+			}
+			p4 tp XYZ(2652.615234375, 5009.22216796875, 2.51263427734375)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "go to death school in nightside" {
+			p4 tp XYZ(527.04150390625, 20.76665496826172, 93.44625854492188)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to merle ambrose in the commons" {
+			p4 tp XYZ(-218.2695770263672, 10.178104400634766, 5.57305908203125)
+			call ZoneChange_P4
+			p4 tp XYZ(611.7841796875, -2747.8134765625, 139.41943359375)
+			call ZoneChange_P4
+			p4 tp XYZ(-956.08056640625, -2473.01611328125, 124.86581420898438)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "a whole new world" {
+		if p4 tracking_goal "go to bartleby in ravenwood" {
+			p4 tp XYZ(-20.45465087890625, -614.9901123046875, 0.0)
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "go to spiral chamber in the oasis" {
+			p4 tp XYZ(20.087583541870117, 1938.824951171875, 79.35800170898438)
+			call ZoneChange_P4
+			p4 tp XYZ(5.033364295959473, -52.24725341796875, 89.21310424804688)
+			call X_Interact_P4
+			sleep 3
+			until NOT p4 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p4 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P4
+			call SpeedDelay
+			return
+		}
+	}
+} #End of P4 Quest Handler
+############################
+#    Main Quest Handler    #	
+############################
+	loop {
+		if playercount 1 {
+			if p1 loading {
+				sleep .01
+			} else {
+				break
+			}
+		} elif playercount 2 {
+			if p1 loading {
+				sleep .01
+			} elif p2 loading {
+				sleep .01
+			} else {
+				break
+			}
+		} elif playercount 3 {
+			if p1 loading {
+				sleep .01
+			} elif p2 loading {
+				sleep .01
+			} elif p3 loading {
+				sleep .01
+			} else {
+				break
+			}
+		} elif playercount 4 {
+			if p1 loading {
+				sleep .01
+			} elif p2 loading {
+				sleep .01
+			} elif p3 loading {
+				sleep .01
+			} elif p4 loading {
+				sleep .01
+			} else {
+				break
+			}
+		}
+	}
+	if playercount 1 {
+		call P1QuestsHandler
+		call Quest_Follow_Checker_P1
+	} elif playercount 2 {
+		call P2QuestsHandler
+		call Quest_Follow_Checker_P2
+	} elif playercount 3 {
+		call P2QuestsHandler
+		call Quest_Follow_Checker_P2
+		call P3QuestsHandler
+		call Quest_Follow_Checker_P3
+	} elif playercount 4 {
+		call P2QuestsHandler
+		call Quest_Follow_Checker_P2
+		call P3QuestsHandler
+		call Quest_Follow_Checker_P3
+		call P4QuestsHandler
+		call Quest_Follow_Checker_P4
+	}
+} #Ends the entire block of Auto Quester
+
+
+call WizardCity_Main_Quest_Tree
