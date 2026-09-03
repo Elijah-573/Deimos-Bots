@@ -1,0 +1,32 @@
+###deimos_expertmode
+
+until p1 windowvisible ['WorldView', 'DeckConfiguration', 'FurnitureSpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet'] {
+	p1 presskey U, 0.1
+}
+p1 clickwindow ['WorldView', 'DeckConfiguration', 'FurnitureSpellbookPage', 'windowForBtns', 'Layout', 'btnFeedPet']
+if p1 windowvisible ['WorldView', 'DeckConfiguration', 'MessageBoxModalWindow', 'messageBoxBG'] {
+	p1 presskey ENTER, 0.1
+}
+p1 clickwindow ['WorldView', 'DeckConfiguration', 'FurnitureSpellbookPage', 'PetGameRewards', 'btnBack']
+
+if p1 bagcount == 14 {
+	p1 presskey U, 0.1
+	sleep 0.1
+
+	until p1 windowvisible ['WorldView', 'shopGUI', 'ShopCategory_HousingStuff'] {
+		p1 presskey X, 0.1
+	}
+
+	until p1 windowvisible ['WorldView', 'shopGUI', 'FurnitureLayout', 'ShopCategory_Decoration'] {
+		p1 clickwindow ['WorldView', 'shopGUI', 'ShopCategory_HousingStuff']
+	}
+	p1 clickwindow ['WorldView', 'shopGUI', 'FurnitureLayout', 'ShopCategory_Decoration']
+
+	until p1 windowvisible ['WorldView', 'shopGUI', 'BankingMoveMultipleItems', 'CurrentQuantity'] {
+		p1 clickwindow ['WorldView', 'shopGUI', 'BankingSubWindow', 'Move1', 'MoveButton1']
+	}
+
+	sleep 0.5
+	p1 click 575, 400
+	p1 clickwindow ['WorldView', 'shopGUI', 'BankingMoveMultipleItems', 'MoveButton']
+}

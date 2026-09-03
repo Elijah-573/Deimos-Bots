@@ -1,0 +1,20 @@
+###deimos_expertmode
+
+while true {
+
+    #Final Fight
+    except p1 entitytp Tri-Gauntlet-Angler
+    p1 entitytp Tri-Gauntlet-Angler
+    mass waitforcombat completion
+    sleep 1 
+    mass tp XYZ(846.987, -1086.360, -2.145)
+    sleep 2.5
+    p1 tp XYZ(-1600.769, 1878.628, -2.144)
+    p1 waitforzonechange
+    sleep 1
+    p1 tp XYZ(1528.629, 25.840, 24.374)
+    sleep 1
+    p1 waitforzonechange
+
+    sleep 1
+}

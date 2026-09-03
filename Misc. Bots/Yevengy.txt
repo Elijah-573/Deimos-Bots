@@ -1,0 +1,19 @@
+#start in front of the gate
+
+mass tp XYZ(0.9779069423675537, 2014.5875244140625, 0.699981689453125)
+sleep 1
+mass walkto XYZ(18.769075393676758, 2502.30322265625, 0.699981689453125)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 2
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+mass tp closestmob
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(53.435, -3447.54541015625, 0.519061737060547)
+sleep 4
+mass sendkey ENTER, 0.1
+mass waitforzonechange completion
+sleep 2

@@ -1,0 +1,37 @@
+###deimos_expertmode
+
+while true {
+
+    if inzone Housing_FarmHouse/Exterior {
+
+        # Elder / Angel version
+        mass entitytp GDN_LG_CouchPotatoes_Angel
+        sleep 0.15
+        mass sendkey X, 0.4
+        sleep 0.4
+
+        # Regular version
+        mass entitytp GDN_LG_CouchPotatoes
+        sleep 0.15
+        mass sendkey X, 0.4
+        sleep 0.4
+
+        # Harvest effect fallback
+        mass entitytp HarvestEffectLg
+        sleep 0.15
+        mass sendkey X, 0.4
+        sleep 0.4
+
+    } else {
+        # Fast navigation fallback
+        mass clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GotoDormButton']
+        mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+        sleep 0.5
+        mass entitytp GDN_LG_CouchPotatoes
+        sleep 0.3
+        mass sendkey X, 0.6
+        sleep 1
+    }
+
+    sleep 0.2
+}

@@ -1,0 +1,513 @@
+###deimos_expertmode
+
+block load {
+    while any loading {
+        sleep 0.1
+    }
+}
+
+block recall_marker {
+    while any windowvisible ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'RecallButton', 'txtRecallTimer'] {
+        sleep 1
+    }
+    times 3 {
+        clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'RecallButton']
+    }
+    until not any loading {
+        sleep 0.1
+    }
+}
+
+block buy_potions_p1 {
+    if p1 potioncountbelow 2 {
+        log "P1 buying potions"
+        p1 tp XYZ(-4370.792, 1069.406, 229.000)
+        sleep 0.5
+        p1 sendkey X, 0.1
+        sleep 0.5
+        if p1 windowvisible ['WorldView', 'main', 'fillallpotions'] {
+            p1 clickwindow ['WorldView', 'main', 'fillallpotions']
+            sleep 0.3
+            p1 clickwindow ['WorldView', 'main', 'buyAction']
+            sleep 0.3
+            p1 clickwindow ['WorldView', 'main', 'btnShopPotions']
+            sleep 0.5
+            p1 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+            sleep 0.5
+            p1 clickwindow ['WorldView', 'main', 'fillallpotions']
+            sleep 0.3
+            p1 clickwindow ['WorldView', 'main', 'buyAction']
+            sleep 0.3
+            p1 clickwindow ['WorldView', 'main', 'exit']
+            sleep 0.5
+            log "P1 potions done"
+        } else {
+            log "P1 shop failed to open, retrying"
+            p1 tp XYZ(-4370.792, 1069.406, 229.000)
+            sleep 0.5
+            p1 sendkey X, 0.1
+            sleep 0.5
+            if p1 windowvisible ['WorldView', 'main', 'fillallpotions'] {
+                p1 clickwindow ['WorldView', 'main', 'fillallpotions']
+                sleep 0.3
+                p1 clickwindow ['WorldView', 'main', 'buyAction']
+                sleep 0.3
+                p1 clickwindow ['WorldView', 'main', 'btnShopPotions']
+                sleep 0.5
+                p1 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+                sleep 0.5
+                p1 clickwindow ['WorldView', 'main', 'fillallpotions']
+                sleep 0.3
+                p1 clickwindow ['WorldView', 'main', 'buyAction']
+                sleep 0.3
+                p1 clickwindow ['WorldView', 'main', 'exit']
+                sleep 0.5
+                log "P1 potions done"
+            } else {
+                log "P1 shop failed twice, skipping"
+            }
+        }
+    }
+}
+
+block buy_potions_p2 {
+    if p2 potioncountbelow 2 {
+        log "P2 buying potions"
+        p2 tp XYZ(-4370.792, 1069.406, 229.000)
+        sleep 0.5
+        p2 sendkey X, 0.1
+        sleep 0.5
+        if p2 windowvisible ['WorldView', 'main', 'fillallpotions'] {
+            p2 clickwindow ['WorldView', 'main', 'fillallpotions']
+            sleep 0.3
+            p2 clickwindow ['WorldView', 'main', 'buyAction']
+            sleep 0.3
+            p2 clickwindow ['WorldView', 'main', 'btnShopPotions']
+            sleep 0.5
+            p2 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+            sleep 0.5
+            p2 clickwindow ['WorldView', 'main', 'fillallpotions']
+            sleep 0.3
+            p2 clickwindow ['WorldView', 'main', 'buyAction']
+            sleep 0.3
+            p2 clickwindow ['WorldView', 'main', 'exit']
+            sleep 0.5
+            log "P2 potions done"
+        } else {
+            log "P2 shop failed to open, retrying"
+            p2 tp XYZ(-4370.792, 1069.406, 229.000)
+            sleep 0.5
+            p2 sendkey X, 0.1
+            sleep 0.5
+            if p2 windowvisible ['WorldView', 'main', 'fillallpotions'] {
+                p2 clickwindow ['WorldView', 'main', 'fillallpotions']
+                sleep 0.3
+                p2 clickwindow ['WorldView', 'main', 'buyAction']
+                sleep 0.3
+                p2 clickwindow ['WorldView', 'main', 'btnShopPotions']
+                sleep 0.5
+                p2 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+                sleep 0.5
+                p2 clickwindow ['WorldView', 'main', 'fillallpotions']
+                sleep 0.3
+                p2 clickwindow ['WorldView', 'main', 'buyAction']
+                sleep 0.3
+                p2 clickwindow ['WorldView', 'main', 'exit']
+                sleep 0.5
+                log "P2 potions done"
+            } else {
+                log "P2 shop failed twice, skipping"
+            }
+        }
+    }
+}
+
+block buy_potions_p3 {
+    if p3 potioncountbelow 2 {
+        log "P3 buying potions"
+        p3 tp XYZ(-4370.792, 1069.406, 229.000)
+        sleep 0.5
+        p3 sendkey X, 0.1
+        sleep 0.5
+        if p3 windowvisible ['WorldView', 'main', 'fillallpotions'] {
+            p3 clickwindow ['WorldView', 'main', 'fillallpotions']
+            sleep 0.3
+            p3 clickwindow ['WorldView', 'main', 'buyAction']
+            sleep 0.3
+            p3 clickwindow ['WorldView', 'main', 'btnShopPotions']
+            sleep 0.5
+            p3 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+            sleep 0.5
+            p3 clickwindow ['WorldView', 'main', 'fillallpotions']
+            sleep 0.3
+            p3 clickwindow ['WorldView', 'main', 'buyAction']
+            sleep 0.3
+            p3 clickwindow ['WorldView', 'main', 'exit']
+            sleep 0.5
+            log "P3 potions done"
+        } else {
+            log "P3 shop failed to open, retrying"
+            p3 tp XYZ(-4370.792, 1069.406, 229.000)
+            sleep 0.5
+            p3 sendkey X, 0.1
+            sleep 0.5
+            if p3 windowvisible ['WorldView', 'main', 'fillallpotions'] {
+                p3 clickwindow ['WorldView', 'main', 'fillallpotions']
+                sleep 0.3
+                p3 clickwindow ['WorldView', 'main', 'buyAction']
+                sleep 0.3
+                p3 clickwindow ['WorldView', 'main', 'btnShopPotions']
+                sleep 0.5
+                p3 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+                sleep 0.5
+                p3 clickwindow ['WorldView', 'main', 'fillallpotions']
+                sleep 0.3
+                p3 clickwindow ['WorldView', 'main', 'buyAction']
+                sleep 0.3
+                p3 clickwindow ['WorldView', 'main', 'exit']
+                sleep 0.5
+                log "P3 potions done"
+            } else {
+                log "P3 shop failed twice, skipping"
+            }
+        }
+    }
+}
+
+block buy_potions_p4 {
+    if p4 potioncountbelow 2 {
+        log "P4 buying potions"
+        p4 tp XYZ(-4370.792, 1069.406, 229.000)
+        sleep 0.5
+        p4 sendkey X, 0.1
+        sleep 0.5
+        if p4 windowvisible ['WorldView', 'main', 'fillallpotions'] {
+            p4 clickwindow ['WorldView', 'main', 'fillallpotions']
+            sleep 0.3
+            p4 clickwindow ['WorldView', 'main', 'buyAction']
+            sleep 0.3
+            p4 clickwindow ['WorldView', 'main', 'btnShopPotions']
+            sleep 0.5
+            p4 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+            sleep 0.5
+            p4 clickwindow ['WorldView', 'main', 'fillallpotions']
+            sleep 0.3
+            p4 clickwindow ['WorldView', 'main', 'buyAction']
+            sleep 0.3
+            p4 clickwindow ['WorldView', 'main', 'exit']
+            sleep 0.5
+            log "P4 potions done"
+        } else {
+            log "P4 shop failed to open, retrying"
+            p4 tp XYZ(-4370.792, 1069.406, 229.000)
+            sleep 0.5
+            p4 sendkey X, 0.1
+            sleep 0.5
+            if p4 windowvisible ['WorldView', 'main', 'fillallpotions'] {
+                p4 clickwindow ['WorldView', 'main', 'fillallpotions']
+                sleep 0.3
+                p4 clickwindow ['WorldView', 'main', 'buyAction']
+                sleep 0.3
+                p4 clickwindow ['WorldView', 'main', 'btnShopPotions']
+                sleep 0.5
+                p4 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+                sleep 0.5
+                p4 clickwindow ['WorldView', 'main', 'fillallpotions']
+                sleep 0.3
+                p4 clickwindow ['WorldView', 'main', 'buyAction']
+                sleep 0.3
+                p4 clickwindow ['WorldView', 'main', 'exit']
+                sleep 0.5
+                log "P4 potions done"
+            } else {
+                log "P4 shop failed twice, skipping"
+            }
+        }
+    }
+}
+
+block buy_potions {
+    if any potioncountbelow 2 {
+        log "Potions needed, heading to Commons"
+        mass clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton', 'txtGoHomeTimer']
+        sleep 3
+        call load
+        log "All clients in Commons"
+        if playercount 1 {
+            call buy_potions_p1
+        } elif playercount 2 {
+            call buy_potions_p1
+            call buy_potions_p2
+        } elif playercount 3 {
+            call buy_potions_p1
+            call buy_potions_p2
+            call buy_potions_p3
+        } elif playercount 4 {
+            call buy_potions_p1
+            call buy_potions_p2
+            call buy_potions_p3
+            call buy_potions_p4
+        }
+        log "All clients potions done, recalling to sigil"
+        call recall_marker
+        call load
+    }
+}
+
+block stagger_tp_sigil {
+    if playercount 1 {
+        p1 tp XYZ(-3017.097, -2794.138, 28.617)
+    } elif playercount 2 {
+        p1 tp XYZ(-3017.097, -2794.138, 28.617)
+        sleep 0.5
+        p2 tp XYZ(-3017.097, -2794.138, 28.617)
+    } elif playercount 3 {
+        p1 tp XYZ(-3017.097, -2794.138, 28.617)
+        sleep 0.5
+        p2 tp XYZ(-3017.097, -2794.138, 28.617)
+        sleep 0.5
+        p3 tp XYZ(-3017.097, -2794.138, 28.617)
+    } elif playercount 4 {
+        p1 tp XYZ(-3017.097, -2794.138, 28.617)
+        sleep 0.5
+        p2 tp XYZ(-3017.097, -2794.138, 28.617)
+        sleep 0.5
+        p3 tp XYZ(-3017.097, -2794.138, 28.617)
+        sleep 0.5
+        p4 tp XYZ(-3017.097, -2794.138, 28.617)
+    }
+}
+
+block stagger_tp_room2 {
+    if playercount 1 {
+        p1 tp XYZ(2253.371, 101.633, 129.004)
+    } elif playercount 2 {
+        p1 tp XYZ(2253.371, 101.633, 129.004)
+        sleep 0.5
+        p2 tp XYZ(2253.371, 101.633, 129.004)
+    } elif playercount 3 {
+        p1 tp XYZ(2253.371, 101.633, 129.004)
+        sleep 0.5
+        p2 tp XYZ(2253.371, 101.633, 129.004)
+        sleep 0.5
+        p3 tp XYZ(2253.371, 101.633, 129.004)
+    } elif playercount 4 {
+        p1 tp XYZ(2253.371, 101.633, 129.004)
+        sleep 0.5
+        p2 tp XYZ(2253.371, 101.633, 129.004)
+        sleep 0.5
+        p3 tp XYZ(2253.371, 101.633, 129.004)
+        sleep 0.5
+        p4 tp XYZ(2253.371, 101.633, 129.004)
+    }
+}
+
+block stagger_tp_boss {
+    if playercount 1 {
+        p1 tp XYZ(2025.041, -1994.446, 93.399)
+    } elif playercount 2 {
+        p1 tp XYZ(2025.041, -1994.446, 93.399)
+        sleep 0.5
+        p2 tp XYZ(2025.041, -1994.446, 93.399)
+    } elif playercount 3 {
+        p1 tp XYZ(2025.041, -1994.446, 93.399)
+        sleep 0.5
+        p2 tp XYZ(2025.041, -1994.446, 93.399)
+        sleep 0.5
+        p3 tp XYZ(2025.041, -1994.446, 93.399)
+    } elif playercount 4 {
+        p1 tp XYZ(2025.041, -1994.446, 93.399)
+        sleep 0.5
+        p2 tp XYZ(2025.041, -1994.446, 93.399)
+        sleep 0.5
+        p3 tp XYZ(2025.041, -1994.446, 93.399)
+        sleep 0.5
+        p4 tp XYZ(2025.041, -1994.446, 93.399)
+    }
+}
+
+block stagger_tp_spawn {
+    if playercount 1 {
+        p1 tp XYZ(-39.297, -2057.117, -79.967)
+    } elif playercount 2 {
+        p1 tp XYZ(-39.297, -2057.117, -79.967)
+        sleep 0.5
+        p2 tp XYZ(-39.297, -2057.117, -79.967)
+    } elif playercount 3 {
+        p1 tp XYZ(-39.297, -2057.117, -79.967)
+        sleep 0.5
+        p2 tp XYZ(-39.297, -2057.117, -79.967)
+        sleep 0.5
+        p3 tp XYZ(-39.297, -2057.117, -79.967)
+    } elif playercount 4 {
+        p1 tp XYZ(-39.297, -2057.117, -79.967)
+        sleep 0.5
+        p2 tp XYZ(-39.297, -2057.117, -79.967)
+        sleep 0.5
+        p3 tp XYZ(-39.297, -2057.117, -79.967)
+        sleep 0.5
+        p4 tp XYZ(-39.297, -2057.117, -79.967)
+    }
+}
+
+block enter_sigil {
+    log "Teleporting to sigil"
+    call stagger_tp_sigil
+    until any windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+        call stagger_tp_sigil
+        sleep 0.5
+    }
+    log "In range of sigil, pressing X"
+    mass sendkey X
+    mass waitforzonechange
+    mass waitforzonechange completion
+    call load
+    log "Inside WaterWorks"
+}
+
+block room1_to_room2 {
+    log "Moving through Gauntlet 01 to 03"
+    until any inzone WizardCity/Gauntlets/WC_Triton_Gauntlet1/WC_Triton_Gauntlet_03 {
+        call stagger_tp_room2
+        sleep 0.5
+    }
+    until mass inzone WizardCity/Gauntlets/WC_Triton_Gauntlet1/WC_Triton_Gauntlet_03 {
+        call stagger_tp_room2
+        sleep 0.5
+    }
+    call load
+    log "Now in Gauntlet 03"
+}
+
+block activate_clam {
+    log "P1 teleporting to clam"
+    until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+        p1 tp XYZ(70.328, 1634.775, -48.118)
+        sleep 0.5
+    }
+    log "P1 pressing X on clam to spawn mobs"
+    p1 sendkey X
+    sleep 0.5
+}
+
+block fight_room2 {
+    log "Waiting for auto pull into combat"
+    times 6 {
+        if any incombat {
+            break
+        } else {
+            sleep 0.5
+        }
+    }
+    if not any incombat {
+        log "Auto pull failed, fallback tp to closest mob"
+        until any incombat {
+            mass tp closestmob
+            sleep 0.5
+        }
+    }
+    log "In combat, waiting for completion"
+    mass waitforcombat completion
+    sleep 1
+    log "Mobs defeated, door should be open"
+}
+
+block room2_to_boss {
+    log "Moving through Gauntlet 03 to boss room"
+    until any inzone WizardCity/Gauntlets/WC_Triton_Gauntlet1/WC_Triton_Gauntlet_04 {
+        call stagger_tp_boss
+        sleep 0.5
+    }
+    until mass inzone WizardCity/Gauntlets/WC_Triton_Gauntlet1/WC_Triton_Gauntlet_04 {
+        call stagger_tp_boss
+        sleep 0.5
+    }
+    call load
+    log "Now in boss room"
+}
+
+block fight_boss {
+    log "Teleporting all clients to spawn point to trigger boss"
+    call stagger_tp_spawn
+    sleep 1
+    log "Sending clients to boss individually if not in combat"
+    if playercount 1 {
+        until p1 incombat {
+            p1 entitytp Tri-Gauntlet-Squid
+            sleep 0.5
+        }
+    } elif playercount 2 {
+        until p1 incombat {
+            p1 entitytp Tri-Gauntlet-Squid
+            sleep 0.5
+        }
+        until p2 incombat {
+            p2 entitytp Tri-Gauntlet-Squid
+            sleep 0.5
+        }
+    } elif playercount 3 {
+        until p1 incombat {
+            p1 entitytp Tri-Gauntlet-Squid
+            sleep 0.5
+        }
+        until p2 incombat {
+            p2 entitytp Tri-Gauntlet-Squid
+            sleep 0.5
+        }
+        until p3 incombat {
+            p3 entitytp Tri-Gauntlet-Squid
+            sleep 0.5
+        }
+    } elif playercount 4 {
+        until p1 incombat {
+            p1 entitytp Tri-Gauntlet-Squid
+            sleep 0.5
+        }
+        until p2 incombat {
+            p2 entitytp Tri-Gauntlet-Squid
+            sleep 0.5
+        }
+        until p3 incombat {
+            p3 entitytp Tri-Gauntlet-Squid
+            sleep 0.5
+        }
+        until p4 incombat {
+            p4 entitytp Tri-Gauntlet-Squid
+            sleep 0.5
+        }
+    }
+    log "All clients in combat, waiting for completion"
+    mass waitforcombat completion
+    sleep 1
+    log "Boss defeated"
+}
+
+block exit_run {
+    log "Recalling to sigil waypoint"
+    call recall_marker
+    call load
+    sleep 1
+}
+
+# -- SETUP --
+log "Setting waypoint at sigil"
+call stagger_tp_sigil
+until any windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+    call stagger_tp_sigil
+    sleep 0.5
+}
+mass clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'MarkButton']
+sleep 0.5
+log "Waypoint set, starting farm loop"
+
+# -- MAIN LOOP --
+loop {
+    call buy_potions
+    call enter_sigil
+    call room1_to_room2
+    call activate_clam
+    call fight_room2
+    call room2_to_boss
+    call fight_boss
+    call exit_run
+}
