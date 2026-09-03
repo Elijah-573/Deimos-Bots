@@ -1,0 +1,71 @@
+#Start in Sweetzburg 
+#PretzelSticks 1
+mass tp XYZ(-3283.253, -6152.004, 105.090)
+sleep 0.5
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+sleep 0.5
+#PretzelSticks 
+mass tp XYZ(914.034, 6541.588, 17.500)
+sleep 0.5
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+sleep 0.5
+#PretzelSticks 
+mass tp XYZ(-5003.018, -2447.036, 40.631)
+sleep 0.5
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+sleep 0.5
+#PretzelSticks 
+mass tp XYZ(5488.014, 377.097, 8.039)
+sleep 0.5
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+sleep 0.5
+#PretzelSticks 
+mass tp XYZ(4166.914, -2747.764, 95.532)
+sleep 0.5
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+sleep 0.5
+#PretzelSticks 
+mass tp XYZ(-3293.855, -6074.566, 99.687)
+sleep 0.5
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+sleep 0.5
+#PretzelSticks 
+mass tp XYZ(4406.091, -6193.158, 106.052)
+sleep 0.5
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+sleep 0.5
+#PretzelSticks 
+mass tp XYZ(137.287, 1816.284, 17.502)
+sleep 0.5
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+sleep 0.5
+#PretzelSticks 
+mass tp XYZ(-1986.901, 2428.890, 16.569)
+sleep 0.5
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+sleep 0.5
+#PretzelSticks 
+mass tp XYZ(1099.794, -3377.544, 17.500)
+sleep 0.5
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+mass sendkey X, 0.3
+sleep 0.5

@@ -1,0 +1,139 @@
+#start in ariel jungle
+#start in wraith realm
+p1 tp XYZ(-7200, 4039, -10)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-460.003, -3747.635, -132.190)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-1270.837, -6293.345, 213.317)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-3938.285, 1492.791, -10.006)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-5029.390, -1879.166, -5.609)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-2054.929, 1080.046, -137.244)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-3187.018, -1641.552, -86.861)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-5737.492, -3964.668, -5.557)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-2633.042, -3301.069, -139.327)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-4413.709, 3186.306, -10.006)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aether Ore
+p1 tp XYZ(-983.193, -11492.019, 1507.648)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+
+#Zone Change
+p1 tp XYZ(-1519, -11700, 1608)
+p1 waitforzonechange from Empyrea/EM_Z01_Jungle
+sleep .5
+
+#Aethyr Ore
+p1 tp XYZ(-2573.419, 213.960, -8.965)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(711.840, -4222.564, 3.701)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-3631.697, -1983.667, 2.016)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(2707.185, -1050.189, -28.884)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-3756.251, -5216.589, -2.167)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-2596.145, 244.572, -8.947)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-7857.657, -8638.776, -9.090)
+
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(-8576.722, -5552.006, -30.491)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aethyr Ore
+p1 tp XYZ(5669.058, -9961.534, -8.496)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+#Aether Ore
+p1 tp XYZ(-11946.860, -6937.709, 20.629)
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+p1 sendkey X, 0.9
+
+
+#Back to the jungle
+p1 tp XYZ(6871.767578125, -11059.1142578125, -13.75201416015625)
+p1 waitforzonechange from Empyrea/EM_Z00_Aeriel_HUB
+sleep .5
