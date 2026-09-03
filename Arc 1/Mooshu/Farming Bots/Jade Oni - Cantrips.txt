@@ -1,0 +1,167 @@
+###deimos_expertmode
+
+# Rank 1-5 Spirit Spellements
+# EVERYONE takes the Scales of Knowledge
+# Start in Jade Palace
+# Combat ON / Dialogue ON
+# Change P1NAME to P1's name
+
+############################################################
+######################### SETTINGS #########################
+############################################################
+
+block Delay {
+    print "Calling Delay"
+    sleep 2                                 # <-- Change delay according to your latency 
+}
+
+block TeleportToP1 {
+    print "Teleporting to P1"
+
+    except p1 friendtp P1NAME               # <-- Change P1NAME to P1's name
+    except p1 waitforzonechange completion
+}
+
+############################################################
+
+block P1GoToJadePalace {
+    print "P1 Going to Jade Palace"
+
+    until p1 inzone MooShu/MS_Hub {
+        p1 sendkey END, 0.1
+        p1 sendkey END, 0.1
+        p1 sendkey END, 0.1
+        p1 waitforzonechange completion
+    }
+}
+
+block P1GoToThroneRoom {
+    print "P1 Going to Throne Room"
+
+    until p1 inzone MooShu/MS_Hub {
+        call P1GoToJadePalace
+        call Delay
+    }
+
+    until p1 inzone MooShu/Interiors/MS_Emperor_Palace {
+
+        until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+            p1 tp XYZ(18500.0, 0, 898.448)
+            p1 walkto XYZ(19000.0, 0, 898.448)
+            call Delay
+        }
+
+        while p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+            p1 sendkey X, 0.1
+        }
+
+        p1 waitforzonechange completion
+        call Delay
+    }
+}
+
+block ApplyScaleOfKnowledge {
+    print "Going to Apply Scale of Knowledge"
+
+    call P1GoToThroneRoom
+    call TeleportToP1
+    call Delay
+
+    until mass windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+        mass tp XYZ(200.0, 0, 0)
+        mass walkto XYZ(-400.0, 1260.0, 0.000)
+        call Delay
+    }
+
+    while mass windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+        mass sendkey X, 0.1
+    }
+
+    while mass windowvisible ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton'] {
+        mass clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+        call Delay
+    }
+
+    mass tp XYZ(200.0, 0, 0)
+}
+
+block CheckScaleOfKnowledge {
+    print "Checking Scale of Knowledge Status"
+
+    if mass windowvisible ['WorldView', 'windowHUD', 'wndElixirContainer', 'sprtElixir1'] {
+        return
+    }
+
+    call ApplyScaleOfKnowledge
+    call Delay
+}
+
+block GoToThroneRoom {
+    print "Going to Throne Room"
+
+    until mass inzone MooShu/Interiors/MS_Emperor_Palace {
+        call P1GoToThroneRoom
+        call TeleportToP1
+        call Delay
+    }
+
+    until any windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+        mass tp XYZ(200.0, 0, 0)
+        mass walkto XYZ(-1700.0, 90.0, 99.999)
+        call Delay
+    }
+
+    while any windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+        sendkey X, 0.1
+    }
+
+    call Delay
+}
+
+block HealthMana {
+    print "Getting Health and Mana Wisps"
+
+    while any healthbelow 100% and any inrange "CombatBonus_WispHealth" {
+        sameany entitytp Health
+        call Delay
+    }
+
+    while any manabelow 100% and any inrange "CombatBonus_WispMana" {
+        sameany entitytp Mana
+        call Delay
+    }
+}
+
+block Combat {
+    print "Entering Combat"
+    
+    if not playercount 1 {
+        until except p1 incombat {
+            except p1 entitytp Oni-Jade-MSBoss-L76
+        }
+    }
+
+    until p1 incombat {
+        p1 entitytp Oni-Jade-MSBoss-L76
+    }
+
+    mass waitforcombat completion
+    call Delay
+    call HealthMana
+    call Delay
+}
+
+block Main {
+    print "=== START OF ITERATION ==="
+
+    mass buypotions ifneeded
+    mass usepotion 20 5
+
+    call CheckScaleOfKnowledge
+    call GoToThroneRoom
+    call Combat
+
+    print "=== END OF ITERATION ==="
+}
+
+call Main

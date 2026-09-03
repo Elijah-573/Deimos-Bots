@@ -1,0 +1,18 @@
+p1 tp XYZ(-2236.930908203125, 2384.430419921875, -220.0830078125)
+sleep 1
+mass sendkey X, 0.5
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+p1 waitforzonechange completion
+p1 tp XYZ(-23946.916015625, 52836.640625, -129.6986083984375)
+sleep .3
+p1 tp closestmob
+p1 waitforzonechange completion
+p1 tp XYZ(53.339988708496094, -5870.21240234375, -230.00003051757812)
+p1 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+p1 waitforzonechange completion
+
+#roof/exit: XYZ(53.339988708496094, -5870.21240234375, -230.00003051757812)
+
+
+#clanker: p1 tp XYZ(-22816.5, 20192.1, 36.307)

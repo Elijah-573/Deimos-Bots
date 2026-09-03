@@ -1,0 +1,65 @@
+mass tp XYZ(21820.185546875, 16666.248046875, -382.6259765625)
+sleep 1
+mass walkto XYZ(22468.404296875, 16752.998046875, -336.3408203125)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 0.3
+mass waitforzonechange completion
+sleep 1
+mass tp XYZ(15.411332130432129, 1885.13623046875, 3.64862060546875)
+sleep 1
+mass sendkey X, 0.3
+sleep 3
+mass tp XYZ(-7.688615322113037, 7109.89794921875, 0.103118896484375)
+sleep 0.5
+mass walkto XYZ(-2.9536261558532715, 7484.8681640625, -161.88653564453125)
+sleep 2
+mass tp XYZ(30.184200286865234, 4853.75244140625, 0.101898193359375)
+sleep 1
+mass sendkey X, 0.3
+sleep 3
+mass tp XYZ(1010.8233032226562, 34977.390625, 153.52191162109375)
+sleep 1
+mass walkto XYZ(1292.893798828125, 34984.76953125, 153.52191162109375)
+mass waitforzonechange completion
+sleep 1
+mass tp XYZ(26.003543853759766, -936.599609375, -99.9249267578125)
+sleep 0.5
+mass walkto XYZ(118.84785461425781, 0.5992884635925293, -100.0)
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(25.923355102539062, -1574.921630859375, -0.00042724609375)
+sleep 0.5
+mass walkto XYZ(4.285721302032471, -1842.2862548828125, -0.00103759765625)
+mass waitforzonechange completion
+sleep 1
+mass tp XYZ(54.095970153808594, 4749.10595703125, 0.1017455980181694)
+sleep 1
+mass sendkey X, 0.3
+sleep 4
+mass tp XYZ(54.61737823486328, 7884.6875, -199.9005126953125)
+mass sendkey X, 0.3
+sleep 2
+mass tp XYZ(-119.77784729003906, 6895.490234375, 0.101837158203125)
+sleep 0.5
+mass walkto XYZ(-16.969663619995117, 6295.3759765625, 0.10186767578125)
+sleep 2
+mass sendkey X, 0.3
+mass waitforzonechange
+sleep 1
+mass tp XYZ(-169.29547119140625, 6296.38037109375, 3.0517578125e-05)
+mass waitforcombat completion
+sleep 1
+mass walkto XYZ(-73.04077911376953, 4468.91552734375, -0.000274658203125)
+sleep 3
+mass tp mass tp XYZ(-169.29547119140625, 6296.38037109375, 3.0517578125e-05)
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(-8.763030052185059, -756.0386352539062, 0.0)
+mass waitforzonechange completion
+sleep 1
+mass tp XYZ(-176.9790802001953, 69.18235778808594, 0.020233154296875)
+sleep 1
+mass walkto XYZ(-197.29469299316406, -866.5972290039062, 10.082672119140625)
+mass waitforzonechange completion
+sleep 1

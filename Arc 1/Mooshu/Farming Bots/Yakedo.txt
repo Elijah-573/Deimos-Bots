@@ -1,0 +1,368 @@
+###deimos_expertmode
+#Last Update: 12/1/2024
+#Begin while all connected clients are in the world mooshu.
+
+block Friend_To_TP_To {
+	p2 friendtp CHANGENAME
+}
+
+block Speed_Delay {
+	sleep .1
+}
+
+block Anti_Zone_Change_Lock {
+	sleep 2
+	times 60 {
+		if loading {
+			sleep 1
+		} else {
+			sleep 2
+			break
+		}
+	}
+}
+block Travel_Back_To_Dungeon {
+	tp XYZ(3051.658203125, 3794.612548828125, 1.100311279296875)
+	call Anti_Zone_Change_Lock
+	if NOT inzone MooShu/MS_War/MS_War_RuinedVillage_Hub {
+		until inzone MooShu/MS_Hub {
+			sendkey END, .1
+		}
+		return
+	}
+	times 5 {
+		tp XYZ(-6950.134765625, -27786.7265625, 79.593505859375)
+	}
+}	
+block Reach_Yakedo_Spawn_Point {
+	until hasxyz XYZ(-6960.1630859375, -27737.435546875, 79.593505859375) {
+		tp XYZ(-6960.1630859375, -27737.435546875, 79.593505859375)
+		call Speed_Delay
+		tp XYZ(0,100000,0)
+		call Speed_Delay
+	}
+	block Send_Key_X {
+		times 5 {
+			sendkey X, .1
+		}
+		times 2 {
+			if hasdialogue {
+				until NOT hasdialogue {
+					sleep .1
+				}
+				break
+			} else {
+				sleep 1
+			}
+		}		
+	}
+	block Grab_Health {
+		times 4 {
+			entitytp health
+		}
+		tp XYZ(-7291.2861328125, 8982.5517578125, -326.6667175292969)
+	}
+	block Fight_Yakedo {
+		times 120 {
+			if incombat {
+				waitforcombat completion
+				call Grab_Health
+				break
+			} else {
+				tp XYZ(-7291.2861328125, 8982.5517578125, -326.6667175292969)
+				call Speed_Delay
+				entitytp Pig-War-Warrior-LXX
+				sleep 1
+			}
+		}
+	}
+	sleep 2
+	if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "crimson fields" {
+			times 15 {
+				sendkey X, .1
+			}
+			times 60 {
+				if inzone MooShu/MS_War/MS_War_BattlefieldA {
+					call Speed_Delay
+					break
+				} else {
+					sleep 1
+				}
+			}
+			#raise up 4 flags
+			times 5 {			# 1
+				tp XYZ(-3508.371337890625, 18408.890625, -149.41612243652344)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {			# 2
+				tp XYZ(-9392.107421875, 15320.109375, -150.20761108398438) 
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {			# 3
+				tp XYZ(-4193.197265625, 13843.974609375, -399.9936828613281)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {			# 4
+				tp XYZ(-8843.1494140625, 11299.77734375, -399.99371337890625)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			#flags raised
+			times 5 {
+				tp XYZ(-1023.625, -35.570308685302734, 10.0)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-5914.67822265625, 21879.01953125, 216.47959899902344)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			#gather wood piles
+			times 5 {		# 1
+				tp XYZ(-1546.154296875, 18916.29296875, -148.95449829101562)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {		# 2
+				tp XYZ(-3047.177734375, 20569.427734375, -149.77639770507812)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {		# 3
+				tp XYZ(-3145.79150390625, 15463.91796875, -153.67849731445312)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {		# 4
+				tp XYZ(-6404.2783203125, 16884.31640625, -149.62374877929688)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			#end of gathering wood piles
+			times 5 {
+				tp XYZ(-5914.67822265625, 21879.01953125, 216.47959899902344)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-6898.921875, 19352.990234375, 216.47959899902344)
+				call Speed_Delay
+			}
+			times 5 {
+				tp XYZ(-9122.625, 17863.98046875, -149.69940185546875)
+				call Speed_Delay
+			}
+			times 5 {
+				tp XYZ(-4295.93310546875, 18257.80078125, -149.2071990966797)
+				call Speed_Delay
+			}
+			times 5 {
+				tp XYZ(-5914.67822265625, 21879.01953125, 216.47959899902344)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-24930.9609375, 2716.97607421875, 19.93630027770996)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-24745.439453125, 25044.9296875, -145.7559051513672)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-5914.67822265625, 21879.01953125, 216.47959899902344)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-10219.330078125, 20879.33984375, -149.77630615234375)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-34763.921875, 25010.46484375, 153.52178955078125)
+				call Speed_Delay
+			}
+			times 60 {
+				if inzone MooShu/MS_War/Interiors/MS_War2_T2 {
+					call Speed_Delay
+					break
+				} else {
+					sleep 1
+				}
+			}
+			if NOT inzone MooShu/MS_War/Interiors/MS_War2_T2 {
+				print "Everyone not in boss area. Restarting"
+				until inzone MooShu/MS_Hub {
+					sendkey END, .1
+				}
+				return
+			}
+			times 120 {
+				if incombat {
+					waitforcombat completion
+					break
+				} else {
+					tp XYZ(485.4101867675781, -352.671142578125, -99.99976348876953)
+					call Speed_Delay
+					entitytp Troll-Yellow-MSBoss-L42
+					call Speed_Delay
+					tp XYZ(0,100000,0)
+					sleep 1
+				}
+			}
+			times 30 {
+				if inzone MooShu/MS_War/Interiors/MS_War2_T2 {
+					tp XYZ(6.0577473640441895, -1836.741943359375, -0.001007080078125)
+				} elif inzone MooShu/MS_War/MS_War_BattlefieldA {
+					call Speed_Delay
+					break
+				}
+			}
+			times 5 {
+				tp XYZ(-10219.330078125, 20879.33984375, -149.77630615234375)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-7033.5439453125, 7551.88623046875, 0.0)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-15229.3896484375, 18042.349609375, 0.006347655784338713)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-10219.330078125, 20879.33984375, -149.77630615234375)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			times 5 {
+				tp XYZ(-5914.67822265625, 21879.01953125, 216.47959899902344)
+				call Speed_Delay
+			}
+			call Send_Key_X
+			print "Reached quest battle of evermore. Checking if yakedo is active."
+			times 5 {
+				tp XYZ(-6941.21875, 9273.3525390625, -390.4057922363281)
+				call Speed_Delay
+			}
+			if inrange "Pig-War-Warrior-LXX" {
+				print "Yakedo is active. Starting fight loop."
+			} else {
+				print "Error. Yakedo hasn't spawned. Restarting"
+				until inzone MooShu/MS_Hub {
+					sendkey END, .1
+				}
+				return
+			}
+			if playercount 1 {
+				call Fight_Yakedo
+				until inzone MooShu/MS_Hub {
+					sendkey END, .1
+				}
+				return
+			} elif playercount 2 {
+				call Fight_Yakedo
+				until inzone MooShu/MS_Hub {
+					sendkey END, .1
+				}
+				return
+			} else {
+				while NOT p1 manabelow 40% {
+					call Fight_Yakedo
+					times 5 {
+						tp XYZ(-7328.4775390625, 8803.3583984375, -265.9925842285156)
+						call Speed_Delay
+					}
+					until p2 inzone MooShu/MS_Hub {
+						p2 sendkey END, .1
+					}
+					sleep 4
+					call Friend_To_TP_To
+					times 120 {
+						if NOT sameplace {
+							sleep 1
+						} else {
+							sleep 2
+							break
+						}
+					}
+					if NOT sameplace {
+						print "p2 hasn't returned to dungeon. Restarting..."
+						until inzone MooShu/MS_Hub {
+							sendkey END, .1
+						}
+						return
+					}
+				}
+				until inzone MooShu/MS_Hub {
+					sendkey END, .1
+				}
+				if inzone MooShu/MS_Hub {
+					until manaabove 90% {
+						until inrange "WC_WispMana" {
+							tp XYZ(2820.1416015625, -309.07769775390625, 1.100311279296875)
+							call Speed_Delay
+							tp XYZ(2797.0986328125, -3498.890380859375, 1.100311279296875)
+							call Speed_Delay
+							tp XYZ(10146.279296875, -3562.38525390625, 225.00003051757812)
+							call Speed_Delay
+							tp XYZ(11491.224609375, -9916.392578125, -157.15719604492188)
+							call Speed_Delay
+							tp XYZ(12502.453125, 8440.2578125, -115.09332275390625)
+							call Speed_Delay
+						}
+						entitytp mana
+					}
+					call Travel_Back_To_Dungeon
+				}
+			}	
+		}
+	}
+}
+block Grab_Mana {
+	if inzone MooShu/MS_Hub {
+		until manaabove 90% {
+			until inrange "WC_WispMana" {
+				tp XYZ(2820.1416015625, -309.07769775390625, 1.100311279296875)
+				call Speed_Delay
+				tp XYZ(2797.0986328125, -3498.890380859375, 1.100311279296875)
+				call Speed_Delay
+				tp XYZ(10146.279296875, -3562.38525390625, 225.00003051757812)
+				call Speed_Delay
+				tp XYZ(11491.224609375, -9916.392578125, -157.15719604492188)
+				call Speed_Delay
+				tp XYZ(12502.453125, 8440.2578125, -115.09332275390625)
+				call Speed_Delay
+			}
+			entitytp mana
+		}
+	}
+}
+if NOT inzone MooShu/MS_Hub {
+	print "Porting clients back to mooshu hub."
+	until inzone MooShu/MS_Hub {
+		sendkey END, .1
+	}
+	sleep 4
+	if p1 manabelow 40% {
+		call Grab_Mana
+	}
+	call Travel_Back_To_Dungeon
+} else {
+	if p1 manabelow 40% {
+		call Grab_Mana
+	}
+	call Travel_Back_To_Dungeon
+}
+call Reach_Yakedo_Spawn_Point

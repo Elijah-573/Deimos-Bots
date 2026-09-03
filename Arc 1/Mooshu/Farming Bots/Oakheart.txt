@@ -1,0 +1,21 @@
+#Run in Village of Sorrow
+
+#Sigil
+mass tp XYZ(68120.5625, 48998.046875, 153.56289672851562)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+
+#oakheart Combat
+mass entitytp Treant-MSBoss-L54
+mass waitforcombat completion
+sleep 1
+
+#Exit
+mass tp XYZ(50.30171203613281, -1837.950439453125, -0.001007080078125)
+mass waitforzonechange completion
+sleep 1

@@ -746,3 +746,23 @@ sleep 1
 mass clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'RecallButton']
 mass waitforzonechange completion
 sleep 1
+
+#Open Bag
+except p1 waitforpath ['WorldView', 'windowHUD', 'btnSpellbook']
+except p1 clickwindow ['WorldView', 'windowHUD', 'btnSpellbook']
+
+#Select Potions
+except p1 waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'ButtonLayout', 'Tab_Elixir']
+except p1 clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'ButtonLayout', 'Tab_Elixir']
+
+#Select Trash
+except p1 waitforpath ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'Trash_Item']
+except p1 clickwindow ['WorldView', 'DeckConfiguration', 'InventorySpellbookPage', 'windowForBtns', 'Layout', 'Trash_Item']
+
+#Select Yes
+except p1 waitforpath ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+except p1 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+
+#Close Bag
+except p1 waitforpath ['WorldView', 'windowHUD', 'btnSpellbook']
+except p1 clickwindow ['WorldView', 'windowHUD', 'btnSpellbook']

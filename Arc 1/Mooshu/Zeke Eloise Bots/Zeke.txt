@@ -1,0 +1,84 @@
+#Jade Palace 
+mass tp XYZ(16456.0, -10435.0, -158.0) #Oyster
+sleep 2
+
+#Jade Palace 
+mass tp XYZ(12355.0, 10627.0, 15.0) 
+sleep 2
+
+#Yoshito Temple 
+mass tp XYZ(11468, -12956, 53)
+mass waitforzonechange completion
+mass tp XYZ(-1881, -1695, 3)
+mass waitforzonechange completion
+mass tp XYZ(8097.0, 19540.0, -979.0) 
+sleep 2
+
+#Village Of Sorrow
+mass tp XYZ(9471, 31753, -80)
+mass waitforzonechange completion
+mass tp XYZ(31064, 33300, -320)
+sleep 2
+mass tp XYZ(-3712, 199, 203)
+mass waitforzonechange completion
+sleep 2 
+
+#Tree of Life
+mass tp XYZ(22340.44921875, 17011.4453125, -333.7033996582031)
+sleep 2
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 2
+mass tp XYZ(-5.0, 12320.0, 0.0)
+
+#Shoshun Village
+mass sendkey END, 0.1
+mass waitforzonechange completion
+sleep 1 
+mass tp XYZ(11692, 14094, 261)
+mass waitforzonechange completion
+mass tp XYZ(-1825, -1650, 6)
+mass waitforzonechange completion
+mass tp XYZ(-3110.0, 3900.0, 4.0) 
+sleep 2
+
+#Kishibe Village
+mass tp XYZ(-13595, 6950, 480)
+mass waitforzonechange completion
+mass tp XYZ(17393.0, 3222.0, 227.0) 
+sleep 2
+mass tp XYZ(565, -1370, 0)
+mass waitforzonechange completion
+
+#Shirataki Temple
+mass tp XYZ(-411, 15907, 705)
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 2
+mass tp XYZ(47838.0, 1565.0, 610.0)
+
+#Hametsu Village
+mass sendkey END, 0.1
+mass waitforzonechange completion
+sleep 1 
+mass tp XYZ(3275, 3340, 1)
+mass waitforzonechange completion
+mass tp XYZ(-16500.0, -21150.0, -320.0)
+sleep 2
+
+#Tataki Outpost
+mass tp XYZ(3010, -22255, -320)
+mass waitforzonechange completion
+mass tp XYZ(5330.0, -19350.0, 0.0)
+sleep 25 
+
+#Zeke
+mass sendkey END, 0.1
+mass waitforzonechange completion
+sleep 1
+mass tp XYZ(80.5667724609375, -3679.812255859375, 1.100341796875)
+kill

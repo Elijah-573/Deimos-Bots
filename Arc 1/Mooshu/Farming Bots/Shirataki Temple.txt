@@ -1,0 +1,23 @@
+#Shirataki Temple
+#Start in Shoshun Village
+
+#Sigil
+mass tp XYZ(-200.06838989257812, 15870.2724609375, 702.072509765625)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+
+#Enter Shoji
+mass tp XYZ(10990.2138671875, -15193.115234375, 153.52267456054688)
+mass waitforzonechange completion
+sleep 1
+
+#Combat
+#Pulls Shoji first
+mass tp closestmob
+mass waitforcombat completion
+sleep 1

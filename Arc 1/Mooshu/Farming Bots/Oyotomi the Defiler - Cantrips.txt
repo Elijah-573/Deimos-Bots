@@ -1,0 +1,288 @@
+###deimos_expertmode
+
+# Credit: @Ratul for original Do-Daga spellement bot that this bot is based off of
+
+# Oyotomi the Defiler farming bot
+# Drops rank 1-5 spirit and balance spellements, plus some nice school design gear
+
+############################################################
+# SETTINGS
+############################################################
+
+# Boolean toggles (True / False, case-sensitive)
+
+setvar allScaled = True
+
+# If allScaled is True
+#	- Assumes you are using an Adventure Party or Guild group to set your turn order, so all clients enter the battle at the same time
+#	- Every client will be using a level scaling elixir
+
+# If allScaled is False
+#	- Assumes p1 is the hitter
+#	- Assumes p1 is capable of killing the boss without help from other clients, so p1 enters the battle first
+#   - Every client other than p1 will be using a level scaling elixir
+
+# Start location: Anywhere in Mooshu
+
+# Deimos Settings
+# 	- Combat: Enabled
+# 	- Dialogue: Enabled
+
+# Wizard101 Settings
+#	- Remember Realm: Yes (necessary to avoid potential realm desync between multiple clients)
+#
+# Misc:
+#	- Assumes p1 is the hitter
+#	- Assumes p1 is capable of killing the boss without help from other clients, so p1 enters the battle first
+
+############################################################
+# UTIL FUNCTIONS
+############################################################
+
+block Delay {
+    sleep 1
+}
+
+############################################################
+
+# Safely load zones to handle potential client zone desynchronization
+block LoadZone {
+	print "Loading zone"
+
+	times 100 {
+        if any loading {
+            break
+        } else {
+            call Delay
+        }
+    }
+    while any loading {
+        call Delay
+    }
+    while not windowtext ['ToolTipContainer', 'ToolTipText'] "right-click on a phrase to add to/remove from favorites" {
+        while any windowvisible ['WorldView', 'PermanentShopModalWindow'] {
+            any sendkey ESC 
+            call Delay
+        }
+        while any windowvisible ['WorldView', 'DeckConfiguration'] {
+            any sendkey ESC
+            call Delay
+        }
+        cursorwindow ['WorldView', 'windowQuickChat', 'btnRadialQuickChat']
+        sleep 0.1
+    }
+    cursorwindow ['WorldView', 'windowHUD', 'btnSpellbook']
+    call Delay
+}
+
+############################################################
+
+block CollectHealthManaWisps {
+	print "Collecting health and mana wisps if necessary"
+	
+	while any inrange "Health" {
+		if sameany healthbelow 80% {
+			entitytp Health
+		} else {
+			break
+		}
+	}
+
+	while p1 inrange "Mana" {
+		if p1 manabelow 80% {
+			p1 entitytp Mana
+		} else {
+			break
+		}
+	}
+}
+
+############################################################
+# CORE FUNCTIONS
+############################################################
+
+block ApplyLevelScaling {
+	print "Going to level scaling dungeon"
+	
+	until inzone MooShu/MS_Hub {
+        sendkey END
+        call LoadZone
+    }
+	
+	call Delay
+	
+	until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		tp XYZ(18530.042, -15.785, 898.448)
+		
+		call Delay
+		
+        tp XYZ(19163.441, -0.061, 898.448)
+		
+		# Wait up to 3x delay time before resetting position
+		times 3 {
+			if not windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+				call Delay
+			}
+		}
+    }
+	
+	while any windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+        sendkey X
+    }
+	
+	call LoadZone
+	
+	if inzone MooShu/Interiors/MS_Emperor_Palace {
+		print "All clients are inside the level scaling dungeon"
+	}
+	else {
+		print "ERROR: Not all clients are inside the level scaling dungeon"
+		call ApplyLevelScaling
+		return
+	}
+	
+	print "Applying level scaling elixir"
+	
+	until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+        tp XYZ(-380.754, 1287.120, 0.000)
+        call Delay
+    }
+
+	if allScaled == True {
+		while windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+			sendkey X
+		}
+
+		while windowvisible ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton'] {
+			clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+			call Delay
+		}
+	}
+	else {
+		while except p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+			except p1 sendkey X
+		}
+
+		while except p1 windowvisible ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton'] {
+			except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+			call Delay
+		}
+	}
+	
+	# Wait until tp hub recall button is enabled again
+	while windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+		sleep 1
+	}
+}
+
+############################################################
+
+block CheckLevelScaling {
+	print "Checking level scaling"
+	
+	if except p1 windowvisible ['WorldView', 'windowHUD', 'wndElixirContainer', 'sprtElixir1'] {
+        print "All clients except p1 are already level scaled"
+		return
+    }
+	
+	print "At least one client needs to apply level scaling"
+	call ApplyLevelScaling
+}
+
+############################################################
+
+block GoToBoss {
+	print "Going to boss"
+
+	# Go to Jade Palace
+	until inzone MooShu/MS_Hub {
+        sendkey END
+        call LoadZone
+    }
+	
+	call Delay
+	
+	# Go to dojo leading to Yoshihito Temple
+	until inzone MooShu/Interiors/MS_RockDojoT2 {
+		tp XYZ(11467.522, -13035.910, 53.846)
+		call LoadZone
+	}
+	
+	call Delay
+	
+	# Go to Yoshihito Temple
+	until inzone MooShu/MS_Death/MS_Death_Hub_RuinedTemple {
+		tp XYZ(-1879.308, 1727.476, -0.000)
+		call LoadZone
+	}
+	
+	call Delay
+	
+	# Go to Village of Sorrow
+	until inzone MooShu/MS_Death/MS_Death_Zone2_HauntedVillage {
+		tp XYZ(9832.133, 32616.234, -79.594)
+		call LoadZone
+	}
+	
+	call Delay
+}
+
+############################################################
+
+block Combat {
+	if not inzone MooShu/MS_Death/MS_Death_Zone2_HauntedVillage {
+		print "ERROR: Not all clients are in the same zone as the boss, resetting locations"
+		call GoToBoss
+	}
+
+    print "Entering combat"
+	
+	# Spawn the boss
+	tp XYZ(19576.314, 36672.687, -320.399)
+	call Delay
+
+    until incombat {
+		call Delay
+        p1 entitytp Wraith-MSBoss-L56
+		# Not calling Delay here because if the delay duration is set too high, there is risk of p1 inputting a card before other clients join the battle
+		sleep 1
+		except p1 entitytp Wraith-MSBoss-L56
+    }
+
+    waitforcombat completion
+	
+	call Delay
+}
+
+############################################################
+
+block ExitBossFight {
+	print "Exiting boss dungeon"
+	
+	tp XYZ(18904.222, 29762.714, -320.399)
+	sleep 4 # Wait for invulnerability to expire
+}
+
+############################################################
+# MAIN FUNCTION
+############################################################
+
+block Main {
+    print "=== START OF ITERATION ==="
+	
+	call CheckLevelScaling
+	
+	buypotions ifneeded
+	usepotion 20 10
+	
+    call Combat
+	call CollectHealthManaWisps
+	
+	# Reset the boss
+	tp XYZ(18731.720, 29816.097, -320.399)
+	sleep 4
+	
+    print "=== END OF ITERATION ==="
+}
+
+call Main

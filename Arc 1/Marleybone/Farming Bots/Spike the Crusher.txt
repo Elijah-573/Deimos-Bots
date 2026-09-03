@@ -1,0 +1,51 @@
+# This makes you enter the Big Ben sigil
+p1 tp XYZ(361.13323974609375, 4146.42138671875, -350.0277099609375)
+sleep 0.2
+p1 walkto XYZ(-0.0658416673541069, 4456.228515625, -350.0277099609375)
+sleep 1
+p1 sendkey X 0.1
+p1 sendkey X 0.1
+
+p1 waitforzonechange 
+mass usepotion 25 15
+
+# This teleports you to Gearhead (Floor 6)
+p1 teleport XYZ(18351.767578125, 20970.6953125, -202.74778747558594)
+p1 waitforcombat completion
+sleep 1
+
+# (Milk 1)
+p1 teleport XYZ(19663.4609375, 21306.384765625, -202.74842834472656)
+sleep 0.5
+p1 sendkey X, 0.1
+sleep 0.5
+p1 sendkey SPACEBAR, 0.1
+sleep 5
+
+# (Milk 2)
+p1 teleport XYZ(-10463.6640625, 10868.861328125, -202.73138427734375)
+sleep 0.5
+p1 sendkey X, 0.1
+sleep 0.5
+p1 sendkey SPACEBAR, 0.1
+sleep 5
+
+# (Milk 3)
+p1 teleport XYZ(19578.404296875, 10693.408203125, -202.7490234375)
+p1 sendkey X, 0.1
+p1 sendkey SPACEBAR, 0.1
+sleep 0.1
+sleep 5
+
+# Spike the Crusher (Floor 14)
+p1 teleport XYZ(22368.12109375, 11860.8798828125, -202.98257446289062)
+sleep 0.8
+p1 walkto XYZ(24604.14453125, 12022.076171875, -202.75149536132812)
+p1 waitforcombat completion
+sleep 0.1 
+# This teleports you out of Big Ben
+p1 teleport XYZ(-32077.9453125, 21012.25, -192.9477081298828)
+sleep 0.1
+p1 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+sleep 0.1
+p1 waitforzonechange from Marleybone/MB_BigBen/MB_BigBen

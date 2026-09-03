@@ -1,0 +1,40 @@
+#GO IN
+mass tp XYZ(63418.24609375, 26074.6875, 0.0)
+sleep 1.5
+mass walkto XYZ(63866.65625, 26157.5, -3.0517578125e-05)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#GOTOKEY
+mass tp XYZ(2777.266845703125, -3.3892805576324463, 30.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+mass sendkey X, 0.1
+mass waitforfree
+mass tp XYZ(2000.049560546875, -16.298446655273438, 29.999969482421875)
+sleep 1
+p1 walkto XYZ(2924.049560546875, -15.761884689331055, 30.0)
+p1 waitforzonechange completion
+p2 walkto XYZ(2924.049560546875, -15.761884689331055, 30.0)
+p2 waitforzonechange completion
+p3 walkto XYZ(2924.049560546875, -15.761884689331055, 30.0)
+p3 waitforzonechange completion
+p4 walkto XYZ(2924.049560546875, -15.761884689331055, 30.0)
+p4 waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#FIGHT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#LEAVE
+mass tp XYZ(2542.7216796875, 73.32891845703125, 30.0)
+mass waitforzonechange completion
+mass waitforfree

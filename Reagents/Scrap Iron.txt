@@ -1,0 +1,84 @@
+#Run in Scotland Yard Roof
+
+#Sigil
+mass tp XYZ(-2224.20849609375, 2296.63720703125, -220.08297729492188)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton'] 
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+
+#Scrap Irons
+mass tp XYZ(-21778.720703125, 19434.830078125, 0.0)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-27570.310546875, 13272.3603515625, -240.00001525878906)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-614.0803833007812, 25636.05078125, 0.0)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-25084.23046875, 54142.5703125, -129.6986541748047)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(950.69189453125, 33357.03125, -480.0364074707031)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-23389.650390625, 52146.4609375, -229.99998474121094)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-29553.58984375, 10516.4404296875, -239.99998474121094)
+sleep 0.5
+mass sendkey X, 0.1
+
+#Ores
+mass tp XYZ(8621.9208984375, 25762.2890625, -480.0364074707031)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-13204.7001953125, 53149.87109375, -1049.9840087890625)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(2612.152099609375, 25577.33984375, -230.0)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-24919.400390625, 51428.69921875, -129.69863891601562)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-740.7191162109375, 35232.33984375, -480.0364990234375)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-8177.173828125, 35241.2734375, -167.39990234375)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-16330.0595703125, 51949.4296875, -1450.197021484375)
+sleep 0.5
+mass sendkey X, 0.1
+
+#Mushrooms
+mass tp XYZ(-16649.16015625, 55148.08984375, -850.01611328125)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-17417.30078125, 53594.08984375, -1049.9840087890625)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-15750.76953125, 50264.37890625, -1450.197021484375)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-13812.4296875, 50237.640625, -1450.197021484375)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-17277.0, 52552.3515625, -1049.9840087890625)
+sleep 0.5
+mass sendkey X, 0.1
+mass tp XYZ(-15209.3095703125, 55533.12890625, -649.913818359375)
+sleep 0.5
+mass sendkey X, 0.1
+
+#Exit
+mass tp XYZ(-6.7429304122924805, -5857.45263671875, -230.0)
+mass waitforpath ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+mass clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+mass waitforzonechange completion
+sleep 1

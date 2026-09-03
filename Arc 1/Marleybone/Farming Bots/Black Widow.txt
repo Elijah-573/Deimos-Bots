@@ -1,0 +1,17 @@
+mass tp XYZ(10631.8916015625, 22352.89453125, 3.0517578125e-05)
+mass waitforfree
+mass walkto XYZ(10354.6435546875, 22384.11328125, 3.0517578125e-05)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+mass tp XYZ(54.69773864746094, -69.41847229003906, 0.0)
+mass waitforcombat completion
+mass waitforfree
+sleep 0.5
+mass tp XYZ(18.43771743774414, -1237.384033203125, -3.0517578125e-05)
+mass waitforzonechange completion
+mass waitforfree

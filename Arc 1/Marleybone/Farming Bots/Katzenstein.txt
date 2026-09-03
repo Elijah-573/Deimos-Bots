@@ -1,0 +1,18 @@
+mass tp XYZ(-2222.207275390625, 2348.076171875, -220.0830078125)
+sleep 2
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange
+sleep 0.5
+mass tp XYZ(-15188.438828125, 51761.96875, --1450.1986083984375)
+sleep 0.5
+mass walkto XYZ(-15242.422, 53266.503, -1450.197)
+mass waitforcombat completion
+mass tp XYZ(30.490564346313477, -5485.19287109375, -230.0)
+sleep 0.5
+mass walkto XYZ(93.79790496826172, -6625.75927734375, -230.0)
+sleep 3
+mass clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+mass waitforzonechange
+sleep 0.5

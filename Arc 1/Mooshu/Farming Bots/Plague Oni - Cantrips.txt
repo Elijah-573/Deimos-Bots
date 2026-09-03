@@ -1,0 +1,448 @@
+###deimos_expertmode 
+block p1_load {
+	while p1 loading {
+		sleep 1
+	}
+}
+block load {
+	while loading {
+		sleep 1
+	}
+}
+
+block except_load {
+	while except p1 loading {
+		sleep 1
+	}
+}
+
+block load_all {
+	if playercount 2 {
+		while p2 loading {
+			sleep 1
+		}
+	} elif playercount 3 {
+		while p2 loading {
+			sleep 1
+		}
+		while p3 loading {
+			sleep 1
+		}
+	} elif playercount 4 {
+		while p2 loading {
+			sleep 1
+		}
+		while p3 loading {
+			sleep 1
+		}
+		while p4 loading {
+			sleep 1
+		}
+	}
+}
+
+block popup_check {
+	if playercount 2 {
+		while p2 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton'] {
+			p2 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton']
+		}
+	} elif playercount 3 {
+		while p2 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton'] {
+			p2 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton']
+		}
+		while p3 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton'] {
+			p3 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton']
+		}
+	} elif playercount 4 {
+		while p2 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton'] {
+			p2 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton']
+		}
+		while p3 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton'] {
+			p3 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton']
+		}
+		while p4 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton'] {
+			p4 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'rightButton']
+		}
+	}
+}
+
+block oni_sigil {
+	until p1 inzone MooShu/Interiors/MS_Emperor_Palace {
+		sleep 0.1
+			until p1 hasxyz XYZ(19004.13671875, -14.312705993652344, 898.448486328125) {
+				p1 tp XYZ(18500.16015625, -19.885263442993164, 898.448486328125)
+				sleep 1
+				p1 tp XYZ(19004.13671875, -14.312705993652344, 898.448486328125)
+			}
+		sleep 1
+				until not p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sendkey X, 0.1
+				}
+		sleep 12
+	}
+}
+
+block oni_tp {
+	if p1 inzone MooShu/Interiors/MS_Emperor_Palace {
+		except p1 friendtp FRIENDNAME
+		sleep 7
+		call load_all
+	}
+}
+
+block oni_failsafe {
+	until p1 hasxyz XYZ(541.716796875, 34.1956672668457, 0.0) {
+		p1 tp XYZ(101.32244110107422, 31.631757736206055, 0.0)
+		sleep 1
+		p1 tp XYZ(541.716796875, 34.1956672668457, 0.0)
+	}
+	sleep 1
+}
+
+block oni_tp2 {
+	if playercount 2 {
+		sleep 0.1
+			if p2 inzone MooShu/MS_Hub {
+				call oni_failsafe
+				call p1_load
+				call oni_sigil
+				call p1_load
+				call oni_tp
+			}
+	} elif playercount 3 {
+		sleep 0.1
+			if p2 inzone MooShu/MS_Hub {
+				call oni_failsafe
+				call p1_load
+				call oni_sigil
+				call p1_load
+				call oni_tp
+			}
+			if p3 inzone MooShu/MS_Hub {
+				call oni_failsafe
+				call p1_load
+				call oni_sigil
+				call p1_load
+				call oni_tp
+			}
+	} elif playercount 4 {
+		sleep 0.1
+			if p2 inzone MooShu/MS_Hub {
+				call oni_failsafe
+				call p1_load
+				call oni_sigil
+				call p1_load
+				call oni_tp
+			}
+			if p3 inzone MooShu/MS_Hub {
+				call oni_failsafe
+				call p1_load
+				call oni_sigil
+				call p1_load
+				call oni_tp
+			}
+			if p4 inzone MooShu/MS_Hub {
+				call oni_failsafe
+				call p1_load
+				call oni_sigil
+				call p1_load
+				call oni_tp
+			}
+	}
+}
+
+block goto_elixir {
+	until except p1 hasxyz XYZ(-486.0492248535156, 1294.857421875, 0.0) {
+		except p1 tp XYZ(-379.2493591308594, 1286.7801513671875, 0.0)
+		sleep 1
+		except p1 tp XYZ(-486.0492248535156, 1294.857421875, 0.0)
+	}
+}
+
+block shira_tp {
+	if p1 inzone MooShu/MS_Plague/MS_Plague_Zone3_CliffsidePalace {
+		except p1 friendtp FRIENDNAME
+		sleep 7
+		call load_all
+	}
+}
+
+block shira_sigil {
+	until p1 inzone MooShu/MS_Plague/MS_Plague_Zone3_CliffsidePalace {
+		sleep 0.1
+			until p1 hasxyz XYZ(-183.234619140625, 15776.7412109375, 702.072509765625) {
+				p1 tp XYZ(-188.9031219482422, 15524.9599609375, 702.0726318359375)
+				sleep 1
+				p1 tp XYZ(-183.234619140625, 15776.7412109375, 702.072509765625)
+			}
+		sleep 1
+				until not p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sendkey X, 0.1
+				}
+		sleep 12
+	}
+}
+
+block shira_failsafe {
+	until p1 hasxyz XYZ(-3557.66357421875, 153.3455047607422, 139.39212036132812) {
+		p1 tp XYZ(-2733.381103515625, 151.7530059814453, 0.0029296875)
+		sleep 1
+		p1 tp XYZ(-3557.66357421875, 153.3455047607422, 139.39212036132812)
+	}
+sleep 1
+	until not p1 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton'] {
+		clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+	}
+sleep 1
+}
+
+block shira_exit {
+	until p1 hasxyz XYZ(-3359.79541015625, 146.2299041748047, 42.56201171875)  {
+		p1 tp XYZ(-2733.381103515625, 151.7530059814453, 0.0029296875)
+		sleep 1
+		p1 tp XYZ(-3359.79541015625, 146.2299041748047, 42.56201171875) 
+	}
+sleep 1
+	until not p1 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton'] {
+		clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+	}
+sleep 1
+}
+
+block shira_tp2 {
+	if playercount 2 {
+		sleep 0.1
+			if p2 inzone MooShu/MS_Plague/MS_Plague_Hub_FarmVillage {
+				call shira_failsafe
+				call p1_load
+				call shira_sigil
+				call p1_load
+				call shira_tp
+			}
+	} elif playercount 3 {
+		sleep 0.1
+			if p2 inzone MooShu/MS_Plague/MS_Plague_Hub_FarmVillage {
+				call shira_failsafe
+				call p1_load
+				call shira_sigil
+				call p1_load
+				call shira_tp
+			}
+			if p3 inzone MooShu/MS_Plague/MS_Plague_Hub_FarmVillage {
+				call shira_failsafe
+				call p1_load
+				call shira_sigil
+				call p1_load
+				call shira_tp
+			}
+	} elif playercount 4 {
+		sleep 0.1
+			if p2 inzone MooShu/MS_Plague/MS_Plague_Hub_FarmVillage {
+				call shira_failsafe
+				call p1_load
+				call shira_sigil
+				call p1_load
+				call shira_tp
+			}
+			if p3 inzone MooShu/MS_Plague/MS_Plague_Hub_FarmVillage {
+				call shira_failsafe
+				call p1_load
+				call shira_sigil
+				call p1_load
+				call shira_tp
+			}
+			if p4 inzone MooShu/MS_Plague/MS_Plague_Hub_FarmVillage {
+				call shira_failsafe
+				call p1_load
+				call shira_sigil
+				call p1_load
+				call shira_tp
+			}
+	}
+}
+
+
+#Bot Portion
+sleep 0.5
+# grab elixir if inactive
+	if not except p1 windowvisible ['WorldView', 'windowHUD', 'wndElixirContainer', 'sprtElixir1'] {
+		sleep 0.1
+# take to mooshu hub if not already there
+	if not inzone MooShu/MS_Hub {
+		sleep 0.1
+			until inzone MooShu/MS_Hub {
+				sendkey END, 0.1
+				sleep 3
+			}
+				call load
+	}
+
+# main client entering jade oni		
+	call oni_sigil
+	call p1_load
+
+# teleport clients to main client
+	call oni_tp
+	sleep 1
+	call popup_check
+
+# ensure all clients end up in jade oni
+	call oni_tp2
+
+# go to elixir
+	call goto_elixir
+	sleep 1
+}
+
+# elixir work
+	until except p1 windowvisible ['WorldView', 'windowHUD', 'wndElixirContainer', 'sprtElixir1'] {
+		sleep 1
+# interact with elixir
+	until not except p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sendkey X, 0.1
+	}
+# grab the elixir
+	while except p1 windowvisible ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton'] {
+		except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+	}
+	}
+
+
+
+
+# head towards battle after grabbing elixir
+	if except p1 windowvisible ['WorldView', 'windowHUD', 'wndElixirContainer', 'sprtElixir1'] {
+		sleep 0.1
+			if p1 inzone MooShu/Interiors/MS_Emperor_Palace {
+				print oni detected, lets leave
+				call oni_failsafe
+				call p1_load
+			}
+#Hub to Dojo
+	if p1 inzone MooShu/MS_Hub {
+		print mooshu hub detected
+			until p1 inzone MooShu/Interiors/MS_WaterDojot1_Common {
+				sleep 0.1
+					until p1 hasxyz XYZ(11785.021484375, 14075.3330078125, 261.1421203613281) {
+						p1 tp XYZ(11733.048828125, 13279.2001953125, 32.237548828125)
+						sleep 1
+						p1 tp XYZ(11785.021484375, 14075.3330078125, 261.1421203613281)
+					}
+			}
+	}
+sleep 1
+call p1_load
+
+#Dojo to Shoshun
+	if p1 inzone MooShu/Interiors/MS_WaterDojot1_Common {
+		print dojo detected
+			until p1 inzone MooShu/MS_Plague/MS_Plague_Hub_FarmVillage {
+				sleep 0.1
+					until p1 hasxyz XYZ(-1877.5994873046875, -1663.9306640625, 3.0517578125e-05) {
+						p1 tp XYZ(-1418.5074462890625, -1498.805908203125, 0.0)
+						sleep 1
+						p1 tp XYZ(-1877.5994873046875, -1663.9306640625, 3.0517578125e-05)
+					}
+			}
+	}
+sleep 1
+call p1_load
+}
+
+# dungeon entry 
+# main client into shirataki
+	while except p1 windowvisible ['WorldView', 'windowHUD', 'wndElixirContainer', 'sprtElixir1'] {
+		sleep 0.1
+# setup farming
+	if p1 inzone MooShu/MS_Plague/MS_Plague_Hub_FarmVillage {
+		except p1 friendtp FRIENDNAME
+		sleep 7
+		call except_load
+	}
+		call shira_sigil
+		call p1_load
+
+# other clients teleport to main client
+	call shira_tp 
+	sleep 1
+	call popup_check
+
+# ensure clients are together
+	call shira_tp2
+
+# battling sequences
+# ideyoshi area
+	until inzone MooShu/MS_Plague/Interiors/MS_Plague2_PalaceInterior {
+		sleep 0.1
+			until hasxyz XYZ(49345.21484375, 3616.12744140625, 1059.6015625) {
+				tp XYZ(49327.18359375, 3650.25, 0.9778257012367249)
+				sleep 1
+				tp XYZ(49345.21484375, 3616.12744140625, 1059.6015625)
+			}
+	}
+sleep 1
+call load
+
+# range
+	until hasxyz XYZ(14.998035430908203, -1415.3741455078125, -9.959991455078125) {
+		tp XYZ(-347.0450439453125, -1881.66845703125, 0.000152587890625)
+		sleep 1
+		tp XYZ(14.998035430908203, -1415.3741455078125, -9.959991455078125)
+	}
+
+# ideyoshi combat
+	until except p1 incombat {
+		except p1 entitytp Pig-Plague-Lord-MSBoss-L46
+	}
+	while except p1 incombat {
+		p1 entitytp Pig-Plague-Lord-MSBoss-L46
+		p1 entitytp Pig-Plague-Lord-MSBoss-L46
+		p1 entitytp Pig-Plague-Lord-MSBoss-L46
+		waitforcombat completion
+		sleep 1
+		entitytp Mana
+		sleep 0.5
+		entitytp Mana
+		sleep 0.5
+	}
+	if not incombat {
+		sendkey D, 0.5
+		sendkey A, 0.5
+		tp XYZ(14.998035430908203, -1415.3741455078125, -9.959991455078125)
+		sleep 2
+	}
+
+# oni combat 
+	until except p1 incombat {
+		except p1 entitytp Oni-Plague-MSBoss-L54
+	}
+	while except p1 incombat {
+		p1 entitytp Oni-Plague-MSBoss-L54
+		p1 entitytp Oni-Plague-MSBoss-L54
+		p1 entitytp Oni-Plague-MSBoss-L54
+		waitforcombat completion
+		sleep 1
+		entitytp Mana
+		sleep 0.5
+		entitytp Mana
+		sleep 0.5
+	}
+# exit ideyoshi area
+	if not incombat {
+		sleep 0.1
+			until p1 hasxyz XYZ(159.02020263671875, -3196.28759765625, 0.71514892578125) {
+				p1 tp XYZ(-113.53938293457031, -1860.9910888671875, 0.000152587890625)
+				sleep 1
+				p1 tp XYZ(159.02020263671875, -3196.28759765625, 0.71514892578125)
+			}
+sleep 1
+call p1_load
+call shira_exit
+call p1_load
+	}
+}
+
+
+
+
+

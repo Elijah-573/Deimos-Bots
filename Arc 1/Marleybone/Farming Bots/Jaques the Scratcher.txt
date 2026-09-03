@@ -1,0 +1,23 @@
+mass tp XYZ(382.1568908691406, 6509.2802734375, -479.9288024902344)
+
+mass buypotions ifneeded
+mass usepotion 30 20
+
+mass walkto XYZ(400.920166015625, 7423.4765625, -444.47552490234375)
+
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton'] 
+mass sendkey X, 0.1
+
+mass waitforzonechange zone Marleybone/MB_ScotlandYard/Interiors/MB_KnightsCourt_T3
+sleep 1
+mass tp XYZ(-15.488008499145508, -76.43853759765625, 0.0)
+
+mass waitforcombat completion
+sleep 1
+
+mass tp XYZ(1.9199947118759155, -1258.111083984375, 0.0)
+
+mass waitforzonechange zone Marleybone/MB_ScotlandYard/MB_KnightsCourt
+sleep 1
+ 
+#Jacques the scratcher, drops spellements (if HAVEN'T defeated Jade Oni), also drops stitch gear

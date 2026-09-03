@@ -1,0 +1,133 @@
+###deimos_expertmode
+#Start in front of the dungeon sigil
+#Combat ON
+#Dialogue ON
+block handle_load {
+    until not loading {
+        sleep 4
+    }
+}
+
+block enter {
+    sleep 2
+    tp XYZ(-2105.936767578125, 1783.5013427734375, -239.99899291992188)
+    sleep 0.3
+    walkto XYZ(-2186.6259765625, 2228.6328125, -220.08297729492188)
+    sleep 2
+    times 4 {
+        sendkey X, 0.1
+    }
+    sleep 0.1
+    waitforzonechange completion
+}
+
+
+block fireguts {
+    sleep 1
+    tp XYZ(-278.7987060546875, 12242.326171875, 0.0)
+    sleep 2
+    times 4 {
+        sendkey X
+    }
+    sleep 3
+    tp XYZ(-2585.796142578125, 11419.26953125, -230.00009155273438)
+    sleep 2
+    tp XYZ(-27738.720703125, 11859.900390625, -239.99996948242188)
+    sleep 1
+
+    #going to fight firgute
+    walkto XYZ(-28434.751953125, 11899.3701171875, -240.0000457763672)
+    waitforzonechange completion
+    sleep 2
+    tp closestmob
+    waitforcombat completion
+    sleep 2
+    #getting out 
+    tp XYZ(-2.9382143020629883, -2268.540771484375, -724.390625)
+    waitforzonechange completion
+    sleep 1
+}
+
+
+block puzzle {
+    #solving puzzle
+    p1 tp XYZ(1861.9691162109375, 11755.65234375, -229.99996948242188)
+    sleep 2
+    #Puzzle #1
+    p1 tp XYZ(2564.43017578125, 11074.3916015625, -229.99996948242188)
+    sleep 2
+    p1 sendkey X, 0.1
+    sleep 4
+    #Puzzle # 2
+    p1 walkto XYZ(2588.99072265625, 12173.9296875, -230.0)
+    p1 tp XYZ(2588.99072265625, 12173.9296875, -230.0)
+    sleep 2
+    p1 sendkey X, 0.1
+    sleep 4
+
+    #Puzzle # 3
+    p1 walkto XYZ(2583.86181640625, 10621.4384765625, -230.00003051757812)
+    p1 tp XYZ(2583.86181640625, 10621.4384765625, -230.00003051757812)
+    sleep 2
+    p1 sendkey X, 0.1
+    sleep 4
+
+    #Puzzle # 4
+    p1 walkto XYZ(2611.316162109375, 11755.033203125, -230.0)
+    p1 tp XYZ(2611.316162109375, 11755.033203125, -230.0)
+    sleep 2
+    p1 sendkey X, 0.1
+    sleep 4
+
+    #Talk to Watson
+    p1 tp XYZ(-278.7987060546875, 12242.326171875, 0.0)
+    sleep 3
+    sendkey X, 0.1
+    sleep 4
+}
+
+
+
+block clanker {
+    #Clanker
+    tp XYZ(-22773.078125, 19476.826171875, 3.0517578125e-05)
+    sleep 0.1
+    walkto XYZ(-22759.46875, 20187.73828125, 36.30755615234375)
+    sleep 0.2
+    waitforzonechange completion
+    sleep 2
+    tp closestmob
+    waitforcombat completion
+}
+
+
+block quit {
+    sleep 2
+    mass sendkey ESC 
+    sleep 2
+    if windowvisible ['WorldView', 'DeckConfiguration', 'SettingPage', 'QuitButton'] {
+        clickwindow ['WorldView', 'DeckConfiguration', 'SettingPage', 'QuitButton']
+    }
+    sleep 2
+    if windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton'] {
+        clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+    }
+    call handle_load
+}
+
+block relog {
+    sleep 2
+    waitforpath ['WorldView', 'mainWindow']
+    sleep 2
+    clickwindow ['WorldView', 'mainWindow', 'btnPlay']
+    call handle_load
+}
+
+
+
+call enter 
+call fireguts
+call puzzle 
+call clanker 
+call quit 
+call relog

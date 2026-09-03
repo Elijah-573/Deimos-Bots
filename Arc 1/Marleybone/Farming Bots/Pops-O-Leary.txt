@@ -1,0 +1,38 @@
+#SIGIL 
+mass tp XYZ(-4629.25732421875, 8178.869140625, -113.55352783203125)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+sleep 8 
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+
+#COMBAT PULLING
+mass tp XYZ(7631.87646484375, 37964.16796875, 775.259521484375)
+sleep 1
+mass tp closestmob
+mass waitforcombat completion
+sleep 2
+
+#EXIT
+mass tp XYZ(937.0458984375, 130.69879150390625, -3.0517578125e-05)
+mass waitforpath ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+mass clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+mass waitforzonechange completion
+sleep 1
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1

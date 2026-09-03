@@ -1,0 +1,17 @@
+sleep 1
+p1 tp XYZ(-4434.6591796875, 8255.69921875, -113.55352783203125)
+sleep 1
+mass sendkey X, 0.5
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+p1 waitforzonechange completion
+mass sendkey X, 0.1
+p1 waitforzonechange completion
+p1 tp XYZ(8821.2890625, 34554.05, -724.80289672851562)
+sleep 1
+mass waitforcombat completion
+p1 tp XYZ(936.3497314453125, 35.780086517333984, -3.0517578125e-05)
+p1 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+p1 waitforzonechange completion
+mass sendkey X, 0.1
+p1 waitforzonechange completion

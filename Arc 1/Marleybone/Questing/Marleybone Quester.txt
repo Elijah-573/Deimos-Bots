@@ -1,0 +1,5193 @@
+###deimos_expertmode
+###Last Update: 11/1/2024
+
+############################
+###     Marleybone       ###
+############################
+
+block Marleybone_Main_Quest_Tree {
+
+############################
+###      Settings        ###
+############################
+
+block Main_Account_Teleport_P2 {
+	p1 friendtp CHANGENAME					# Change to the name of the account on client P2 (If not using client P2, just leave as-is)
+}
+block Main_Account_Teleport_P3 {
+	p1 friendtp CHANGENAME					# Change to the name of the account on client P1 (If not using client P3, just leave as-is)
+}
+block Main_Account_Teleport_P4 {
+	p1 friendtp CHANGENAME					# Change to the name of the account on client P4 (If not using client P4, just leave as-is)
+}
+block SpeedDelay {
+	sleep 1							# Change "1" to however fast you'll like the bot to run. Between ( .1 - 2 ) is best for most 
+}
+########## Playstyle Editor Below ##########################################################
+# For questions on how to setup a playstyle within this script, please refer to this link. #
+# https://discord.com/channels/912917467792281600/912927606070988810/1294315527572946944   #
+############################################################################################
+
+#No solo instances inside of Marleybone. Please use the default combat tab for setting up a playstyle.
+
+################ ******************************** ######################
+################ ***DON'T TOUCH ANYTHING BELOW*** ######################
+################ ******************************** ######################
+#_______________________________________________________________________
+############################
+### Functional Blocks    ###
+############################
+############################
+# Other Functional Blocks  #	
+############################
+block X_Interact_MASS {
+	sleep 3
+	times 20 {
+		sendkey X, .1
+	}
+	sleep 2
+}
+block ZoneChange_MASS {
+	waitforzonechange completion
+	sleep 2
+}
+block Waiting_All_Arrival_Message {
+	print "Waiting for all clients to reach this sigil."
+}
+block Combat_Dungeon_Complete_MASS {
+	waitforcombat completion
+	times 4 {
+		entitytp Health
+		entitytp Mana
+	}
+}
+block Dungeon_X_Key_SOLO {
+	sleep 3
+	sendkey X, .5
+}
+block Dungeon_X_Key_MASS {
+	sleep 5
+	until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	sleep 1
+	sendkey X, .5
+}
+block Exit_Quest_Menu {
+	times 10 {
+	clickwindow ['WorldView', 'NPCServicesWin', 'wndDialogMain', 'Exit']
+	}
+}
+block Main_Is_Busy_On_Off {
+	if p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+		until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+			p1 sendkey F, .25
+			sleep .5
+		}
+	} else {
+		until p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+			p1 sendkey F, .25
+			sleep .5
+		}
+	}
+}
+block Teleport_Main_To_Help_P1 {
+	sleep .1
+}
+block Teleport_Main_To_Help_P2 {
+	while p1 loading {
+		sleep 2
+	}
+	sleep 1
+	if NOT p1 loading {
+		if NOT p1 incombat {
+			until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+				sleep .1
+			}
+			if NOT p1:p2 sameplace {
+				if NOT p1:p2 samezone {
+					call Main_Account_Teleport_P2
+					sleep 2
+				} else {
+					call Main_Account_Teleport_P2
+					while NOT p1:p2 sameplace {
+						sleep 2
+					}
+				}
+			}
+		}
+	}
+}
+block Teleport_Main_To_Help_P3 {
+	while p1 loading {
+		sleep 2
+	}
+	sleep 1
+	if NOT p1 loading {
+		if NOT p1 incombat {
+			until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+				sleep .1
+			}
+			if NOT p1:p3 sameplace {
+				if NOT p1:p3 samezone {
+					call Main_Account_Teleport_P3
+					sleep 2
+				} else {
+					call Main_Account_Teleport_P3
+					while NOT p1:p3 sameplace {
+						sleep 2
+					}
+				}
+			}
+		}
+	}
+}		
+block Teleport_Main_To_Help_P4 {
+	while p1 loading {
+		sleep 2
+	}
+	sleep 1
+	if NOT p1 loading {
+		if NOT p1 incombat {
+			until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+				sleep .1
+			}
+			if NOT p1:p4 sameplace {
+				if NOT p1:p4 samezone {
+					call Main_Account_Teleport_P4
+					sleep 2
+				} else {
+					call Main_Account_Teleport_P4
+					while NOT p1:p4 sameplace {
+						sleep 2
+					}
+				}
+			}
+		}
+	}
+}
+############################
+### P1 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P1 {
+	if NOT p1 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p1 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p1 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p1 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p1 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p1 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p1 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p1 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P1 {
+	until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p1 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P1 {
+	sleep 2
+	while p1 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P1 {
+	p1 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P1 {
+	p1 waitforcombat completion
+	times 2 {
+		p1 entitytp Health
+		sleep .2
+		p1 entitytp Mana
+		sleep .2
+	}
+}
+############################
+### P2 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P2 {
+	if NOT p2 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p2 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p2 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p2 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p2 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p2 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p2 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p2 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P2 {
+	until p2 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p2 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P2 {
+	sleep 2
+	while p2 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P2 {
+	p2 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P2 {
+	p2 waitforcombat completion
+	times 2 {
+		p2 entitytp Health
+		sleep .2
+		p2 entitytp Mana
+		sleep .2
+	}
+	until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+		sleep .1
+	}
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+}
+############################
+### P3 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P3 {
+	if NOT p3 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p3 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p3 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p3 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p3 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p3 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p3 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p3 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P3 {
+	until p3 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p3 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P3 {
+	sleep 2
+	while p3 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P3 {
+	p3 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P3 {
+	p3 waitforcombat completion
+	times 2 {
+		p3 entitytp Health
+		sleep .2
+		p3 entitytp Mana
+		sleep .2
+	}
+	until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+		sleep .1
+	}
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+}
+############################
+### P4 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P4 {
+	if NOT p4 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p4 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p4 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p4 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p4 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p4 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p4 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p4 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P4 {
+	until p4 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p4 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P4 {
+	sleep 2
+	while p4 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P4 {
+	p4 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P4 {
+	p4 waitforcombat completion
+	times 2 {
+		p4 entitytp Health
+		sleep .2
+		p4 entitytp Mana
+		sleep .2
+	}
+	until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+		sleep .1
+	}
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+}
+########################################################################
+########################################################################
+########################################################################
+#_______________________________________________________________________
+#_______________________________________________________________________
+#_______________________________________________________________________
+block P1QuestsHandler {
+	if p1 tracking_quest "missing souls" {
+		if p1 tracking_goal "talk to private kinchley in wolfminster abbey" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "sarcophagus search" {
+		if p1 tracking_goal "talk to clancy pembroke in royal museum" {
+			p1 tp XYZ(-19.527908325195312, -3681.874755859375, 0.0)
+			call ZoneChange_P1
+			p1 tp XYZ(-183.6346893310547, 9127.6201171875, -3.0517578125e-05)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "not so fast..." {
+		if p1 tracking_goal "talk to mayor pimsbury in digmoore station" {
+			p1 tp XYZ(-23.664295196533203, -650.8883056640625, 0.014190673828125)
+			call ZoneChange_P1
+			p1 tp XYZ(9544.572265625, -7459.037109375, 30.00042724609375)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "a cat-tastrophy" {
+		if p1 tracking_goal "talk to sherlock bones in digmoore station" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "back up for bones" {
+		if p1 tracking_goal "talk to ms. conrail in hyde park" {
+			p1 tp quest
+			call ZoneChange_P1
+			call X_Interact_P1
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "garden secret" {
+		if p1 tracking_goal "find baxter in hyde park" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to ms. conrail in hyde park" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "house hunt" {
+		if p1 tracking_goal "search east safehouse in hyde park" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				sleep 2
+				p1 tp XYZ(-6.630228042602539, -1341.9310302734375, 3.0517578125e-05)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp XYZ(-6.630228042602539, -1341.9310302734375, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "search west safehouse in hyde park" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				sleep 2
+				p1 tp XYZ(23.37596893310547, -1298.4466552734375, -3.0517578125e-05)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp XYZ(23.37596893310547, -1298.4466552734375, -3.0517578125e-05)
+					call ZoneChange_P1
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "search south safehouse in hyde park" {		
+			p1 tp XYZ(5468.6396484375, 10947.58984375, -240.0)
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				sleep 2
+				p1 tp XYZ(-16.306795120239258, -2343.75244140625, -724.3464965820312)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					sleep 2
+					tp XYZ(-16.306795120239258, -2343.75244140625, -724.3464965820312)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to ms. conrail in hyde park" {		
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "springing the snitch" {
+		if p1 tracking_goal "talk to willie marks in willie's clocktower" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp XYZ(-54.7710075378418, 117.52244567871094, -3.0517578125e-05)
+				call Combat_Complete_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(-8.2332763671875, -1369.8414306640625, 0.0)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp XYZ(-54.7710075378418, 117.52244567871094, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					times 30 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(-8.2332763671875, -1369.8414306640625, 0.0)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to ms. conrail in hyde park" {	
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "the right tools" {
+		while p1 tracking_goal "defeat hooligan and collect lockpicks in hyde park" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to ms. conrail in hyde park" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "open says me" {
+		if p1 tracking_goal "talk to baxter in hyde park" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp XYZ(-21.467880249023438, -2270.031005859375, -724.3900756835938)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-21.467880249023438, -2270.031005859375, -724.3900756835938)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to ms. conrail in hyde park" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to sherlock bones in digmoore station" {
+			p1 tp XYZ(761.6161499023438, -3756.278564453125, 0.0)
+			call ZoneChange_P1
+			call X_Interact_P1
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "out of control" {
+		if p1 tracking_goal "talk to ms. marphely in chelsea court" {
+			p1 tp quest
+			call ZoneChange_P1
+			call X_Interact_P1
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "for whom the bell tolls" {
+		if p1 tracking_goal "go to chelsea clocktower in chelsea court" {
+			p1 tp quest
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "talk to ms. marphely in chelsea court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "a guide..." {
+		if p1 tracking_goal "talk to william pugsby in chelsea court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "keeper of secrets" {
+		if p1 tracking_goal "defeat shakes o'leary in chelsea court" {
+			p1 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp XYZ(10.533515930175781, -1373.0135498046875, 3.0517578125e-05)
+				call ZoneChange_P1
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P1
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(10.533515930175781, -1373.0135498046875, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to william pugsby in chelsea court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "the only one left" {
+		if p1 tracking_goal "defeat timmy icepick in chelsea court" {
+			p1 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp XYZ(2.32828950881958, -2285.441162109375, -724.3804931640625)
+				call ZoneChange_P1
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P1
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(2.32828950881958, -2285.441162109375, -724.3804931640625)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to william pugsby in chelsea court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "sweet success" {
+		if p1 tracking_goal "talk to ms. marphely in chelsea court" {			
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "password, please!" {
+		if p1 tracking_goal "go to chelsea clocktower in chelsea court" {
+			p1 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				sleep 2
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp quest
+				times 20 {
+					p1 sendkey X, .1
+				}
+				p1 tp XYZ(-24.239429473876953, -1471.8526611328125, 3.0517578125e-05)
+				call ZoneChange_P1
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P1
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					times 20 {
+						sendkey X, .1
+					}
+					tp XYZ(-24.239429473876953, -1471.8526611328125, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to ms. marphely in chelsea court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "collar me impressed" {
+		if p1 tracking_goal "talk to sherlock bones in digmoore station" {
+			p1 tp XYZ(-15143.6455078125, 3103.462158203125, 3.0517578125e-05)
+			call ZoneChange_P1
+			call X_Interact_P1
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "a private meeting" {
+		if p1 tracking_goal "go to 221 barker st. in regent's square" {
+			p1 tp XYZ(-23.106685638427734, -2723.02783203125, -285.0466003417969)
+			call ZoneChange_P1
+			p1 tp XYZ(8469.7275390625, 7914.453125, 108.51904296875)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+		}
+		if p1 tracking_goal "talk to baxter in regent's square" {
+			p1 tp quest
+			p1 turncam 3.88
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to sherlock bones in regent's square" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to sherlock bones in digmoore station" {
+			p1 tp XYZ(-17.476970672607422, -560.7700805664062, 0.0)
+			call ZoneChange_P1
+			p1 tp XYZ(9553.572265625, -7460.73876953125, 29.9998779296875)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "internal investigation" {
+		if p1 tracking_goal "talk to baxter in the ironworks" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				call X_Interact_P1
+				call ZoneChange_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(7486.19140625, 36697.28515625, 775.259521484375)
+				call Combat_Complete_P1
+				p1 tp XYZ(935.191650390625, 125.91624450683594, -3.0517578125e-05)
+				sleep 3
+				p1 sendkey ENTER, .3
+				call ZoneChange_P1
+				call X_Interact_P1
+				call ZoneChange_P1
+			} else {
+				if except p1 sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "the ironworks" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							times 20 {
+								sendkey X, .1
+							}
+							while loading {
+								sleep 5
+							}
+							tp quest
+							sleep 3
+							sendkey X, .3
+							sleep 2
+							tp XYZ(7486.19140625, 36697.28515625, 775.259521484375)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(935.191650390625, 125.91624450683594, -3.0517578125e-05)
+							sleep 3
+							sendkey ENTER, .3
+							call ZoneChange_MASS
+							times 20 {
+								sendkey X, .1
+							}
+							while loading {
+								sleep 5
+							}
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to sherlock bones in digmoore station" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "ring the alarm" {
+		if p1 tracking_goal "talk to watson in scotland yard roof" {
+			p1 tp XYZ(8.339845657348633, -2717.61962890625, -285.04864501953125)
+			call ZoneChange_P1
+			p1 tp XYZ(-9356.537109375, 2291.3505859375, 0.000518798828125)
+			call ZoneChange_P1
+			p1 tp XYZ(13.703730583190918, 2037.7152099609375, 10.00250244140625)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "prison break" {
+		if p1 tracking_goal "talk to officer ness in newgate prison" {
+			p1 tp XYZ(-2186.874755859375, -2524.546142578125, -239.9990234375)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "stop that cat!" {
+		if p1 tracking_goal "go to meowiarty's cell in newgate prison" {
+			p1 tp quest
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "talk to officer malone in newgate prison" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "go to meowiarty in newgate prison" {
+			p1 tp quest
+			sleep 2
+			if p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+				if p1 windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "great clocktower" {
+					if playercount 1 {
+						call Dungeon_X_Key_SOLO
+						call ZoneChange_P1
+						p1 tp quest
+						call Combat_Complete_P1
+						p1 tp XYZ(-22.04244613647461, -1345.7266845703125, 0.0)
+						call ZoneChange_P1
+					} else {
+						if except p1 sameplace {
+							call Teleport_Main_To_Help_P1
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-22.04244613647461, -1345.7266845703125, 0.0)
+							call ZoneChange_MASS
+						} else {
+							call Waiting_All_Arrival_Message
+						}
+					}
+				}
+			}	
+			return
+		}
+		if p1 tracking_goal "talk to officer wallace in newgate prison" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to officer stone in newgate prison" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to officer dorsett in newgate prison" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "go to hideout in newgate prison" {
+			p1 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				sleep 2
+				times 5 {
+					p1 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P1
+				p1 tp XYZ(-26.89360809326172, -2285.421875, -724.3812255859375)
+				call ZoneChange_P1
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P1
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					times 5 {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-26.89360809326172, -2285.421875, -724.3812255859375)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to officer payne in newgate prison" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to watson in scotland yard roof" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "scratching post" {
+		if p1 tracking_goal "talk to sergeant steeg in knight's court" {		
+			p1 tp XYZ(-7002.53173828125, -442.8685302734375, -239.48800659179688)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+		}
+	}
+	if p1 tracking_quest "wildcat woes" {
+		if p1 tracking_goal "talk to linda milltop in knight's court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+		}
+		if p1 tracking_goal "defeat jacques the scratcher in knight's court" {
+			p1 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P1
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to sergeant steeg in knight's court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "cat scratch fever" {
+		while p1 tracking_goal "defeat deadly scratcher in knight's court" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to sergeant steeg in knight's court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "investigation..." {
+		if p1 tracking_goal "talk to catherine dalton in knight's court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to sergeant steeg in knight's court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "location, location..." {
+		if p1 tracking_goal "talk to amy brooks in knight's court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to sergeant steeg in knight's court" {
+			p1 tp quest
+			call X_Interact_P1
+			sleep 3
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "gimme a hand" {
+		if p1 tracking_goal "go to amy brooks' place in knight's court" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to sergeant steeg in knight's court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "cross examination" {
+		if p1 tracking_goal "talk to angus crankenhop in regent's square at burt's" {
+			p1 tp XYZ(-501.143310546875, -9410.240234375, -240.0)
+			call ZoneChange_P1
+			p1 tp XYZ(-55.69786834716797, 12.780092239379883, -49.98127746582031)
+			call ZoneChange_P1
+			p1 tp XYZ(41.323036193847656, -562.9835205078125, -0.0001220703125)
+			call ZoneChange_P1
+			p1 tp XYZ(1090.196533203125, 3728.45361328125, 20.0)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to sergeant steeg in knight's court" {
+			p1 tp XYZ(1.547001838684082, -802.2810668945312, 0.0)
+			call ZoneChange_P1
+			p1 tp XYZ(-9376.3095703125, 2306.751220703125, 0.000518798828125)
+			call ZoneChange_P1
+			p1 tp XYZ(6.859953880310059, 2046.4677734375, 10.005767822265625)
+			call ZoneChange_P1
+			p1 tp XYZ(-7019.4736328125, -438.78717041015625, -239.48802185058594)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "doctor of deception" {
+		if p1 tracking_goal "go to knight's tower in knight's court" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "knight's tower" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call Combat_Dungeon_Complete_MASS
+							tp quest
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to sergeant steeg in knight's court" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "case closed!" {
+		if p1 tracking_goal "talk to watson in scotland yard roof" {
+			p1 tp XYZ(-492.3572998046875, -9413.2080078125, -240.0)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+		}
+	}
+	if p1 tracking_quest "weird science" {
+		if p1 tracking_goal "talk to watson in katzenstein's lab" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(-15252.3740234375, 53330.45703125, -1450.197021484375)
+				call Combat_Complete_P1
+				p1 tp XYZ(-15909.01953125, 53949.44921875, -1448.385009765625)
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				sleep 2
+				p1 tp XYZ(-17037.712890625, 52523.16015625, -1049.9840087890625)
+				call X_Interact_P1
+				sleep 1
+				p1 tp XYZ(-15460.58203125, 55458.609375, -649.913818359375)
+				call X_Interact_P1
+				sleep 1
+				p1 tp XYZ(-14007.3271484375, 49905.7578125, -761.5347290039062)
+				call X_Interact_P1
+				sleep 1
+				p1 tp XYZ(-15200.0, 53250.0, -1448.385009765625)
+				sleep 2
+				p1 tp XYZ(-15846.375, 53872.46875, -1450.197021484375)
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(-16572.76171875, 53070.13671875, -1049.9840087890625)
+				call X_Interact_P1
+				sleep 2
+				p1 tp XYZ(-13815.826171875, 53222.71484375, -1049.9840087890625)
+				call X_Interact_P1
+				sleep 2
+				p1 tp XYZ(-15274.2470703125, 54632.6953125, -649.9136962890625)
+				call X_Interact_P1
+				sleep 2
+				p1 tp XYZ(-15198.91015625, 53253.23046875, -1450.0)
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(-10.993003845214844, -5855.1953125, -230.0)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "katzenstein's lab" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15252.3740234375, 53330.45703125, -1450.197021484375)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-15909.01953125, 53949.44921875, -1448.385009765625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-17037.712890625, 52523.16015625, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15460.58203125, 55458.609375, -649.913818359375)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-14007.3271484375, 49905.7578125, -761.5347290039062)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15200.0, 53250.0, -1448.385009765625)
+							sleep 2
+							tp XYZ(-15846.375, 53872.46875, -1450.197021484375)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-16572.76171875, 53070.13671875, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-13815.826171875, 53222.71484375, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15274.2470703125, 54632.6953125, -649.9136962890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15198.91015625, 53253.23046875, -1450.0)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-10.993003845214844, -5855.1953125, -230.0)
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to watson in scotland yard roof" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "fetch bones!" {
+		if p1 tracking_goal "talk to sherlock bones in royal museum" {
+			p1 tp XYZ(-63.47635269165039, -1.0674889087677002, -49.983001708984375)
+			call ZoneChange_P1
+			p1 tp XYZ(-8.612683296203613, -550.5782470703125, -9.1552734375e-05)
+			call ZoneChange_P1
+			p1 tp XYZ(-177.76025390625, 9133.76171875, -3.0517578125e-05)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+		}
+		if p1 tracking_goal "talk to clancy pembroke in regent's square" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+		}
+	}
+	if p1 tracking_quest "stolen away" {
+		if p1 tracking_goal "talk to gus in counterweight east" {
+			p1 tp XYZ(748.7399291992188, 5953.37353515625, 260.1841125488281)
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(3182.253173828125, -1676.1416015625, 3300.0)
+				p1 turncam 1.57
+				sleep 2
+				p1 walkto XYZ(-18.65045166015625, -1651.37841796875, 4400.0419921875)
+				sleep 2
+				p1 tp XYZ(106.4523696899414, -333.3121032714844, 4201.01123046875)
+				call Combat_Complete_P1
+				p1 tp XYZ(-27.23398208618164, -5311.6025390625, 10.011322021484375)
+				sleep 2
+				p1 sendkey ENTER, .3
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 3
+					times 20 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(3182.253173828125, -1676.1416015625, 3300.0)
+					turncam 1.57
+					sleep 2
+					walkto XYZ(-18.65045166015625, -1651.37841796875, 4400.0419921875)
+					sleep 2
+					tp XYZ(106.4523696899414, -333.3121032714844, 4201.01123046875)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-27.23398208618164, -5311.6025390625, 10.011322021484375)
+					sleep 2
+					sendkey ENTER, .3
+					call ZoneChange_MASS
+					tp XYZ(1254.6829833984375, 257.4205017089844, -0.0286865234375)
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to clancy pembroke in regent's square" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+		}
+	}
+	if p1 tracking_quest "weights and measures" {
+		if p1 tracking_goal "talk to sally newflower in counterweight west" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(3200.114013671875, -1692.418701171875, 3300.0)
+				p1 turncam 1.58
+				sleep 2
+				p1 walkto XYZ(-0.3228416442871094, -1632.4368896484375, 4400.0419921875)
+				sleep 2
+				p1 tp XYZ(131.27520751953125, -304.2705993652344, 4201.01123046875)
+				call Combat_Complete_P1
+				p1 tp XYZ(-3.078742027282715, -5224.27783203125, 10.011260986328125)
+				sleep 2
+				p1 sendkey ENTER, .3
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "counterweight west" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call X_Interact_MASS
+							tp XYZ(3200.114013671875, -1692.418701171875, 3300.0)
+							turncam 1.58
+							sleep 2
+							walkto XYZ(-0.3228416442871094, -1632.4368896484375, 4400.0419921875)
+							sleep 2
+							tp XYZ(131.27520751953125, -304.2705993652344, 4201.01123046875)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-3.078742027282715, -5224.27783203125, 10.011260986328125)
+							sleep 2
+							sendkey ENTER, .3
+							call ZoneChange_MASS
+							tp XYZ(-459.1158447265625, -637.42333984375, 0.014190673828125)
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to clancy pembroke in royal museum" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+		}
+		if p1 tracking_goal "talk to sherlock bones in regent's square" {
+			p1 tp quest
+			p1 turncam 5.23
+			sleep 1
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+		}
+	}
+	if p1 tracking_quest "the last meow" {
+		if p1 tracking_goal "defeat meowiarty in big ben" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp XYZ(89.9852066040039, -423.4084167480469, -279.1181945800781)
+				call Combat_Complete_P1
+				p1 tp XYZ(-17.12259292602539, -2384.594482421875, -269.1960144042969)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "big ben" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp XYZ(89.9852066040039, -423.4084167480469, -279.1181945800781)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-17.12259292602539, -2384.594482421875, -269.1960144042969)
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to sherlock bones in regent's square" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "bad news..." {
+		if p1 tracking_goal "talk to merle ambrose in commons" {
+			p1 tp XYZ(-31.500415802001953, -632.3355712890625, 0.014190673828125)
+			call ZoneChange_P1
+			p1 tp XYZ(-10.162223815917969, -5324.01220703125, 19.99310302734375)
+			call ZoneChange_P1
+			p1 tp XYZ(24.164222717285156, -55.822853088378906, 59.999908447265625)
+			call X_Interact_P1
+			sleep 3
+			until NOT p1 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p1 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P1
+			p1 tp XYZ(-10.2535982131958, -3244.99560546875, 244.02288818359375)
+			call ZoneChange_P1
+			call SpeedDelay
+			p1 tp XYZ(-1.195801019668579, -2098.578125, -140.38534545898438)
+			call ZoneChange_P1
+			p1 tp XYZ(-956.0952758789062, -2466.62939453125, 124.86578369140625)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "mooshu" {
+		if p1 tracking_goal "explore mooshu in teleport chamber" {
+			p1 tp XYZ(-14.366083145141602, -657.7991943359375, 0.0)
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp XYZ(45.936668395996094, 1882.246826171875, 72.29592895507812)
+			call ZoneChange_P1
+			p1 tp XYZ(36.051605224609375, -60.5693244934082, 89.21310424804688)
+			call X_Interact_P1
+			sleep 3
+			until NOT p1 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p1 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P1
+			call SpeedDelay
+			return
+		}
+	}
+} #End of P1 Quest Handler
+block P2QuestsHandler {
+	if p2 tracking_quest "missing souls" {
+		if p2 tracking_goal "talk to private kinchley in wolfminster abbey" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "sarcophagus search" {
+		if p2 tracking_goal "talk to clancy pembroke in royal museum" {
+			p2 tp XYZ(-19.527908325195312, -3681.874755859375, 0.0)
+			call ZoneChange_P2
+			p2 tp XYZ(-183.6346893310547, 9127.6201171875, -3.0517578125e-05)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "not so fast..." {
+		if p2 tracking_goal "talk to mayor pimsbury in digmoore station" {
+			p2 tp XYZ(-23.664295196533203, -650.8883056640625, 0.014190673828125)
+			call ZoneChange_P2
+			p2 tp XYZ(9544.572265625, -7459.037109375, 30.00042724609375)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "a cat-tastrophy" {
+		if p2 tracking_goal "talk to sherlock bones in digmoore station" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "back up for bones" {
+		if p2 tracking_goal "talk to ms. conrail in hyde park" {
+			p2 tp quest
+			call ZoneChange_P2
+			call X_Interact_P2
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "garden secret" {
+		if p2 tracking_goal "find baxter in hyde park" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to ms. conrail in hyde park" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "house hunt" {
+		if p2 tracking_goal "search east safehouse in hyde park" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				sleep 2
+				p2 tp XYZ(-6.630228042602539, -1341.9310302734375, 3.0517578125e-05)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp XYZ(-6.630228042602539, -1341.9310302734375, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "search west safehouse in hyde park" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				sleep 2
+				p2 tp XYZ(23.37596893310547, -1298.4466552734375, -3.0517578125e-05)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp XYZ(23.37596893310547, -1298.4466552734375, -3.0517578125e-05)
+					call ZoneChange_P2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "search south safehouse in hyde park" {		
+			p2 tp XYZ(5468.6396484375, 10947.58984375, -240.0)
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				sleep 2
+				p2 tp XYZ(-16.306795120239258, -2343.75244140625, -724.3464965820312)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					sleep 2
+					tp XYZ(-16.306795120239258, -2343.75244140625, -724.3464965820312)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to ms. conrail in hyde park" {		
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "springing the snitch" {
+		if p2 tracking_goal "talk to willie marks in willie's clocktower" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp XYZ(-54.7710075378418, 117.52244567871094, -3.0517578125e-05)
+				call Combat_Complete_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(-8.2332763671875, -1369.8414306640625, 0.0)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp XYZ(-54.7710075378418, 117.52244567871094, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					times 30 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(-8.2332763671875, -1369.8414306640625, 0.0)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to ms. conrail in hyde park" {	
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "the right tools" {
+		while p2 tracking_goal "defeat hooligan and collect lockpicks in hyde park" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to ms. conrail in hyde park" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "open says me" {
+		if p2 tracking_goal "talk to baxter in hyde park" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp XYZ(-21.467880249023438, -2270.031005859375, -724.3900756835938)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-21.467880249023438, -2270.031005859375, -724.3900756835938)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to ms. conrail in hyde park" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to sherlock bones in digmoore station" {
+			p2 tp XYZ(761.6161499023438, -3756.278564453125, 0.0)
+			call ZoneChange_P2
+			call X_Interact_P2
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "out of control" {
+		if p2 tracking_goal "talk to ms. marphely in chelsea court" {
+			p2 tp quest
+			call ZoneChange_P2
+			call X_Interact_P2
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "for whom the bell tolls" {
+		if p2 tracking_goal "go to chelsea clocktower in chelsea court" {
+			p2 tp quest
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "talk to ms. marphely in chelsea court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "a guide..." {
+		if p2 tracking_goal "talk to william pugsby in chelsea court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "keeper of secrets" {
+		if p2 tracking_goal "defeat shakes o'leary in chelsea court" {
+			p2 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp XYZ(10.533515930175781, -1373.0135498046875, 3.0517578125e-05)
+				call ZoneChange_P2
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P2
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(10.533515930175781, -1373.0135498046875, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to william pugsby in chelsea court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "the only one left" {
+		if p2 tracking_goal "defeat timmy icepick in chelsea court" {
+			p2 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp XYZ(2.32828950881958, -2285.441162109375, -724.3804931640625)
+				call ZoneChange_P2
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P2
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(2.32828950881958, -2285.441162109375, -724.3804931640625)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to william pugsby in chelsea court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "sweet success" {
+		if p2 tracking_goal "talk to ms. marphely in chelsea court" {			
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "password, please!" {
+		if p2 tracking_goal "go to chelsea clocktower in chelsea court" {
+			p2 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				sleep 2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp quest
+				times 20 {
+					p2 sendkey X, .1
+				}
+				p2 tp XYZ(-24.239429473876953, -1471.8526611328125, 3.0517578125e-05)
+				call ZoneChange_P2
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P2
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					times 20 {
+						sendkey X, .1
+					}
+					tp XYZ(-24.239429473876953, -1471.8526611328125, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to ms. marphely in chelsea court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "collar me impressed" {
+		if p2 tracking_goal "talk to sherlock bones in digmoore station" {
+			p2 tp XYZ(-15143.6455078125, 3103.462158203125, 3.0517578125e-05)
+			call ZoneChange_P2
+			call X_Interact_P2
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "a private meeting" {
+		if p2 tracking_goal "go to 221 barker st. in regent's square" {
+			p2 tp XYZ(-23.106685638427734, -2723.02783203125, -285.0466003417969)
+			call ZoneChange_P2
+			p2 tp XYZ(8469.7275390625, 7914.453125, 108.51904296875)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+		}
+		if p2 tracking_goal "talk to baxter in regent's square" {
+			p2 tp quest
+			p2 turncam 3.88
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to sherlock bones in regent's square" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to sherlock bones in digmoore station" {
+			p2 tp XYZ(-17.476970672607422, -560.7700805664062, 0.0)
+			call ZoneChange_P2
+			p2 tp XYZ(9553.572265625, -7460.73876953125, 29.9998779296875)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "internal investigation" {
+		if p2 tracking_goal "talk to baxter in the ironworks" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				call X_Interact_P2
+				call ZoneChange_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(7486.19140625, 36697.28515625, 775.259521484375)
+				call Combat_Complete_P2
+				p2 tp XYZ(935.191650390625, 125.91624450683594, -3.0517578125e-05)
+				sleep 3
+				p2 sendkey ENTER, .3
+				call ZoneChange_P2
+				call X_Interact_P2
+				call ZoneChange_P2
+			} else {
+				if except p1 sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "the ironworks" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							times 20 {
+								sendkey X, .1
+							}
+							while loading {
+								sleep 5
+							}
+							tp quest
+							sleep 3
+							sendkey X, .3
+							sleep 2
+							tp XYZ(7486.19140625, 36697.28515625, 775.259521484375)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(935.191650390625, 125.91624450683594, -3.0517578125e-05)
+							sleep 3
+							sendkey ENTER, .3
+							call ZoneChange_MASS
+							times 20 {
+								sendkey X, .1
+							}
+							while loading {
+								sleep 5
+							}
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to sherlock bones in digmoore station" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "ring the alarm" {
+		if p2 tracking_goal "talk to watson in scotland yard roof" {
+			p2 tp XYZ(8.339845657348633, -2717.61962890625, -285.04864501953125)
+			call ZoneChange_P2
+			p2 tp XYZ(-9356.537109375, 2291.3505859375, 0.000518798828125)
+			call ZoneChange_P2
+			p2 tp XYZ(13.703730583190918, 2037.7152099609375, 10.00250244140625)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "prison break" {
+		if p2 tracking_goal "talk to officer ness in newgate prison" {
+			p2 tp XYZ(-2186.874755859375, -2524.546142578125, -239.9990234375)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "stop that cat!" {
+		if p2 tracking_goal "go to meowiarty's cell in newgate prison" {
+			p2 tp quest
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "talk to officer malone in newgate prison" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "go to meowiarty in newgate prison" {
+			p2 tp quest
+			sleep 2
+			if p2 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+				if p2 windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "great clocktower" {
+					if playercount 1 {
+						call Dungeon_X_Key_SOLO
+						call ZoneChange_P2
+						p2 tp quest
+						call Combat_Complete_P2
+						p2 tp XYZ(-22.04244613647461, -1345.7266845703125, 0.0)
+						call ZoneChange_P2
+					} else {
+						if except p1 sameplace {
+							call Teleport_Main_To_Help_P2
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-22.04244613647461, -1345.7266845703125, 0.0)
+							call ZoneChange_MASS
+						} else {
+							call Waiting_All_Arrival_Message
+						}
+					}
+				}
+			}	
+			return
+		}
+		if p2 tracking_goal "talk to officer wallace in newgate prison" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to officer stone in newgate prison" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to officer dorsett in newgate prison" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "go to hideout in newgate prison" {
+			p2 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				sleep 2
+				times 5 {
+					p2 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P2
+				p2 tp XYZ(-26.89360809326172, -2285.421875, -724.3812255859375)
+				call ZoneChange_P2
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P2
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					times 5 {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-26.89360809326172, -2285.421875, -724.3812255859375)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to officer payne in newgate prison" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to watson in scotland yard roof" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "scratching post" {
+		if p2 tracking_goal "talk to sergeant steeg in knight's court" {		
+			p2 tp XYZ(-7002.53173828125, -442.8685302734375, -239.48800659179688)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+		}
+	}
+	if p2 tracking_quest "wildcat woes" {
+		if p2 tracking_goal "talk to linda milltop in knight's court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+		}
+		if p2 tracking_goal "defeat jacques the scratcher in knight's court" {
+			p2 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P2
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to sergeant steeg in knight's court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "cat scratch fever" {
+		while p2 tracking_goal "defeat deadly scratcher in knight's court" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to sergeant steeg in knight's court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "investigation..." {
+		if p2 tracking_goal "talk to catherine dalton in knight's court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to sergeant steeg in knight's court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "location, location..." {
+		if p2 tracking_goal "talk to amy brooks in knight's court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to sergeant steeg in knight's court" {
+			p2 tp quest
+			call X_Interact_P2
+			sleep 3
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "gimme a hand" {
+		if p2 tracking_goal "go to amy brooks' place in knight's court" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to sergeant steeg in knight's court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "cross examination" {
+		if p2 tracking_goal "talk to angus crankenhop in regent's square at burt's" {
+			p2 tp XYZ(-501.143310546875, -9410.240234375, -240.0)
+			call ZoneChange_P2
+			p2 tp XYZ(-55.69786834716797, 12.780092239379883, -49.98127746582031)
+			call ZoneChange_P2
+			p2 tp XYZ(41.323036193847656, -562.9835205078125, -0.0001220703125)
+			call ZoneChange_P2
+			p2 tp XYZ(1090.196533203125, 3728.45361328125, 20.0)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to sergeant steeg in knight's court" {
+			p2 tp XYZ(1.547001838684082, -802.2810668945312, 0.0)
+			call ZoneChange_P2
+			p2 tp XYZ(-9376.3095703125, 2306.751220703125, 0.000518798828125)
+			call ZoneChange_P2
+			p2 tp XYZ(6.859953880310059, 2046.4677734375, 10.005767822265625)
+			call ZoneChange_P2
+			p2 tp XYZ(-7019.4736328125, -438.78717041015625, -239.48802185058594)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "doctor of deception" {
+		if p2 tracking_goal "go to knight's tower in knight's court" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "knight's tower" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call Combat_Dungeon_Complete_MASS
+							tp quest
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to sergeant steeg in knight's court" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "case closed!" {
+		if p2 tracking_goal "talk to watson in scotland yard roof" {
+			p2 tp XYZ(-492.3572998046875, -9413.2080078125, -240.0)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+		}
+	}
+	if p2 tracking_quest "weird science" {
+		if p2 tracking_goal "talk to watson in katzenstein's lab" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(-15252.3740234375, 53330.45703125, -1450.197021484375)
+				call Combat_Complete_P2
+				p2 tp XYZ(-15909.01953125, 53949.44921875, -1448.385009765625)
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				sleep 2
+				p2 tp XYZ(-17037.712890625, 52523.16015625, -1049.9840087890625)
+				call X_Interact_P2
+				sleep 1
+				p2 tp XYZ(-15460.58203125, 55458.609375, -649.913818359375)
+				call X_Interact_P2
+				sleep 1
+				p2 tp XYZ(-14007.3271484375, 49905.7578125, -761.5347290039062)
+				call X_Interact_P2
+				sleep 1
+				p2 tp XYZ(-15200.0, 53250.0, -1448.385009765625)
+				sleep 2
+				p2 tp XYZ(-15846.375, 53872.46875, -1450.197021484375)
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(-16572.76171875, 53070.13671875, -1049.9840087890625)
+				call X_Interact_P2
+				sleep 2
+				p2 tp XYZ(-13815.826171875, 53222.71484375, -1049.9840087890625)
+				call X_Interact_P2
+				sleep 2
+				p2 tp XYZ(-15274.2470703125, 54632.6953125, -649.9136962890625)
+				call X_Interact_P2
+				sleep 2
+				p2 tp XYZ(-15198.91015625, 53253.23046875, -1450.0)
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(-10.993003845214844, -5855.1953125, -230.0)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "katzenstein's lab" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15252.3740234375, 53330.45703125, -1450.197021484375)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-15909.01953125, 53949.44921875, -1448.385009765625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-17037.712890625, 52523.16015625, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15460.58203125, 55458.609375, -649.913818359375)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-14007.3271484375, 49905.7578125, -761.5347290039062)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15200.0, 53250.0, -1448.385009765625)
+							sleep 2
+							tp XYZ(-15846.375, 53872.46875, -1450.197021484375)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-16572.76171875, 53070.13671875, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-13815.826171875, 53222.71484375, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15274.2470703125, 54632.6953125, -649.9136962890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15198.91015625, 53253.23046875, -1450.0)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-10.993003845214844, -5855.1953125, -230.0)
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to watson in scotland yard roof" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "fetch bones!" {
+		if p2 tracking_goal "talk to sherlock bones in royal museum" {
+			p2 tp XYZ(-63.47635269165039, -1.0674889087677002, -49.983001708984375)
+			call ZoneChange_P2
+			p2 tp XYZ(-8.612683296203613, -550.5782470703125, -9.1552734375e-05)
+			call ZoneChange_P2
+			p2 tp XYZ(-177.76025390625, 9133.76171875, -3.0517578125e-05)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+		}
+		if p2 tracking_goal "talk to clancy pembroke in regent's square" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+		}
+	}
+	if p2 tracking_quest "stolen away" {
+		if p2 tracking_goal "talk to gus in counterweight east" {
+			p2 tp XYZ(748.7399291992188, 5953.37353515625, 260.1841125488281)
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(3182.253173828125, -1676.1416015625, 3300.0)
+				p2 turncam 1.57
+				sleep 2
+				p2 walkto XYZ(-18.65045166015625, -1651.37841796875, 4400.0419921875)
+				sleep 2
+				p2 tp XYZ(106.4523696899414, -333.3121032714844, 4201.01123046875)
+				call Combat_Complete_P2
+				p2 tp XYZ(-27.23398208618164, -5311.6025390625, 10.011322021484375)
+				sleep 2
+				p2 sendkey ENTER, .3
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 3
+					times 20 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(3182.253173828125, -1676.1416015625, 3300.0)
+					turncam 1.57
+					sleep 2
+					walkto XYZ(-18.65045166015625, -1651.37841796875, 4400.0419921875)
+					sleep 2
+					tp XYZ(106.4523696899414, -333.3121032714844, 4201.01123046875)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-27.23398208618164, -5311.6025390625, 10.011322021484375)
+					sleep 2
+					sendkey ENTER, .3
+					call ZoneChange_MASS
+					tp XYZ(1254.6829833984375, 257.4205017089844, -0.0286865234375)
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to clancy pembroke in regent's square" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+		}
+	}
+	if p2 tracking_quest "weights and measures" {
+		if p2 tracking_goal "talk to sally newflower in counterweight west" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(3200.114013671875, -1692.418701171875, 3300.0)
+				p2 turncam 1.58
+				sleep 2
+				p2 walkto XYZ(-0.3228416442871094, -1632.4368896484375, 4400.0419921875)
+				sleep 2
+				p2 tp XYZ(131.27520751953125, -304.2705993652344, 4201.01123046875)
+				call Combat_Complete_P2
+				p2 tp XYZ(-3.078742027282715, -5224.27783203125, 10.011260986328125)
+				sleep 2
+				p2 sendkey ENTER, .3
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "counterweight west" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call X_Interact_MASS
+							tp XYZ(3200.114013671875, -1692.418701171875, 3300.0)
+							turncam 1.58
+							sleep 2
+							walkto XYZ(-0.3228416442871094, -1632.4368896484375, 4400.0419921875)
+							sleep 2
+							tp XYZ(131.27520751953125, -304.2705993652344, 4201.01123046875)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-3.078742027282715, -5224.27783203125, 10.011260986328125)
+							sleep 2
+							sendkey ENTER, .3
+							call ZoneChange_MASS
+							tp XYZ(-459.1158447265625, -637.42333984375, 0.014190673828125)
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to clancy pembroke in royal museum" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+		}
+		if p2 tracking_goal "talk to sherlock bones in regent's square" {
+			p2 tp quest
+			p2 turncam 5.23
+			sleep 1
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+		}
+	}
+	if p2 tracking_quest "the last meow" {
+		if p2 tracking_goal "defeat meowiarty in big ben" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp XYZ(89.9852066040039, -423.4084167480469, -279.1181945800781)
+				call Combat_Complete_P2
+				p2 tp XYZ(-17.12259292602539, -2384.594482421875, -269.1960144042969)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "big ben" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp XYZ(89.9852066040039, -423.4084167480469, -279.1181945800781)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-17.12259292602539, -2384.594482421875, -269.1960144042969)
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to sherlock bones in regent's square" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "bad news..." {
+		if p2 tracking_goal "talk to merle ambrose in commons" {
+			p2 tp XYZ(-31.500415802001953, -632.3355712890625, 0.014190673828125)
+			call ZoneChange_P2
+			p2 tp XYZ(-10.162223815917969, -5324.01220703125, 19.99310302734375)
+			call ZoneChange_P2
+			p2 tp XYZ(24.164222717285156, -55.822853088378906, 59.999908447265625)
+			call X_Interact_P2
+			sleep 3
+			until NOT p2 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p2 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P2
+			p2 tp XYZ(-10.2535982131958, -3244.99560546875, 244.02288818359375)
+			call ZoneChange_P2
+			call SpeedDelay
+			p2 tp XYZ(-1.195801019668579, -2098.578125, -140.38534545898438)
+			call ZoneChange_P2
+			p2 tp XYZ(-956.0952758789062, -2466.62939453125, 124.86578369140625)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "mooshu" {
+		if p2 tracking_goal "explore mooshu in teleport chamber" {
+			p2 tp XYZ(-14.366083145141602, -657.7991943359375, 0.0)
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp XYZ(45.936668395996094, 1882.246826171875, 72.29592895507812)
+			call ZoneChange_P2
+			p2 tp XYZ(36.051605224609375, -60.5693244934082, 89.21310424804688)
+			call X_Interact_P2
+			sleep 3
+			until NOT p2 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p2 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P2
+			call SpeedDelay
+			return
+		}
+	}
+} #End of P2 Quest Handler
+block P3QuestsHandler {
+	if p3 tracking_quest "missing souls" {
+		if p3 tracking_goal "talk to private kinchley in wolfminster abbey" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "sarcophagus search" {
+		if p3 tracking_goal "talk to clancy pembroke in royal museum" {
+			p3 tp XYZ(-19.527908325195312, -3681.874755859375, 0.0)
+			call ZoneChange_P3
+			p3 tp XYZ(-183.6346893310547, 9127.6201171875, -3.0517578125e-05)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "not so fast..." {
+		if p3 tracking_goal "talk to mayor pimsbury in digmoore station" {
+			p3 tp XYZ(-23.664295196533203, -650.8883056640625, 0.014190673828125)
+			call ZoneChange_P3
+			p3 tp XYZ(9544.572265625, -7459.037109375, 30.00042724609375)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "a cat-tastrophy" {
+		if p3 tracking_goal "talk to sherlock bones in digmoore station" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "back up for bones" {
+		if p3 tracking_goal "talk to ms. conrail in hyde park" {
+			p3 tp quest
+			call ZoneChange_P3
+			call X_Interact_P3
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "garden secret" {
+		if p3 tracking_goal "find baxter in hyde park" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to ms. conrail in hyde park" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "house hunt" {
+		if p3 tracking_goal "search east safehouse in hyde park" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				sleep 2
+				p3 tp XYZ(-6.630228042602539, -1341.9310302734375, 3.0517578125e-05)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp XYZ(-6.630228042602539, -1341.9310302734375, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "search west safehouse in hyde park" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				sleep 2
+				p3 tp XYZ(23.37596893310547, -1298.4466552734375, -3.0517578125e-05)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp XYZ(23.37596893310547, -1298.4466552734375, -3.0517578125e-05)
+					call ZoneChange_P3
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "search south safehouse in hyde park" {		
+			p3 tp XYZ(5468.6396484375, 10947.58984375, -240.0)
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				sleep 2
+				p3 tp XYZ(-16.306795120239258, -2343.75244140625, -724.3464965820312)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					sleep 2
+					tp XYZ(-16.306795120239258, -2343.75244140625, -724.3464965820312)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to ms. conrail in hyde park" {		
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "springing the snitch" {
+		if p3 tracking_goal "talk to willie marks in willie's clocktower" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp XYZ(-54.7710075378418, 117.52244567871094, -3.0517578125e-05)
+				call Combat_Complete_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(-8.2332763671875, -1369.8414306640625, 0.0)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp XYZ(-54.7710075378418, 117.52244567871094, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					times 30 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(-8.2332763671875, -1369.8414306640625, 0.0)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to ms. conrail in hyde park" {	
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "the right tools" {
+		while p3 tracking_goal "defeat hooligan and collect lockpicks in hyde park" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to ms. conrail in hyde park" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "open says me" {
+		if p3 tracking_goal "talk to baxter in hyde park" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp XYZ(-21.467880249023438, -2270.031005859375, -724.3900756835938)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-21.467880249023438, -2270.031005859375, -724.3900756835938)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to ms. conrail in hyde park" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to sherlock bones in digmoore station" {
+			p3 tp XYZ(761.6161499023438, -3756.278564453125, 0.0)
+			call ZoneChange_P3
+			call X_Interact_P3
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "out of control" {
+		if p3 tracking_goal "talk to ms. marphely in chelsea court" {
+			p3 tp quest
+			call ZoneChange_P3
+			call X_Interact_P3
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "for whom the bell tolls" {
+		if p3 tracking_goal "go to chelsea clocktower in chelsea court" {
+			p3 tp quest
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "talk to ms. marphely in chelsea court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "a guide..." {
+		if p3 tracking_goal "talk to william pugsby in chelsea court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "keeper of secrets" {
+		if p3 tracking_goal "defeat shakes o'leary in chelsea court" {
+			p3 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp XYZ(10.533515930175781, -1373.0135498046875, 3.0517578125e-05)
+				call ZoneChange_P3
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P3
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(10.533515930175781, -1373.0135498046875, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to william pugsby in chelsea court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "the only one left" {
+		if p3 tracking_goal "defeat timmy icepick in chelsea court" {
+			p3 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp XYZ(2.32828950881958, -2285.441162109375, -724.3804931640625)
+				call ZoneChange_P3
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P3
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(2.32828950881958, -2285.441162109375, -724.3804931640625)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to william pugsby in chelsea court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "sweet success" {
+		if p3 tracking_goal "talk to ms. marphely in chelsea court" {			
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "password, please!" {
+		if p3 tracking_goal "go to chelsea clocktower in chelsea court" {
+			p3 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				sleep 2
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp quest
+				times 20 {
+					p3 sendkey X, .1
+				}
+				p3 tp XYZ(-24.239429473876953, -1471.8526611328125, 3.0517578125e-05)
+				call ZoneChange_P3
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P3
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					times 20 {
+						sendkey X, .1
+					}
+					tp XYZ(-24.239429473876953, -1471.8526611328125, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to ms. marphely in chelsea court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "collar me impressed" {
+		if p3 tracking_goal "talk to sherlock bones in digmoore station" {
+			p3 tp XYZ(-15143.6455078125, 3103.462158203125, 3.0517578125e-05)
+			call ZoneChange_P3
+			call X_Interact_P3
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "a private meeting" {
+		if p3 tracking_goal "go to 221 barker st. in regent's square" {
+			p3 tp XYZ(-23.106685638427734, -2723.02783203125, -285.0466003417969)
+			call ZoneChange_P3
+			p3 tp XYZ(8469.7275390625, 7914.453125, 108.51904296875)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+		}
+		if p3 tracking_goal "talk to baxter in regent's square" {
+			p3 tp quest
+			p3 turncam 3.88
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to sherlock bones in regent's square" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to sherlock bones in digmoore station" {
+			p3 tp XYZ(-17.476970672607422, -560.7700805664062, 0.0)
+			call ZoneChange_P3
+			p3 tp XYZ(9553.572265625, -7460.73876953125, 29.9998779296875)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "internal investigation" {
+		if p3 tracking_goal "talk to baxter in the ironworks" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				call X_Interact_P3
+				call ZoneChange_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(7486.19140625, 36697.28515625, 775.259521484375)
+				call Combat_Complete_P3
+				p3 tp XYZ(935.191650390625, 125.91624450683594, -3.0517578125e-05)
+				sleep 3
+				p3 sendkey ENTER, .3
+				call ZoneChange_P3
+				call X_Interact_P3
+				call ZoneChange_P3
+			} else {
+				if except p1 sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "the ironworks" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							times 20 {
+								sendkey X, .1
+							}
+							while loading {
+								sleep 5
+							}
+							tp quest
+							sleep 3
+							sendkey X, .3
+							sleep 2
+							tp XYZ(7486.19140625, 36697.28515625, 775.259521484375)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(935.191650390625, 125.91624450683594, -3.0517578125e-05)
+							sleep 3
+							sendkey ENTER, .3
+							call ZoneChange_MASS
+							times 20 {
+								sendkey X, .1
+							}
+							while loading {
+								sleep 5
+							}
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to sherlock bones in digmoore station" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "ring the alarm" {
+		if p3 tracking_goal "talk to watson in scotland yard roof" {
+			p3 tp XYZ(8.339845657348633, -2717.61962890625, -285.04864501953125)
+			call ZoneChange_P3
+			p3 tp XYZ(-9356.537109375, 2291.3505859375, 0.000518798828125)
+			call ZoneChange_P3
+			p3 tp XYZ(13.703730583190918, 2037.7152099609375, 10.00250244140625)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "prison break" {
+		if p3 tracking_goal "talk to officer ness in newgate prison" {
+			p3 tp XYZ(-2186.874755859375, -2524.546142578125, -239.9990234375)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "stop that cat!" {
+		if p3 tracking_goal "go to meowiarty's cell in newgate prison" {
+			p3 tp quest
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "talk to officer malone in newgate prison" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "go to meowiarty in newgate prison" {
+			p3 tp quest
+			sleep 2
+			if p3 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+				if p3 windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "great clocktower" {
+					if playercount 1 {
+						call Dungeon_X_Key_SOLO
+						call ZoneChange_P3
+						p3 tp quest
+						call Combat_Complete_P3
+						p3 tp XYZ(-22.04244613647461, -1345.7266845703125, 0.0)
+						call ZoneChange_P3
+					} else {
+						if except p1 sameplace {
+							call Teleport_Main_To_Help_P3
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-22.04244613647461, -1345.7266845703125, 0.0)
+							call ZoneChange_MASS
+						} else {
+							call Waiting_All_Arrival_Message
+						}
+					}
+				}
+			}	
+			return
+		}
+		if p3 tracking_goal "talk to officer wallace in newgate prison" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to officer stone in newgate prison" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to officer dorsett in newgate prison" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "go to hideout in newgate prison" {
+			p3 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				sleep 2
+				times 5 {
+					p3 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P3
+				p3 tp XYZ(-26.89360809326172, -2285.421875, -724.3812255859375)
+				call ZoneChange_P3
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P3
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					times 5 {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-26.89360809326172, -2285.421875, -724.3812255859375)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to officer payne in newgate prison" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to watson in scotland yard roof" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "scratching post" {
+		if p3 tracking_goal "talk to sergeant steeg in knight's court" {		
+			p3 tp XYZ(-7002.53173828125, -442.8685302734375, -239.48800659179688)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+		}
+	}
+	if p3 tracking_quest "wildcat woes" {
+		if p3 tracking_goal "talk to linda milltop in knight's court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+		}
+		if p3 tracking_goal "defeat jacques the scratcher in knight's court" {
+			p3 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P3
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to sergeant steeg in knight's court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "cat scratch fever" {
+		while p3 tracking_goal "defeat deadly scratcher in knight's court" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to sergeant steeg in knight's court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "investigation..." {
+		if p3 tracking_goal "talk to catherine dalton in knight's court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to sergeant steeg in knight's court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "location, location..." {
+		if p3 tracking_goal "talk to amy brooks in knight's court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to sergeant steeg in knight's court" {
+			p3 tp quest
+			call X_Interact_P3
+			sleep 3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "gimme a hand" {
+		if p3 tracking_goal "go to amy brooks' place in knight's court" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to sergeant steeg in knight's court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "cross examination" {
+		if p3 tracking_goal "talk to angus crankenhop in regent's square at burt's" {
+			p3 tp XYZ(-501.143310546875, -9410.240234375, -240.0)
+			call ZoneChange_P3
+			p3 tp XYZ(-55.69786834716797, 12.780092239379883, -49.98127746582031)
+			call ZoneChange_P3
+			p3 tp XYZ(41.323036193847656, -562.9835205078125, -0.0001220703125)
+			call ZoneChange_P3
+			p3 tp XYZ(1090.196533203125, 3728.45361328125, 20.0)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to sergeant steeg in knight's court" {
+			p3 tp XYZ(1.547001838684082, -802.2810668945312, 0.0)
+			call ZoneChange_P3
+			p3 tp XYZ(-9376.3095703125, 2306.751220703125, 0.000518798828125)
+			call ZoneChange_P3
+			p3 tp XYZ(6.859953880310059, 2046.4677734375, 10.005767822265625)
+			call ZoneChange_P3
+			p3 tp XYZ(-7019.4736328125, -438.78717041015625, -239.48802185058594)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "doctor of deception" {
+		if p3 tracking_goal "go to knight's tower in knight's court" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "knight's tower" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call Combat_Dungeon_Complete_MASS
+							tp quest
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to sergeant steeg in knight's court" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "case closed!" {
+		if p3 tracking_goal "talk to watson in scotland yard roof" {
+			p3 tp XYZ(-492.3572998046875, -9413.2080078125, -240.0)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+		}
+	}
+	if p3 tracking_quest "weird science" {
+		if p3 tracking_goal "talk to watson in katzenstein's lab" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(-15252.3740234375, 53330.45703125, -1450.197021484375)
+				call Combat_Complete_P3
+				p3 tp XYZ(-15909.01953125, 53949.44921875, -1448.385009765625)
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				sleep 2
+				p3 tp XYZ(-17037.712890625, 52523.16015625, -1049.9840087890625)
+				call X_Interact_P3
+				sleep 1
+				p3 tp XYZ(-15460.58203125, 55458.609375, -649.913818359375)
+				call X_Interact_P3
+				sleep 1
+				p3 tp XYZ(-14007.3271484375, 49905.7578125, -761.5347290039062)
+				call X_Interact_P3
+				sleep 1
+				p3 tp XYZ(-15200.0, 53250.0, -1448.385009765625)
+				sleep 2
+				p3 tp XYZ(-15846.375, 53872.46875, -1450.197021484375)
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(-16572.76171875, 53070.13671875, -1049.9840087890625)
+				call X_Interact_P3
+				sleep 2
+				p3 tp XYZ(-13815.826171875, 53222.71484375, -1049.9840087890625)
+				call X_Interact_P3
+				sleep 2
+				p3 tp XYZ(-15274.2470703125, 54632.6953125, -649.9136962890625)
+				call X_Interact_P3
+				sleep 2
+				p3 tp XYZ(-15198.91015625, 53253.23046875, -1450.0)
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(-10.993003845214844, -5855.1953125, -230.0)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "katzenstein's lab" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15252.3740234375, 53330.45703125, -1450.197021484375)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-15909.01953125, 53949.44921875, -1448.385009765625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-17037.712890625, 52523.16015625, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15460.58203125, 55458.609375, -649.913818359375)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-14007.3271484375, 49905.7578125, -761.5347290039062)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15200.0, 53250.0, -1448.385009765625)
+							sleep 2
+							tp XYZ(-15846.375, 53872.46875, -1450.197021484375)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-16572.76171875, 53070.13671875, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-13815.826171875, 53222.71484375, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15274.2470703125, 54632.6953125, -649.9136962890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15198.91015625, 53253.23046875, -1450.0)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-10.993003845214844, -5855.1953125, -230.0)
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to watson in scotland yard roof" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "fetch bones!" {
+		if p3 tracking_goal "talk to sherlock bones in royal museum" {
+			p3 tp XYZ(-63.47635269165039, -1.0674889087677002, -49.983001708984375)
+			call ZoneChange_P3
+			p3 tp XYZ(-8.612683296203613, -550.5782470703125, -9.1552734375e-05)
+			call ZoneChange_P3
+			p3 tp XYZ(-177.76025390625, 9133.76171875, -3.0517578125e-05)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+		}
+		if p3 tracking_goal "talk to clancy pembroke in regent's square" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+		}
+	}
+	if p3 tracking_quest "stolen away" {
+		if p3 tracking_goal "talk to gus in counterweight east" {
+			p3 tp XYZ(748.7399291992188, 5953.37353515625, 260.1841125488281)
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(3182.253173828125, -1676.1416015625, 3300.0)
+				p3 turncam 1.57
+				sleep 2
+				p3 walkto XYZ(-18.65045166015625, -1651.37841796875, 4400.0419921875)
+				sleep 2
+				p3 tp XYZ(106.4523696899414, -333.3121032714844, 4201.01123046875)
+				call Combat_Complete_P3
+				p3 tp XYZ(-27.23398208618164, -5311.6025390625, 10.011322021484375)
+				sleep 2
+				p3 sendkey ENTER, .3
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 3
+					times 20 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(3182.253173828125, -1676.1416015625, 3300.0)
+					turncam 1.57
+					sleep 2
+					walkto XYZ(-18.65045166015625, -1651.37841796875, 4400.0419921875)
+					sleep 2
+					tp XYZ(106.4523696899414, -333.3121032714844, 4201.01123046875)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-27.23398208618164, -5311.6025390625, 10.011322021484375)
+					sleep 2
+					sendkey ENTER, .3
+					call ZoneChange_MASS
+					tp XYZ(1254.6829833984375, 257.4205017089844, -0.0286865234375)
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to clancy pembroke in regent's square" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+		}
+	}
+	if p3 tracking_quest "weights and measures" {
+		if p3 tracking_goal "talk to sally newflower in counterweight west" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(3200.114013671875, -1692.418701171875, 3300.0)
+				p3 turncam 1.58
+				sleep 2
+				p3 walkto XYZ(-0.3228416442871094, -1632.4368896484375, 4400.0419921875)
+				sleep 2
+				p3 tp XYZ(131.27520751953125, -304.2705993652344, 4201.01123046875)
+				call Combat_Complete_P3
+				p3 tp XYZ(-3.078742027282715, -5224.27783203125, 10.011260986328125)
+				sleep 2
+				p3 sendkey ENTER, .3
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "counterweight west" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call X_Interact_MASS
+							tp XYZ(3200.114013671875, -1692.418701171875, 3300.0)
+							turncam 1.58
+							sleep 2
+							walkto XYZ(-0.3228416442871094, -1632.4368896484375, 4400.0419921875)
+							sleep 2
+							tp XYZ(131.27520751953125, -304.2705993652344, 4201.01123046875)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-3.078742027282715, -5224.27783203125, 10.011260986328125)
+							sleep 2
+							sendkey ENTER, .3
+							call ZoneChange_MASS
+							tp XYZ(-459.1158447265625, -637.42333984375, 0.014190673828125)
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to clancy pembroke in royal museum" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+		}
+		if p3 tracking_goal "talk to sherlock bones in regent's square" {
+			p3 tp quest
+			p3 turncam 5.23
+			sleep 1
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+		}
+	}
+	if p3 tracking_quest "the last meow" {
+		if p3 tracking_goal "defeat meowiarty in big ben" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp XYZ(89.9852066040039, -423.4084167480469, -279.1181945800781)
+				call Combat_Complete_P3
+				p3 tp XYZ(-17.12259292602539, -2384.594482421875, -269.1960144042969)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "big ben" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp XYZ(89.9852066040039, -423.4084167480469, -279.1181945800781)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-17.12259292602539, -2384.594482421875, -269.1960144042969)
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to sherlock bones in regent's square" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "bad news..." {
+		if p3 tracking_goal "talk to merle ambrose in commons" {
+			p3 tp XYZ(-31.500415802001953, -632.3355712890625, 0.014190673828125)
+			call ZoneChange_P3
+			p3 tp XYZ(-10.162223815917969, -5324.01220703125, 19.99310302734375)
+			call ZoneChange_P3
+			p3 tp XYZ(24.164222717285156, -55.822853088378906, 59.999908447265625)
+			call X_Interact_P3
+			sleep 3
+			until NOT p3 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p3 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P3
+			p3 tp XYZ(-10.2535982131958, -3244.99560546875, 244.02288818359375)
+			call ZoneChange_P3
+			call SpeedDelay
+			p3 tp XYZ(-1.195801019668579, -2098.578125, -140.38534545898438)
+			call ZoneChange_P3
+			p3 tp XYZ(-956.0952758789062, -2466.62939453125, 124.86578369140625)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "mooshu" {
+		if p3 tracking_goal "explore mooshu in teleport chamber" {
+			p3 tp XYZ(-14.366083145141602, -657.7991943359375, 0.0)
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp XYZ(45.936668395996094, 1882.246826171875, 72.29592895507812)
+			call ZoneChange_P3
+			p3 tp XYZ(36.051605224609375, -60.5693244934082, 89.21310424804688)
+			call X_Interact_P3
+			sleep 3
+			until NOT p3 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p3 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P3
+			call SpeedDelay
+			return
+		}
+	}
+} #End of P3 Quest Handler
+block P4QuestsHandler {
+	if p4 tracking_quest "missing souls" {
+		if p4 tracking_goal "talk to private kinchley in wolfminster abbey" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "sarcophagus search" {
+		if p4 tracking_goal "talk to clancy pembroke in royal museum" {
+			p4 tp XYZ(-19.527908325195312, -3681.874755859375, 0.0)
+			call ZoneChange_P4
+			p4 tp XYZ(-183.6346893310547, 9127.6201171875, -3.0517578125e-05)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "not so fast..." {
+		if p4 tracking_goal "talk to mayor pimsbury in digmoore station" {
+			p4 tp XYZ(-23.664295196533203, -650.8883056640625, 0.014190673828125)
+			call ZoneChange_P4
+			p4 tp XYZ(9544.572265625, -7459.037109375, 30.00042724609375)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "a cat-tastrophy" {
+		if p4 tracking_goal "talk to sherlock bones in digmoore station" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "back up for bones" {
+		if p4 tracking_goal "talk to ms. conrail in hyde park" {
+			p4 tp quest
+			call ZoneChange_P4
+			call X_Interact_P4
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "garden secret" {
+		if p4 tracking_goal "find baxter in hyde park" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to ms. conrail in hyde park" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "house hunt" {
+		if p4 tracking_goal "search east safehouse in hyde park" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				sleep 2
+				p4 tp XYZ(-6.630228042602539, -1341.9310302734375, 3.0517578125e-05)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp XYZ(-6.630228042602539, -1341.9310302734375, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "search west safehouse in hyde park" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				sleep 2
+				p4 tp XYZ(23.37596893310547, -1298.4466552734375, -3.0517578125e-05)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp XYZ(23.37596893310547, -1298.4466552734375, -3.0517578125e-05)
+					call ZoneChange_P4
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "search south safehouse in hyde park" {		
+			p4 tp XYZ(5468.6396484375, 10947.58984375, -240.0)
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				sleep 2
+				p4 tp XYZ(-16.306795120239258, -2343.75244140625, -724.3464965820312)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					sleep 2
+					tp XYZ(-16.306795120239258, -2343.75244140625, -724.3464965820312)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to ms. conrail in hyde park" {		
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "springing the snitch" {
+		if p4 tracking_goal "talk to willie marks in willie's clocktower" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp XYZ(-54.7710075378418, 117.52244567871094, -3.0517578125e-05)
+				call Combat_Complete_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(-8.2332763671875, -1369.8414306640625, 0.0)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp XYZ(-54.7710075378418, 117.52244567871094, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					times 30 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(-8.2332763671875, -1369.8414306640625, 0.0)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to ms. conrail in hyde park" {	
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "the right tools" {
+		while p4 tracking_goal "defeat hooligan and collect lockpicks in hyde park" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to ms. conrail in hyde park" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "open says me" {
+		if p4 tracking_goal "talk to baxter in hyde park" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp XYZ(-21.467880249023438, -2270.031005859375, -724.3900756835938)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-21.467880249023438, -2270.031005859375, -724.3900756835938)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to ms. conrail in hyde park" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to sherlock bones in digmoore station" {
+			p4 tp XYZ(761.6161499023438, -3756.278564453125, 0.0)
+			call ZoneChange_P4
+			call X_Interact_P4
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "out of control" {
+		if p4 tracking_goal "talk to ms. marphely in chelsea court" {
+			p4 tp quest
+			call ZoneChange_P4
+			call X_Interact_P4
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "for whom the bell tolls" {
+		if p4 tracking_goal "go to chelsea clocktower in chelsea court" {
+			p4 tp quest
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "talk to ms. marphely in chelsea court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "a guide..." {
+		if p4 tracking_goal "talk to william pugsby in chelsea court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "keeper of secrets" {
+		if p4 tracking_goal "defeat shakes o'leary in chelsea court" {
+			p4 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp XYZ(10.533515930175781, -1373.0135498046875, 3.0517578125e-05)
+				call ZoneChange_P4
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P4
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(10.533515930175781, -1373.0135498046875, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to william pugsby in chelsea court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "the only one left" {
+		if p4 tracking_goal "defeat timmy icepick in chelsea court" {
+			p4 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp XYZ(2.32828950881958, -2285.441162109375, -724.3804931640625)
+				call ZoneChange_P4
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P4
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(2.32828950881958, -2285.441162109375, -724.3804931640625)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to william pugsby in chelsea court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "sweet success" {
+		if p4 tracking_goal "talk to ms. marphely in chelsea court" {			
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "password, please!" {
+		if p4 tracking_goal "go to chelsea clocktower in chelsea court" {
+			p4 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				sleep 2
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp quest
+				times 20 {
+					p4 sendkey X, .1
+				}
+				p4 tp XYZ(-24.239429473876953, -1471.8526611328125, 3.0517578125e-05)
+				call ZoneChange_P4
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P4
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					times 20 {
+						sendkey X, .1
+					}
+					tp XYZ(-24.239429473876953, -1471.8526611328125, 3.0517578125e-05)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to ms. marphely in chelsea court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "collar me impressed" {
+		if p4 tracking_goal "talk to sherlock bones in digmoore station" {
+			p4 tp XYZ(-15143.6455078125, 3103.462158203125, 3.0517578125e-05)
+			call ZoneChange_P4
+			call X_Interact_P4
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "a private meeting" {
+		if p4 tracking_goal "go to 221 barker st. in regent's square" {
+			p4 tp XYZ(-23.106685638427734, -2723.02783203125, -285.0466003417969)
+			call ZoneChange_P4
+			p4 tp XYZ(8469.7275390625, 7914.453125, 108.51904296875)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+		}
+		if p4 tracking_goal "talk to baxter in regent's square" {
+			p4 tp quest
+			p4 turncam 3.88
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to sherlock bones in regent's square" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to sherlock bones in digmoore station" {
+			p4 tp XYZ(-17.476970672607422, -560.7700805664062, 0.0)
+			call ZoneChange_P4
+			p4 tp XYZ(9553.572265625, -7460.73876953125, 29.9998779296875)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "internal investigation" {
+		if p4 tracking_goal "talk to baxter in the ironworks" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				call X_Interact_P4
+				call ZoneChange_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(7486.19140625, 36697.28515625, 775.259521484375)
+				call Combat_Complete_P4
+				p4 tp XYZ(935.191650390625, 125.91624450683594, -3.0517578125e-05)
+				sleep 3
+				p4 sendkey ENTER, .3
+				call ZoneChange_P4
+				call X_Interact_P4
+				call ZoneChange_P4
+			} else {
+				if except p1 sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "the ironworks" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							times 20 {
+								sendkey X, .1
+							}
+							while loading {
+								sleep 5
+							}
+							tp quest
+							sleep 3
+							sendkey X, .3
+							sleep 2
+							tp XYZ(7486.19140625, 36697.28515625, 775.259521484375)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(935.191650390625, 125.91624450683594, -3.0517578125e-05)
+							sleep 3
+							sendkey ENTER, .3
+							call ZoneChange_MASS
+							times 20 {
+								sendkey X, .1
+							}
+							while loading {
+								sleep 5
+							}
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to sherlock bones in digmoore station" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "ring the alarm" {
+		if p4 tracking_goal "talk to watson in scotland yard roof" {
+			p4 tp XYZ(8.339845657348633, -2717.61962890625, -285.04864501953125)
+			call ZoneChange_P4
+			p4 tp XYZ(-9356.537109375, 2291.3505859375, 0.000518798828125)
+			call ZoneChange_P4
+			p4 tp XYZ(13.703730583190918, 2037.7152099609375, 10.00250244140625)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "prison break" {
+		if p4 tracking_goal "talk to officer ness in newgate prison" {
+			p4 tp XYZ(-2186.874755859375, -2524.546142578125, -239.9990234375)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "stop that cat!" {
+		if p4 tracking_goal "go to meowiarty's cell in newgate prison" {
+			p4 tp quest
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "talk to officer malone in newgate prison" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "go to meowiarty in newgate prison" {
+			p4 tp quest
+			sleep 2
+			if p4 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+				if p4 windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "great clocktower" {
+					if playercount 1 {
+						call Dungeon_X_Key_SOLO
+						call ZoneChange_P4
+						p4 tp quest
+						call Combat_Complete_P4
+						p4 tp XYZ(-22.04244613647461, -1345.7266845703125, 0.0)
+						call ZoneChange_P4
+					} else {
+						if except p1 sameplace {
+							call Teleport_Main_To_Help_P4
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-22.04244613647461, -1345.7266845703125, 0.0)
+							call ZoneChange_MASS
+						} else {
+							call Waiting_All_Arrival_Message
+						}
+					}
+				}
+			}	
+			return
+		}
+		if p4 tracking_goal "talk to officer wallace in newgate prison" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to officer stone in newgate prison" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to officer dorsett in newgate prison" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "go to hideout in newgate prison" {
+			p4 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				sleep 2
+				times 5 {
+					p4 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P4
+				p4 tp XYZ(-26.89360809326172, -2285.421875, -724.3812255859375)
+				call ZoneChange_P4
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P4
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 2
+					times 5 {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-26.89360809326172, -2285.421875, -724.3812255859375)
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to officer payne in newgate prison" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to watson in scotland yard roof" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "scratching post" {
+		if p4 tracking_goal "talk to sergeant steeg in knight's court" {		
+			p4 tp XYZ(-7002.53173828125, -442.8685302734375, -239.48800659179688)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+		}
+	}
+	if p4 tracking_quest "wildcat woes" {
+		if p4 tracking_goal "talk to linda milltop in knight's court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+		}
+		if p4 tracking_goal "defeat jacques the scratcher in knight's court" {
+			p4 tp quest
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if except p1 sameplace {
+					call Teleport_Main_To_Help_P4
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to sergeant steeg in knight's court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "cat scratch fever" {
+		while p4 tracking_goal "defeat deadly scratcher in knight's court" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to sergeant steeg in knight's court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "investigation..." {
+		if p4 tracking_goal "talk to catherine dalton in knight's court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to sergeant steeg in knight's court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "location, location..." {
+		if p4 tracking_goal "talk to amy brooks in knight's court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to sergeant steeg in knight's court" {
+			p4 tp quest
+			call X_Interact_P4
+			sleep 3
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "gimme a hand" {
+		if p4 tracking_goal "go to amy brooks' place in knight's court" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call ZoneChange_MASS
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to sergeant steeg in knight's court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "cross examination" {
+		if p4 tracking_goal "talk to angus crankenhop in regent's square at burt's" {
+			p4 tp XYZ(-501.143310546875, -9410.240234375, -240.0)
+			call ZoneChange_P4
+			p4 tp XYZ(-55.69786834716797, 12.780092239379883, -49.98127746582031)
+			call ZoneChange_P4
+			p4 tp XYZ(41.323036193847656, -562.9835205078125, -0.0001220703125)
+			call ZoneChange_P4
+			p4 tp XYZ(1090.196533203125, 3728.45361328125, 20.0)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to sergeant steeg in knight's court" {
+			p4 tp XYZ(1.547001838684082, -802.2810668945312, 0.0)
+			call ZoneChange_P4
+			p4 tp XYZ(-9376.3095703125, 2306.751220703125, 0.000518798828125)
+			call ZoneChange_P4
+			p4 tp XYZ(6.859953880310059, 2046.4677734375, 10.005767822265625)
+			call ZoneChange_P4
+			p4 tp XYZ(-7019.4736328125, -438.78717041015625, -239.48802185058594)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "doctor of deception" {
+		if p4 tracking_goal "go to knight's tower in knight's court" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "knight's tower" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call Combat_Dungeon_Complete_MASS
+							tp quest
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to sergeant steeg in knight's court" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "case closed!" {
+		if p4 tracking_goal "talk to watson in scotland yard roof" {
+			p4 tp XYZ(-492.3572998046875, -9413.2080078125, -240.0)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+		}
+	}
+	if p4 tracking_quest "weird science" {
+		if p4 tracking_goal "talk to watson in katzenstein's lab" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(-15252.3740234375, 53330.45703125, -1450.197021484375)
+				call Combat_Complete_P4
+				p4 tp XYZ(-15909.01953125, 53949.44921875, -1448.385009765625)
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				sleep 2
+				p4 tp XYZ(-17037.712890625, 52523.16015625, -1049.9840087890625)
+				call X_Interact_P4
+				sleep 1
+				p4 tp XYZ(-15460.58203125, 55458.609375, -649.913818359375)
+				call X_Interact_P4
+				sleep 1
+				p4 tp XYZ(-14007.3271484375, 49905.7578125, -761.5347290039062)
+				call X_Interact_P4
+				sleep 1
+				p4 tp XYZ(-15200.0, 53250.0, -1448.385009765625)
+				sleep 2
+				p4 tp XYZ(-15846.375, 53872.46875, -1450.197021484375)
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(-16572.76171875, 53070.13671875, -1049.9840087890625)
+				call X_Interact_P4
+				sleep 2
+				p4 tp XYZ(-13815.826171875, 53222.71484375, -1049.9840087890625)
+				call X_Interact_P4
+				sleep 2
+				p4 tp XYZ(-15274.2470703125, 54632.6953125, -649.9136962890625)
+				call X_Interact_P4
+				sleep 2
+				p4 tp XYZ(-15198.91015625, 53253.23046875, -1450.0)
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(-10.993003845214844, -5855.1953125, -230.0)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "katzenstein's lab" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15252.3740234375, 53330.45703125, -1450.197021484375)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-15909.01953125, 53949.44921875, -1448.385009765625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-17037.712890625, 52523.16015625, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15460.58203125, 55458.609375, -649.913818359375)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-14007.3271484375, 49905.7578125, -761.5347290039062)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15200.0, 53250.0, -1448.385009765625)
+							sleep 2
+							tp XYZ(-15846.375, 53872.46875, -1450.197021484375)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-16572.76171875, 53070.13671875, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-13815.826171875, 53222.71484375, -1049.9840087890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15274.2470703125, 54632.6953125, -649.9136962890625)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-15198.91015625, 53253.23046875, -1450.0)
+							sleep 2
+							times 20 {
+								sendkey X, .1
+							}
+							sleep 2
+							tp XYZ(-10.993003845214844, -5855.1953125, -230.0)
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to watson in scotland yard roof" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "fetch bones!" {
+		if p4 tracking_goal "talk to sherlock bones in royal museum" {
+			p4 tp XYZ(-63.47635269165039, -1.0674889087677002, -49.983001708984375)
+			call ZoneChange_P4
+			p4 tp XYZ(-8.612683296203613, -550.5782470703125, -9.1552734375e-05)
+			call ZoneChange_P4
+			p4 tp XYZ(-177.76025390625, 9133.76171875, -3.0517578125e-05)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+		}
+		if p4 tracking_goal "talk to clancy pembroke in regent's square" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+		}
+	}
+	if p4 tracking_quest "stolen away" {
+		if p4 tracking_goal "talk to gus in counterweight east" {
+			p4 tp XYZ(748.7399291992188, 5953.37353515625, 260.1841125488281)
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(3182.253173828125, -1676.1416015625, 3300.0)
+				p4 turncam 1.57
+				sleep 2
+				p4 walkto XYZ(-18.65045166015625, -1651.37841796875, 4400.0419921875)
+				sleep 2
+				p4 tp XYZ(106.4523696899414, -333.3121032714844, 4201.01123046875)
+				call Combat_Complete_P4
+				p4 tp XYZ(-27.23398208618164, -5311.6025390625, 10.011322021484375)
+				sleep 2
+				p4 sendkey ENTER, .3
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					call ZoneChange_MASS
+					tp quest
+					sleep 3
+					times 20 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(3182.253173828125, -1676.1416015625, 3300.0)
+					turncam 1.57
+					sleep 2
+					walkto XYZ(-18.65045166015625, -1651.37841796875, 4400.0419921875)
+					sleep 2
+					tp XYZ(106.4523696899414, -333.3121032714844, 4201.01123046875)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-27.23398208618164, -5311.6025390625, 10.011322021484375)
+					sleep 2
+					sendkey ENTER, .3
+					call ZoneChange_MASS
+					tp XYZ(1254.6829833984375, 257.4205017089844, -0.0286865234375)
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to clancy pembroke in regent's square" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+		}
+	}
+	if p4 tracking_quest "weights and measures" {
+		if p4 tracking_goal "talk to sally newflower in counterweight west" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(3200.114013671875, -1692.418701171875, 3300.0)
+				p4 turncam 1.58
+				sleep 2
+				p4 walkto XYZ(-0.3228416442871094, -1632.4368896484375, 4400.0419921875)
+				sleep 2
+				p4 tp XYZ(131.27520751953125, -304.2705993652344, 4201.01123046875)
+				call Combat_Complete_P4
+				p4 tp XYZ(-3.078742027282715, -5224.27783203125, 10.011260986328125)
+				sleep 2
+				p4 sendkey ENTER, .3
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "counterweight west" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp quest
+							call X_Interact_MASS
+							tp XYZ(3200.114013671875, -1692.418701171875, 3300.0)
+							turncam 1.58
+							sleep 2
+							walkto XYZ(-0.3228416442871094, -1632.4368896484375, 4400.0419921875)
+							sleep 2
+							tp XYZ(131.27520751953125, -304.2705993652344, 4201.01123046875)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-3.078742027282715, -5224.27783203125, 10.011260986328125)
+							sleep 2
+							sendkey ENTER, .3
+							call ZoneChange_MASS
+							tp XYZ(-459.1158447265625, -637.42333984375, 0.014190673828125)
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to clancy pembroke in royal museum" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+		}
+		if p4 tracking_goal "talk to sherlock bones in regent's square" {
+			p4 tp quest
+			p4 turncam 5.23
+			sleep 1
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+		}
+	}
+	if p4 tracking_quest "the last meow" {
+		if p4 tracking_goal "defeat meowiarty in big ben" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp XYZ(89.9852066040039, -423.4084167480469, -279.1181945800781)
+				call Combat_Complete_P4
+				p4 tp XYZ(-17.12259292602539, -2384.594482421875, -269.1960144042969)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						if windowtext ["WorldView", "NPCRangeWin", "wndTitleBackground", "NPCRangeTxtTitle"] "big ben" {
+							call Dungeon_X_Key_MASS
+							call ZoneChange_MASS
+							tp XYZ(89.9852066040039, -423.4084167480469, -279.1181945800781)
+							call Combat_Dungeon_Complete_MASS
+							tp XYZ(-17.12259292602539, -2384.594482421875, -269.1960144042969)
+							call ZoneChange_MASS
+						}
+					}
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to sherlock bones in regent's square" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "bad news..." {
+		if p4 tracking_goal "talk to merle ambrose in commons" {
+			p4 tp XYZ(-31.500415802001953, -632.3355712890625, 0.014190673828125)
+			call ZoneChange_P4
+			p4 tp XYZ(-10.162223815917969, -5324.01220703125, 19.99310302734375)
+			call ZoneChange_P4
+			p4 tp XYZ(24.164222717285156, -55.822853088378906, 59.999908447265625)
+			call X_Interact_P4
+			sleep 3
+			until NOT p4 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p4 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P4
+			p4 tp XYZ(-10.2535982131958, -3244.99560546875, 244.02288818359375)
+			call ZoneChange_P4
+			call SpeedDelay
+			p4 tp XYZ(-1.195801019668579, -2098.578125, -140.38534545898438)
+			call ZoneChange_P4
+			p4 tp XYZ(-956.0952758789062, -2466.62939453125, 124.86578369140625)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "mooshu" {
+		if p4 tracking_goal "explore mooshu in teleport chamber" {
+			p4 tp XYZ(-14.366083145141602, -657.7991943359375, 0.0)
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp XYZ(45.936668395996094, 1882.246826171875, 72.29592895507812)
+			call ZoneChange_P4
+			p4 tp XYZ(36.051605224609375, -60.5693244934082, 89.21310424804688)
+			call X_Interact_P4
+			sleep 3
+			until NOT p4 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+				p4 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+				sleep .1
+			}
+			call ZoneChange_P4
+			call SpeedDelay
+			return
+		}
+	}
+} #End of P4 Quest Handler
+############################
+#    Main Quest Handler    #	
+############################
+	loop {
+		if playercount 1 {
+			if p1 loading {
+				sleep .01
+			} else {
+				break
+			}
+		} elif playercount 2 {
+			if p1 loading {
+				sleep .01
+			} elif p2 loading {
+				sleep .01
+			} else {
+				break
+			}
+		} elif playercount 3 {
+			if p1 loading {
+				sleep .01
+			} elif p2 loading {
+				sleep .01
+			} elif p3 loading {
+				sleep .01
+			} else {
+				break
+			}
+		} elif playercount 4 {
+			if p1 loading {
+				sleep .01
+			} elif p2 loading {
+				sleep .01
+			} elif p3 loading {
+				sleep .01
+			} elif p4 loading {
+				sleep .01
+			} else {
+				break
+			}
+		}
+	}
+	if playercount 1 {
+		call P1QuestsHandler
+		call Quest_Follow_Checker_P1
+	} elif playercount 2 {
+		call P2QuestsHandler
+		call Quest_Follow_Checker_P2
+	} elif playercount 3 {
+		call P2QuestsHandler
+		call Quest_Follow_Checker_P2
+		call P3QuestsHandler
+		call Quest_Follow_Checker_P3
+	} elif playercount 4 {
+		call P2QuestsHandler
+		call Quest_Follow_Checker_P2
+		call P3QuestsHandler
+		call Quest_Follow_Checker_P3
+		call P4QuestsHandler
+		call Quest_Follow_Checker_P4
+	}
+} #Ends the entire block of Auto Quester
+
+
+call Marleybone_Main_Quest_Tree

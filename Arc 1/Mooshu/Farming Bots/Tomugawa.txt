@@ -1,0 +1,22 @@
+p1 tp XYZ(842.7710571289062, 9513.3037109375, -1292.302978515625)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+p1 sendkey X, 0.1
+sleep 1
+p1 tp XYZ(-285.2229919433594, 10694.330078125, -1292.302978515625)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+p1 sendkey X, 0.1
+sleep 1
+p1 tp XYZ(-966.0997924804688, 9490.6572265625, -1292.302978515625)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+p1 sendkey X, 0.1
+sleep 1
+p1 tp XYZ(-52.923702239990234, 9763.3642578125, -1292.302978515625)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+p1 sendkey X, 0.1
+p1 waitforzonechange completion
+sleep 1
+p1 tp XYZ(-63.64189147949219, 6039.01171875, -3.0517578125e-05)
+p1 waitforcombat completion
+sleep 1
+p1 tp XYZ(3.3974054531427e-05, -225.00003051757812, -9.1552734375e-05)
+p1 waitforzonechange completion

@@ -1,0 +1,696 @@
+###deimos_expertmode
+#Last Update: 12/6/2024
+
+block Error_Message {
+	print "Error. Moving clients back to hub"
+	until inzone MooShu/MS_Hub {
+		sendkey END, .1
+	}
+}
+
+block P1_Cast_Magic_Touch_At_Cantrip {
+	until p1 windowvisible [ 'WorldView', 'CantripsWindow', 'CantripsSubWindow', 'Tab_Favorites' ] {
+		p1 clickwindow [ 'WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'OpenCantripsButton' ]
+	}
+	sleep .5
+	p1 clickwindow [ 'WorldView', 'CantripsWindow', 'CantripsSubWindow', 'Tab_Favorites' ]
+	sleep .5
+	p1 clickwindow [ 'WorldView', 'CantripsWindow', 'CantripsSubWindow', 'BottomFrame', 'Icon1' ]
+	times 10 {
+		if NOT p1 windowvisible [ 'WorldView', 'CantripTargetWindow', 'CloseCantripTargetButton' ] {
+			sleep 1
+		} else {
+			sleep 1
+			break
+		}
+	}
+	times 2 {
+		#p1 clickwindow [ 'WorldView', 'WizardChatBox', 'chatContainer', 'chatLogContainer', 'chatLogInnerContainer' ]
+		p1 click 639 429
+	}
+	sleep 6
+}
+block P2_Cast_Magic_Touch_At_Cantrip {
+	until p2 windowvisible [ 'WorldView', 'CantripsWindow', 'CantripsSubWindow', 'Tab_Favorites' ] {
+		p2 clickwindow [ 'WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'OpenCantripsButton' ]
+	}
+	sleep .5
+	p2 clickwindow [ 'WorldView', 'CantripsWindow', 'CantripsSubWindow', 'Tab_Favorites' ]
+	sleep .5
+	p2 clickwindow [ 'WorldView', 'CantripsWindow', 'CantripsSubWindow', 'BottomFrame', 'Icon1' ]
+	times 10 {
+		if NOT p2 windowvisible [ 'WorldView', 'CantripTargetWindow', 'CloseCantripTargetButton' ] {
+			sleep 1
+		} else {
+			sleep 1
+			break
+		}
+	}
+	times 2 {
+		#p2 clickwindow [ 'WorldView', 'WizardChatBox', 'chatContainer', 'chatLogContainer', 'chatLogInnerContainer' ]
+		p2 click 639 429
+	}
+	sleep 6
+}
+block P3_Cast_Magic_Touch_At_Cantrip {
+	until p3 windowvisible [ 'WorldView', 'CantripsWindow', 'CantripsSubWindow', 'Tab_Favorites' ] {
+		p3 clickwindow [ 'WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'OpenCantripsButton' ]
+	}
+	sleep .5
+	p3 clickwindow [ 'WorldView', 'CantripsWindow', 'CantripsSubWindow', 'Tab_Favorites' ]
+	sleep .5
+	p3 clickwindow [ 'WorldView', 'CantripsWindow', 'CantripsSubWindow', 'BottomFrame', 'Icon1' ]
+	times 10 {
+		if NOT p3 windowvisible [ 'WorldView', 'CantripTargetWindow', 'CloseCantripTargetButton' ] {
+			sleep 1
+		} else {
+			sleep 1
+			break
+		}
+	}
+	times 2 {
+		#p3 clickwindow [ 'WorldView', 'WizardChatBox', 'chatContainer', 'chatLogContainer', 'chatLogInnerContainer' ]
+		p3 click 639 429
+	}
+	sleep 6
+}
+
+block P1_Check_If_Cantrip_Chest_Is_Active {
+	times 3 {
+		print "Checking if cantrip chest is active..."
+		if p1 inrange "RitualObject_MS" {
+			print "Cantrip chest detected. Casting Magic Touch"
+			p1 entitytp RitualObject_MS
+			call P1_Cast_Magic_Touch_At_Cantrip
+			break
+		} else {
+			sleep 1
+		}
+	}
+}
+block P2_Check_If_Cantrip_Chest_Is_Active {
+	times 3 {
+		print "Checking if cantrip chest is active..."
+		if p2 inrange "RitualObject_MS" {
+			print "Cantrip chest detected. Casting Magic Touch"
+			p2 entitytp RitualObject_MS
+			call P2_Cast_Magic_Touch_At_Cantrip
+			break
+		} else {
+			sleep 1
+		}
+	}
+}
+block P3_Check_If_Cantrip_Chest_Is_Active {
+	times 3 {
+		print "Checking if cantrip chest is active..."
+		if p3 inrange "RitualObject_MS" {
+			print "Cantrip chest detected. Casting Magic Touch"
+			p3 entitytp RitualObject_MS
+			call P3_Cast_Magic_Touch_At_Cantrip
+			break
+		} else {
+			sleep 1
+		}
+	}
+}
+
+block Travel_To_Cantrip_Locations {
+	block Check_Energy {
+		block No_Energy_Message {
+			print "Not all characters have enough energy. Killing bot"
+			kill
+		}
+		if NOT p1 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>4</center>" {
+			if NOT p2 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>4</center>" {
+				if NOT p3 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>4</center>" {
+					sleep .1
+				} else {
+					call No_Energy_Message
+				}
+			} else {
+				call No_Energy_Message
+			}
+		} else {
+			call No_Energy_Message
+		}
+		if NOT p1 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>3</center>" {
+			if NOT p2 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>3</center>" {
+				if NOT p3 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>3</center>" {
+					sleep .1
+				} else {
+					call No_Energy_Message
+				}
+			} else {
+				call No_Energy_Message
+			}
+		} else {
+			call No_Energy_Message
+		}
+		if NOT p1 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>2</center>" {
+			if NOT p2 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>2</center>" {
+				if NOT p3 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>2</center>" {
+					sleep .1
+				} else {
+					call No_Energy_Message
+				}
+			} else {
+				call No_Energy_Message
+			}
+		} else {
+			call No_Energy_Message
+		}
+		if NOT p1 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>1</center>" {
+			if NOT p2 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>1</center>" {
+				if NOT p3 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>1</center>" {
+					sleep .1
+				} else {
+					call No_Energy_Message
+				}
+			} else {
+				call No_Energy_Message
+			}
+		} else {
+			call No_Energy_Message
+		}
+		if NOT p1 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>0</center>" {
+			if NOT p2 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>0</center>" {
+				if NOT p3 windowtext [ 'WorldView', 'windowHUD', 'spriteEnergyBkg', 'EnergyGlobeRect', 'textEnergy' ] "<center>0</center>" {
+					sleep .1
+				} else {
+					call No_Energy_Message
+				}
+			} else {
+				call No_Energy_Message
+			}
+		} else {
+			call No_Energy_Message
+		}
+	}	
+	if NOT inzone MooShu/MS_Hub {
+		print "Moving all clients back to hub."
+		until inzone MooShu/MS_Hub {
+			sendkey END, .1
+		}
+	} else {
+		if NOT playercount 3 {
+			print "ONLY 3 clients with cantrips must be connected."
+			kill
+		} else {
+			print "Moving to Ancient Burial Grounds"
+			times 3 {
+				tp XYZ(11497.310546875, -13032.3857421875, 53.884674072265625)
+			}
+			times 60 {
+				if NOT inzone MooShu/Interiors/MS_RockDojoT2 {
+					sleep 1
+				} else {
+					break
+				}
+			}
+			if NOT inzone MooShu/Interiors/MS_RockDojoT2 {
+				call Error_Message
+				return
+			}
+			times 3 {
+				tp XYZ(-1879.3350830078125, -1688.25634765625, 3.0517578125e-05)
+			}
+			times 30 {
+				if NOT inzone MooShu/MS_Death/MS_Death_Hub_RuinedTemple {
+					sleep 1
+				} else {
+					break
+				}
+			}
+			if NOT inzone MooShu/MS_Death/MS_Death_Hub_RuinedTemple {
+				call Error_Message
+				return
+			}
+			times 5 {
+				tp XYZ(-10348.2451171875, 17185.52734375, -79.59469604492188)
+			}
+			times 30 {
+				if NOT inzone MooShu/MS_Death/MS_Death_Zone1_BurialGround {
+					sleep 1
+				} else {
+					break
+				}
+			}
+			if NOT inzone MooShu/MS_Death/MS_Death_Zone1_BurialGround {
+				call Error_Message
+				return
+			}
+			#<-----> Location 1 <----->#		
+			until p1 hasxyz XYZ(-12800.9091796875, -15229.3623046875, 25.06524658203125) {
+				p1 tp XYZ(-12800.9091796875, -15229.3623046875, 25.06524658203125)
+			}
+			times 2 {
+				p1 turncam 3.12
+			}
+			sleep 1
+			call Check_Energy
+			call P1_Check_If_Cantrip_Chest_Is_Active
+			until p1 hasxyz XYZ(0,100000,0) { 
+				p1 tp XYZ(0,100000,0)
+			}
+			until p2 hasxyz XYZ(-12800.9091796875, -15229.3623046875, 25.06524658203125) {
+				p2 tp XYZ(-12800.9091796875, -15229.3623046875, 25.06524658203125)
+			}
+			times 2 {
+				p2 turncam 3.12
+			}
+			sleep 1
+			call Check_Energy
+			call P2_Check_If_Cantrip_Chest_Is_Active
+			until p2 hasxyz XYZ(0,100000,0) { 
+				p2 tp XYZ(0,100000,0)
+			}
+			until p3 hasxyz XYZ(-12800.9091796875, -15229.3623046875, 25.06524658203125) {
+				p3 tp XYZ(-12800.9091796875, -15229.3623046875, 25.06524658203125)
+			}
+			times 2 {
+				p3 turncam 3.12
+			}
+			sleep 1
+			call Check_Energy
+			call P3_Check_If_Cantrip_Chest_Is_Active
+			until p3 hasxyz XYZ(0,100000,0) { 
+				p3 tp XYZ(0,100000,0)
+			}
+			#<-----> Location 2 <----->#
+			until p1 hasxyz XYZ(-1177.981201171875, -8721.4287109375, 10.000152587890625) {
+				p1 tp XYZ(-1177.981201171875, -8721.4287109375, 10.000152587890625)
+			}
+			times 2 {
+				p1 turncam 0.39
+			}
+			sleep 1
+			call Check_Energy
+			call P1_Check_If_Cantrip_Chest_Is_Active
+			until p1 hasxyz XYZ(0,100000,0) { 
+				p1 tp XYZ(0,100000,0)
+			}
+			until p2 hasxyz XYZ(-1177.981201171875, -8721.4287109375, 10.000152587890625) {
+				p2 tp XYZ(-1177.981201171875, -8721.4287109375, 10.000152587890625)
+			}
+			times 2 {
+				p2 turncam 0.39
+			}
+			sleep 1
+			call Check_Energy
+			call P2_Check_If_Cantrip_Chest_Is_Active
+			until p2 hasxyz XYZ(0,100000,0) { 
+				p2 tp XYZ(0,100000,0)
+			}
+			until p3 hasxyz XYZ(-1177.981201171875, -8721.4287109375, 10.000152587890625) {
+				p3 tp XYZ(-1177.981201171875, -8721.4287109375, 10.000152587890625)
+			}
+			times 2 {
+				p3 turncam 0.39
+			}
+			sleep 1
+			call Check_Energy
+			call P3_Check_If_Cantrip_Chest_Is_Active
+			until p3 hasxyz XYZ(0,100000,0) { 
+				p3 tp XYZ(0,100000,0)
+			}
+			#<-----> Location 3 <----->#
+			until p1 hasxyz XYZ(-698.7884521484375, 7592.91748046875, -1000.0) {
+				p1 tp XYZ(-698.7884521484375, 7592.91748046875, -1000.0)
+			}
+			times 2 {
+				p1 turncam 1.03
+			}
+			sleep 1
+			call Check_Energy
+			call P1_Check_If_Cantrip_Chest_Is_Active
+			until p1 hasxyz XYZ(0,100000,0) { 
+				p1 tp XYZ(0,100000,0)
+			}
+			until p2 hasxyz XYZ(-698.7884521484375, 7592.91748046875, -1000.0) {
+				p2 tp XYZ(-698.7884521484375, 7592.91748046875, -1000.0)
+			}
+			times 2 {
+				p2 turncam 1.03
+			}
+			sleep 1
+			call Check_Energy
+			call P2_Check_If_Cantrip_Chest_Is_Active
+			until p2 hasxyz XYZ(0,100000,0) { 
+				p2 tp XYZ(0,100000,0)
+			}
+			until p3 hasxyz XYZ(-698.7884521484375, 7592.91748046875, -1000.0) {
+				p3 tp XYZ(-698.7884521484375, 7592.91748046875, -1000.0)
+			}
+			times 2 {
+				p3 turncam 1.03
+			}
+			sleep 1
+			call Check_Energy
+			call P3_Check_If_Cantrip_Chest_Is_Active
+			until p3 hasxyz XYZ(0,100000,0) { 
+				p3 tp XYZ(0,100000,0)
+			}
+			#<-----> Location 4 <----->#
+			until p1 hasxyz XYZ(-4986.6904296875, 10249.4970703125, -1192.302978515625) {
+				p1 tp XYZ(-4986.6904296875, 10249.4970703125, -1192.302978515625)
+			}
+			times 2 {
+				p1 turncam 4.67
+			}
+			sleep 1
+			call Check_Energy
+			call P1_Check_If_Cantrip_Chest_Is_Active
+			until p1 hasxyz XYZ(0,100000,0) { 
+				p1 tp XYZ(0,100000,0)
+			}
+			until p2 hasxyz XYZ(-4986.6904296875, 10249.4970703125, -1192.302978515625) {
+				p2 tp XYZ(-4986.6904296875, 10249.4970703125, -1192.302978515625)
+			}
+			times 2 {
+				p2 turncam 4.67
+			}
+			sleep 1
+			call Check_Energy
+			call P2_Check_If_Cantrip_Chest_Is_Active
+			until p2 hasxyz XYZ(0,100000,0) { 
+				p2 tp XYZ(0,100000,0)
+			}
+			until p3 hasxyz XYZ(-4986.6904296875, 10249.4970703125, -1192.302978515625) {
+				p3 tp XYZ(-4986.6904296875, 10249.4970703125, -1192.302978515625)
+			}
+			times 2 {
+				p3 turncam 4.67
+			}
+			sleep 1
+			call Check_Energy
+			call P3_Check_If_Cantrip_Chest_Is_Active
+			until p3 hasxyz XYZ(0,100000,0) { 
+				p3 tp XYZ(0,100000,0)
+			}
+			#<-----> Location 5 <----->#
+			until p1 hasxyz XYZ(1242.0501708984375, 13962.56640625, -1092.303955078125) {
+				p1 tp XYZ(1242.0501708984375, 13962.56640625, -1092.303955078125)
+			}
+			times 2 {
+				p1 turncam 2.46
+			}
+			sleep 1
+			call Check_Energy
+			call P1_Check_If_Cantrip_Chest_Is_Active
+			until p1 hasxyz XYZ(0,100000,0) { 
+				p1 tp XYZ(0,100000,0)
+			}
+			until p2 hasxyz XYZ(1242.0501708984375, 13962.56640625, -1092.303955078125) {
+				p2 tp XYZ(1242.0501708984375, 13962.56640625, -1092.303955078125)
+			}
+			times 2 {
+				p2 turncam 2.46
+			}
+			sleep 1
+			call Check_Energy
+			call P2_Check_If_Cantrip_Chest_Is_Active
+			until p2 hasxyz XYZ(0,100000,0) { 
+				p2 tp XYZ(0,100000,0)
+			}
+			until p3 hasxyz XYZ(1242.0501708984375, 13962.56640625, -1092.303955078125) {
+				p3 tp XYZ(1242.0501708984375, 13962.56640625, -1092.303955078125)
+			}
+			times 2 {
+				p3 turncam 2.46
+			}
+			sleep 1
+			call Check_Energy
+			call P3_Check_If_Cantrip_Chest_Is_Active
+			until p3 hasxyz XYZ(0,100000,0) { 
+				p3 tp XYZ(0,100000,0)
+			}
+			#<-----> Switch zones to the Newgate Prison <----->#
+			until inzone MooShu/MS_Hub {
+				sendkey END, .1
+			}
+			times 60 {
+				if NOT inzone MooShu/MS_Hub {
+					sleep 1
+				} else {
+					break
+				}
+			}
+			if NOT inzone MooShu/MS_Hub {
+				call Error_Message
+				return
+			}
+			times 5 {
+				tp XYZ(11766.765625, 14090.783203125, 261.1421203613281)
+			}
+			times 60 {
+				if NOT inzone MooShu/Interiors/MS_WaterDojot1_Common {
+					sleep 1
+				} else {
+					break
+				}
+			}
+			if NOT inzone MooShu/Interiors/MS_WaterDojot1_Common {
+				call Error_Message
+				return
+			}
+			times 5 {
+				tp XYZ(-1881.4346923828125, -1681.3875732421875, 3.0517578125e-05)
+			}
+			times 60 {
+				if NOT inzone MooShu/MS_Plague/MS_Plague_Hub_FarmVillage {
+					sleep 1
+				} else {
+					break
+				}
+			}
+			if NOT inzone MooShu/MS_Plague/MS_Plague_Hub_FarmVillage {
+				call Error_Message
+				return
+			}
+			times 5 {
+				tp XYZ(14698.578125, 6417.83203125, 478.9754333496094)
+			}
+			times 60 {
+				if NOT inzone MooShu/MS_Plague/MS_Plague_Zone1_WaterfallCave {
+					sleep 1
+				} else {
+					break
+				}
+			}
+			if NOT inzone MooShu/MS_Plague/MS_Plague_Zone1_WaterfallCave {
+				call Error_Message
+				return
+			}
+			#<-----> Location 6 <----->#
+			until p1 hasxyz XYZ(8184.0712890625, 6941.7177734375, 40.217864990234375) {
+				p1 tp XYZ(8184.0712890625, 6941.7177734375, 40.217864990234375)
+			}
+			times 2 {
+				p1 turncam 3.17
+			}
+			sleep 1
+			call Check_Energy
+			call P1_Check_If_Cantrip_Chest_Is_Active
+			until p1 hasxyz XYZ(0,100000,0) { 
+				p1 tp XYZ(0,100000,0)
+			}
+			until p2 hasxyz XYZ(8184.0712890625, 6941.7177734375, 40.217864990234375) {
+				p2 tp XYZ(8184.0712890625, 6941.7177734375, 40.217864990234375)
+			}
+			times 2 {
+				p2 turncam 3.17
+			}
+			sleep 1
+			call Check_Energy
+			call P2_Check_If_Cantrip_Chest_Is_Active
+			until p2 hasxyz XYZ(0,100000,0) { 
+				p2 tp XYZ(0,100000,0)
+			}
+			until p3 hasxyz XYZ(8184.0712890625, 6941.7177734375, 40.217864990234375) {
+				p3 tp XYZ(8184.0712890625, 6941.7177734375, 40.217864990234375)
+			}
+			times 2 {
+				p3 turncam 3.17
+			}
+			sleep 1
+			call Check_Energy
+			call P3_Check_If_Cantrip_Chest_Is_Active
+			until p3 hasxyz XYZ(0,100000,0) { 
+				p3 tp XYZ(0,100000,0)
+			}
+			#<-----> Location 7 <----->#
+			until p1 hasxyz XYZ(2511.943115234375, 24919.6484375, 9.999969482421875) {
+				p1 tp XYZ(2511.943115234375, 24919.6484375, 9.999969482421875)
+			}
+			times 2 {
+				p1 turncam 3.12
+			}
+			sleep 1
+			call Check_Energy
+			call P1_Check_If_Cantrip_Chest_Is_Active
+			until p1 hasxyz XYZ(0,100000,0) { 
+				p1 tp XYZ(0,100000,0)
+			}
+			until p2 hasxyz XYZ(2511.943115234375, 24919.6484375, 9.999969482421875) {
+				p2 tp XYZ(2511.943115234375, 24919.6484375, 9.999969482421875)
+			}
+			times 2 {
+				p2 turncam 3.12
+			}
+			sleep 1
+			call Check_Energy
+			call P2_Check_If_Cantrip_Chest_Is_Active
+			until p2 hasxyz XYZ(0,100000,0) { 
+				p2 tp XYZ(0,100000,0)
+			}
+			until p3 hasxyz XYZ(2511.943115234375, 24919.6484375, 9.999969482421875) {
+				p3 tp XYZ(2511.943115234375, 24919.6484375, 9.999969482421875)
+			}
+			times 2 {
+				p3 turncam 3.12
+			}
+			sleep 1
+			call Check_Energy
+			call P3_Check_If_Cantrip_Chest_Is_Active
+			until p3 hasxyz XYZ(0,100000,0) { 
+				p3 tp XYZ(0,100000,0)
+			}
+			#<-----> Location 8 <----->#
+			until p1 hasxyz XYZ(59079.53125, 31932.8359375, 10.012969970703125) {
+				p1 tp XYZ(59079.53125, 31932.8359375, 10.012969970703125)
+			}
+			times 2 {
+				p1 turncam 1.52
+			}
+			sleep 1
+			call Check_Energy
+			call P1_Check_If_Cantrip_Chest_Is_Active
+			until p1 hasxyz XYZ(0,100000,0) { 
+				p1 tp XYZ(0,100000,0)
+			}
+			until p2 hasxyz XYZ(59079.53125, 31932.8359375, 10.012969970703125) {
+				p2 tp XYZ(59079.53125, 31932.8359375, 10.012969970703125)
+			}
+			times 2 {
+				p2 turncam 1.52
+			}
+			sleep 1
+			call Check_Energy
+			call P2_Check_If_Cantrip_Chest_Is_Active
+			until p2 hasxyz XYZ(0,100000,0) { 
+				p2 tp XYZ(0,100000,0)
+			}
+			until p3 hasxyz XYZ(59079.53125, 31932.8359375, 10.012969970703125) {
+				p3 tp XYZ(59079.53125, 31932.8359375, 10.012969970703125)
+			}
+			times 2 {
+				p3 turncam 1.52
+			}
+			sleep 1
+			call Check_Energy
+			call P3_Check_If_Cantrip_Chest_Is_Active
+			until p3 hasxyz XYZ(0,100000,0) { 
+				p3 tp XYZ(0,100000,0)
+			}
+			#Going back to hub
+			until inzone MooShu/MS_Hub {
+				sendkey END, .1
+			}
+			print "Farmed locations. Restarting..."
+		}
+	}
+}
+
+block Check_Screen_Resolution {
+	### Check P1 settings
+	until p1 windowvisible [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions' ] {
+		p1 sendkey ESC, .1
+	}
+	sleep 1
+	p1 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions' ]
+	sleep .5
+	if NOT p1 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionResolution', 'OptionControl', 'OptionValue' ] "<center>1280x720" {
+		loop {
+			p1 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionResolution', 'OptionControl', 'OptionButtonLeft' ]
+			if p1 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionResolution', 'OptionControl', 'OptionValue' ] "<center>1280x720" {
+				break
+			}
+		}
+	}
+	if NOT p1 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionFullscreen', 'OptionControl', 'OptionValue' ] "<center>off" {  
+		loop {
+			p1 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionFullscreen', 'OptionControl', 'OptionButtonLeft' ]
+			if p1 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionFullscreen', 'OptionControl', 'OptionValue' ] "<center>off" {
+				break
+			}
+		}
+	}
+	sleep 1
+	p1 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'OkButton' ]
+	### Check P2 settings
+	until p2 windowvisible [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions' ] {
+		p2 sendkey ESC, .1
+	}
+	sleep 1
+	p2 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions' ]
+	sleep .5
+	if NOT p2 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionResolution', 'OptionControl', 'OptionValue' ] "<center>1280x720" {
+		loop {
+			p2 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionResolution', 'OptionControl', 'OptionButtonLeft' ]
+			if p2 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionResolution', 'OptionControl', 'OptionValue' ] "<center>1280x720" {
+				break
+			}
+		}
+	}
+	if NOT p2 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionFullscreen', 'OptionControl', 'OptionValue' ] "<center>off" {  
+		loop {
+			p2 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionFullscreen', 'OptionControl', 'OptionButtonLeft' ]
+			if p2 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionFullscreen', 'OptionControl', 'OptionValue' ] "<center>off" {
+				break
+			}
+		}
+	}
+	sleep 1
+	p2 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'OkButton' ]
+	### Check P3 settings
+	until p3 windowvisible [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions' ] {
+		p3 sendkey ESC, .1
+	}
+	sleep 1
+	p3 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions' ]
+	sleep .5
+	if NOT p3 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionResolution', 'OptionControl', 'OptionValue' ] "<center>1280x720" {
+		loop {
+			p3 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionResolution', 'OptionControl', 'OptionButtonLeft' ]
+			if p3 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionResolution', 'OptionControl', 'OptionValue' ] "<center>1280x720" {
+				break
+			}
+		}
+	}
+	if NOT p3 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionFullscreen', 'OptionControl', 'OptionValue' ] "<center>off" {  
+		loop {
+			p3 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionFullscreen', 'OptionControl', 'OptionButtonLeft' ]
+			if p3 windowtext [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'VideoOptions', 'OptionFullscreen', 'OptionControl', 'OptionValue' ] "<center>off" {
+				break
+			}
+		}
+	}
+	sleep 1
+	p3 clickwindow [ 'WorldView', 'DeckConfiguration', 'SettingPage', 'OkButton' ]
+}
+
+if NOT playercount 3 {
+	print "3 clients with cantrips required."
+	kill
+} else {
+	call Check_Screen_Resolution
+	sleep 1
+	if NOT inzone MooShu/MS_Hub {
+		print "Moving all clients to hub before starting"
+		until inzone MooShu/MS_Hub {
+			sendkey END, .1
+		}
+	}
+	call Travel_To_Cantrip_Locations
+}

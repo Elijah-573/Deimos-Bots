@@ -1,0 +1,43 @@
+#STATE WING
+mass XYZ(1805.461181640625, -4087.49560546875, -4823.625)
+sleep 1
+mass walkto XYZ(2282.401123046875, -4095.03076171875, -4823.625)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+mass tp XYZ(8.0693941116333, 228.76185607910156, 0.20001220703125)
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+mass tp XYZ(487.00067138671875, 1133.4185791015625, 0.20001220703125)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+mass sendkey X, 0.1
+mass waitforfree
+sleep 1
+mass tp XYZ(-17.216064453125, 1656.348388671875, 0.20001220703125)
+mass waitforzonechange completion
+sleep 1
+mass tp XYZ(-150.18841552734375, 41.800445556640625, 0.20001220703125)
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#AFTERKEY
+mass tp XYZ(8.776510238647461, 1646.511962890625, 0.200042724609375)
+mass waitforzonechange completion
+sleep 1
+mass tp XYZ(-68.19129180908203, -62.71673583984375, 0.200042724609375)
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+mass tp XYZ(681.1923217773438, 939.5704956054688, 0.20001220703125)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+mass sendkey X, 0.1
+mass waitforfree
+sleep 1
