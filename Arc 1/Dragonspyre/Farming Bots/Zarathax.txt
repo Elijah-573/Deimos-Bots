@@ -1,0 +1,318 @@
+###deimos_expertmode
+#Block Portion
+block relog {
+	print Different Zones Detected, RETRYING
+	print SLEEPING FOR PRECAUTION
+	sleep 5
+	sendkey ESC, 0.1
+	waitforpath ['WorldView', 'DeckConfiguration', 'SettingPage', 'QuitButton']
+	clickwindow ['WorldView', 'DeckConfiguration', 'SettingPage', 'QuitButton']
+	print SLEEPING FOR PRECAUTION
+	sleep 3
+	if windowvisible ['WorldView', 'mainWindow', 'btnPlay'] {
+			clickwindow ['WorldView', 'mainWindow', 'btnPlay']
+			waitforzonechange completion
+			print RELOG SUCCESSFUL 
+			sleep 1
+		} else {
+			waitforpath ['WorldView', 'mainWindow', 'btnPlay']
+			clickwindow ['WorldView', 'mainWindow', 'btnPlay']
+			waitforzonechange completion
+			print RELOG SUCCESSFUL
+			sleep 1
+		}
+}
+
+block zarathax_sigil {
+	while inzone DragonSpire/DS_A1_Knowledge/DS_A1Z1_WizardTower {
+		tp XYZ(16560.376953125, -14612.4814453125, 933.843505859375)
+		sleep 1
+	if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sleep 13
+	} else {
+		print Sigil Failsafe Activated
+		tp XYZ(16279.7880859375, -14459.57421875, 933.84375)
+		sleep 1
+		tp XYZ(16560.376953125, -14612.4814453125, 933.843505859375)
+		sleep 5
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sleep 13
+	}
+	while not inzone DragonSpire/DS_A1_Knowledge/Interiors/DS_ToK_T11 {
+		sleep 2
+	if not samezone {
+		call relog 
+		call zarathax_sigil
+} 		else {
+			print Arrived in Zarathax
+}
+	}
+	}
+}
+
+block goto_mali {
+	while inzone DragonSpire/DS_A1_Knowledge/DS_A1Z1_WizardTower {
+		tp XYZ(-32139.8125, -14008.1962890625, 30.005828857421875)
+		waitforzonechange completion
+		sleep 1
+	}
+	while inzone DragonSpire/DS_A1_Knowledge/DS_A1Hub_Library {
+		tp XYZ(-11.972896575927734, -326.6722106933594, -20.620208740234375)
+		sleep 1
+	if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		waitforzonechange completion
+		waitforfree
+		sleep 1
+	} else {
+		sendkey S, 0.6
+		sleep 1
+		sendkey W, 0.6
+		sleep 3
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		waitforzonechange completion
+		waitforfree
+		sleep 1
+	}
+	while inzone DragonSpire/DS_Hub_Cathedral {
+		tp XYZ(1160.38818359375, -1159.365478515625, -0.060272216796875)
+		sleep 1
+	if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		waitforzonechange completion
+		waitforfree
+		sleep 1
+	} else {
+		sendkey S, 0.6
+		sleep 1
+		sendkey W, 0.6
+		sleep 3
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		waitforzonechange completion
+		waitforfree
+		sleep 1
+	}
+	while inzone DragonSpire/DS_A3_Kings/DS_A3Hub_Academy {
+		tp XYZ(-5348.9765625, 10069.7255859375, 1998.800048828125)
+		sleep 1
+	if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		waitforzonechange completion
+		waitforfree
+		sleep 1
+	} else {
+		sendkey S, 0.6
+		sleep 1
+		sendkey W, 0.6
+		sleep 3
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		waitforzonechange completion
+		waitforfree
+		sleep 1
+	}
+	while inzone DragonSpire/DS_A3_Kings/DS_A3_FlightPath {
+		sleep 1
+	if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		waitforzonechange completion
+		waitforfree
+		sleep 1
+	} else {
+		sleep 2
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		waitforzonechange completion
+		waitforfree
+		sleep 1
+	}
+	}
+	}
+	}
+	}
+}
+
+block mali_sigil {
+	while inzone DragonSpire/DS_A3_Kings/DS_A3Z3_Volcano/DS_LandingZone {
+		clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'MarkButton']
+		tp XYZ(-5.088611602783203, 6074.64306640625, 100.0)
+		sleep 1
+	if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sleep 13
+	} else {
+		print Sigil Failsafe Activated
+		tp XYZ(129.39781188964844, 5144.529296875, -6.103515625e-05)
+		sleep 1
+		tp XYZ(-5.088611602783203, 6074.64306640625, 100.0)
+		sleep 5
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sleep 13
+	}
+	while not inzone DragonSpire/DS_A3_Kings/DS_A3Z3_Volcano/DS_Volcano1_2 {
+		sleep 2
+	if not samezone {
+		print Different Zones Detected, RETRYING
+		sleep 1
+		clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'RecallButton']
+		waitforzonechange completion
+		sleep 1
+		call mali_sigil
+	}
+	}
+	}
+}
+
+block elixir {
+	while inzone DragonSpire/DS_A3_Kings/DS_A3Z3_Volcano/DS_Volcano1_2 {
+		print Entered Malistaire
+		print Grabbing Elixir
+		sleep 1
+		except p1 tp XYZ(25.8420352935791, 428.453125, -274.89141845703125)
+		except p1 tp XYZ(25.8420352935791, 428.453125, -274.89141845703125)
+		sleep 1
+	if except p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		except p1 sendkey X, 0.1
+		except p1 sendkey X, 0.1
+		except p1 sendkey X, 0.1
+		sleep 1
+		except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+		except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+		sleep 2
+		except p1 sendkey X, 0.1
+		except p1 sendkey X, 0.1
+		except p1 sendkey X, 0.1
+		sleep 1
+		except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+		except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+		sleep 1
+		print ELIXIR GRABBED
+		sendkey END, 0.1
+		sendkey END, 0.1
+		sendkey END, 0.1
+		waitforzonechange completion
+		sleep 1
+	} else {
+		sendkey S, 0.5
+		sleep 0.1
+		sendkey W, 0.5
+		sleep 3
+		except p1 sendkey X, 0.1
+		except p1 sendkey X, 0.1
+		except p1 sendkey X, 0.1
+		sleep 1
+		except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+		except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+		sleep 2
+		except p1 sendkey X, 0.1
+		except p1 sendkey X, 0.1
+		except p1 sendkey X, 0.1
+		sleep 1
+		except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+		except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+		sleep 1
+		print ELIXIR GRABBED
+		sendkey END, 0.1
+		sendkey END, 0.1
+		sendkey END, 0.1
+		waitforzonechange completion
+		sleep 1
+	}
+	}
+}
+
+block return_zarathax {
+	while inzone DragonSpire/DS_Hub_Cathedral {
+		tp XYZ(-1044.8262939453125, 1065.5, -0.0419921875)
+		sleep 1
+	if windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		waitforzonechange completion
+		waitforfree
+		sleep 1
+	} else {
+		sendkey S, 0.6
+		sleep 1
+		sendkey W, 0.6
+		sleep 3
+		sendkey X, 0.1
+		sendkey X, 0.1
+		sendkey X, 0.1
+		waitforzonechange completion
+		waitforfree
+		sleep 1
+	}
+	while inzone DragonSpire/DS_A1_Knowledge/DS_A1Hub_Library {
+		tp XYZ(6343.64501953125, 7110.1630859375, 377.45745849609375)
+		waitforzonechange completion
+		sleep 1
+	}
+	}
+}
+
+block zarathax_combat {
+	while inzone DragonSpire/DS_A1_Knowledge/Interiors/DS_ToK_T11 {
+		sleep 1
+		except p1 entitytp Draconian-Caster-Blue-Boss-R7
+		except p1 waitforcombat
+		p1 entitytp Draconian-Caster-Blue-Boss-R7
+		waitforcombat completion
+		print Zarathax Defeated
+		sleep 1
+		entitytp Health
+		sleep 0.5
+		entitytp Mana
+		sleep 0.5
+		entitytp Health
+		sleep 0.5
+		entitytp Mana
+		sleep 1
+		tp XYZ(-19.023189544677734, 1381.233154296875, 0.123504638671875)
+		waitforzonechange completion
+		sleep 1
+	}
+}
+
+#Bot Portion
+while inzone DragonSpire/DS_A1_Knowledge/DS_A1Z1_WizardTower {
+if except p1 windowvisible ['WorldView', 'windowHUD', 'wndElixirContainer', 'sprtElixir1'] {
+	call zarathax_sigil
+} else {
+	call goto_mali
+	call mali_sigil
+	call elixir
+	call return_zarathax
+	call zarathax_sigil
+}
+}
+
+#Zarathax Combat
+call zarathax_combat

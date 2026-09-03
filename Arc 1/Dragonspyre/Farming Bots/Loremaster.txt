@@ -1,0 +1,212 @@
+###deimos_expertmode 
+# follow format for more tcs, i gave you 3 slots already, mass replace accordingly
+# set a marker on all clients near your sigil 
+# ensure the marker is not too close to your sigil
+# farms loremaster, set your own tcs to save 
+block tc_check {
+    if p1 windowtext ['WorldView', 'shopGUI', 'buyWindow', 'column0', 'shoplist0'] contains ["tc1", "tc2", "tc3"] {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'num0']
+    }
+    if p1 windowtext ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'shoplist1'] contains ["tc1", "tc2", "tc3"] {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'num1']
+    } 
+    if p1 windowtext ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'shoplist2'] contains ["tc1", "tc2", "tc3"] {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'num2']
+    }
+    if p1 windowtext ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'shoplist3'] contains ["tc1", "tc2", "tc3"] {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'num3']
+    }
+    if p1 windowtext ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'shoplist4'] contains ["tc1", "tc2", "tc3"] {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'num4']
+    }
+    if p1 windowtext ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'shoplist5'] contains ["tc1", "tc2", "tc3"] {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'num5']
+    }
+    if p1 windowtext ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'shoplist6'] contains ["tc1", "tc2", "tc3"] {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'num6']
+    }
+    if p1 windowtext ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'shoplist7'] contains ["tc1", "tc2", "tc3"] {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'num7']
+    }
+    if p1 windowtext ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'shoplist8'] contains ["tc1", "tc2", "tc3"] {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'num8']
+    }
+    if p1 windowtext ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'shoplist9'] contains ["tc1", "tc2", "tc3"] {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'column1', 'num9']
+    }
+}
+block sell_tc {
+    times 3 {
+        p1 clickwindow ['WorldView', 'DeckConfiguration', 'DeckConfigurationWindow', 'ControlSprite', 'DeckPage', 'QuickSellButton']
+    }
+    p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'AllAction']
+    until p1 windowdisabled ['WorldView', 'shopGUI', 'buyWindow', 'rightscroll'] {
+        call tc_check
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'rightscroll']
+    }
+    times 3 {
+        p1 clickwindow ['WorldView', 'shopGUI', 'buyWindow', 'sellAction']
+    }
+    times 3 {
+        p1 clickwindow ['WorldView', 'shopGUI', 'QuickSellConfirmationWindow', 'SellButton']
+    }
+    if p1 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton'] {
+        p1 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+    }
+}
+block tcspace_check {
+    p1 sendkey P, 0.1
+    sleep 1
+    p1 clickwindow ['WorldView', 'DeckConfiguration', 'DeckConfigurationWindow', 'ControlSprite', 'TreasureCardButton']
+    while not p1 windowvisible ['WorldView', 'DeckConfiguration', 'DeckConfigurationWindow', 'ControlSprite', 'DeckPage', 'TreasureCardCount'] {
+        sleep 0.2
+    }
+    if p1 windowtext ['WorldView', 'DeckConfiguration', 'DeckConfigurationWindow', 'ControlSprite', 'DeckPage', 'TreasureCardCount'] "<center>999/999" {
+        call sell_tc
+    } else {
+        p1 sendkey P, 0.1
+    }
+}
+block return {
+    until inzone DragonSpire/DS_A1_Knowledge/Interiors/DS_Library_Interior {
+        clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'RecallButton']
+        sleep 3
+    }
+    waitforfree
+    sleep 2
+	waitforfree
+}
+
+#Bot 
+waitforfree 
+call tcspace_check
+sleep 1 
+
+if inzone DragonSpire/DS_A1_Knowledge/Interiors/DS_Library_Interior {
+    tp XYZ(-2619.28564453125, 401.173828125, 6.103515625e-05)
+    sleep 1
+    tp XYZ(-3151.9609375, 547.9762573242188, 0.000579833984375)
+    times 5 {
+        if p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton'] {
+            break
+        }
+        sleep 1
+    }
+    while p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton'] {
+        sendkey X, 0.1
+    }
+    times 13 {
+        if p1 loading {
+            break
+        }
+        sleep 1
+    }
+    waitforfree
+    sleep 2
+}
+
+waitforfree
+
+if p1 inzone DragonSpire/DS_A1_Knowledge/Interiors/DS_Library_LoreMasterEncounter {
+    if sameplace {
+        sleep 1 
+        usepotion 25 5 
+        until incombat {
+            tp closestmob
+        }
+        waitforfree
+        sleep 2
+	    waitforfree
+        if p1 inrange "CombatBonus_WispHealth" {
+            times 3 {
+                entitytp health
+                sleep 0.5
+            }
+        }
+        if p1 inrange "CombatBonus_WispMana" {
+            times 3 {
+				entitytp mana 
+				sleep 0.5
+			}
+        }
+        call return
+    } else {
+        call return
+    }
+}
+
+waitforfree
+
+if healthbelow 25% { 
+	waitforfree
+	sleep 3
+	waitforfree
+	if not windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GotoDormButton'] { 
+		until windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GotoDormButton'] {
+			clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GotoDormButton']
+			sleep 1 
+		}
+	}
+	sleep 4
+	waitforfree
+	sleep 2
+	waitforfree
+	print "Waiting for dorm button to be enabled"
+	times 30 {
+		if not windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GotoDormButton'] {
+			until windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GotoDormButton'] {
+				clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GotoDormButton']
+				sleep 1 
+			}
+			sleep 4
+			break
+		}
+		sleep 1
+	}
+	waitforfree
+	sleep 2
+	waitforfree
+	until loading {
+		tp XYZ(-204.43948364257812, 4.139906406402588, 0.0)
+		sleep 2
+	}
+	waitforfree
+	sleep 2
+	waitforfree
+	until loading {
+		tp XYZ(43.72552490234375, -2206.103515625, -156.78280639648438)
+		sleep 2
+	}
+	waitforfree
+	sleep 2 
+	waitforfree
+	until hasxyz XYZ(-4417.534, 1020.835, 284.384) {
+		tp XYZ(-4417.534, 1020.835, 284.384)
+	}
+	times 10 {
+		if windowvisible ['WorldView', 'NPCRangeWin', 'wndTitleBackground', 'NPCRangeTxtTitle'] {
+			times 10 {
+				sendkey X, .1
+			}
+			break 
+		}
+		sleep 1
+	}
+	times 2 {
+		clickwindow ['WorldView', 'main', 'fillallpotions']
+		sleep 1
+		clickwindow ['WorldView', 'main', 'buyAction']
+		sleep 1
+		clickwindow ['WorldView', 'windowHUD', 'btnPotions']
+		sleep 1
+	}
+	clickwindow ['WorldView', 'main', 'exit']
+	sleep 2
+	call return
+}
+
+waitforfree
+
+if not sameplace {
+    call return 
+}

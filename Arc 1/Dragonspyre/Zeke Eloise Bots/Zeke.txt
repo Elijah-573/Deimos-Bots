@@ -1,0 +1,126 @@
+mass tp XYZ(5025.0, -6395.0, 2470.0) 
+sleep 3
+mass tp XYZ(-1130, 1130, 0)
+sleep 3 
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(2606.708251953125, 3294.06591796875, 400.0888977050781)
+sleep 3
+mass tp XYZ(6410, 7230, 380)
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-29580.0, -9470.0, -390.0)
+sleep 3
+mass tp XYZ(-32140, -13990, 30)
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-3645, 6410, 660)
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-222, 5991, 30)
+sleep 3
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+mass tp XYZ(-9, 274, 25)
+sleep 3
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-4138.0, 4195.0, 30.0)
+sleep 3
+mass sendkey END, 0.1
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-1242, -1272, 0)
+sleep 3 
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(8020.0, 11560.0, -400.0)
+sleep 3
+mass tp XYZ(-7820, 9930, 205)
+sleep 3
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-11287.0185546875, -31278.6484375, 30.004913330078125)
+sleep 3
+mass sendkey END, 0.3
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(1256, -1280, 0)
+sleep 3
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-5422.0, 7327.0, 1998.0)
+sleep 3
+mass tp XYZ(-2672, 6490, 600)
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-2500.0, 17100.0, -420.0)
+sleep 3
+mass tp XYZ(7975, 55148, 30)
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-5425, 10073, 1998)
+sleep 3 
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 3 
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-3162, 1427, 100) 
+sleep 3
+mass tp XYZ(-56.45296859741211, 6121.2333984375, 100.00003051757812)
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange compleion
+sleep 3
+mass tp XYZ(3769.5952148375, 11490.771484375, -403.51519775390625)
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-844.6585693359375, -10517.546875, -2404.23779296875)
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(-1376.6143798828125, -82.77426147460938, -5362.43408203125)
+sleep 3
+mass walkto XYZ(-1385.417236328125, 5543.33056640625, -5777.4228515625)
+sleep 3
+mass sendkey X, 1
+sleep 35
+mass walkto XYZ(-10.952378273010254, 5505.12060546875, -5777.42333984375)
+mass waitforfree
+sleep 3
+mass tp XYZ(3505.955322265625, 9273.076171875, 4734.29833984375)
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(591.5687255859375, 33.80082321166992, -2.628753662109375)
+mass waitforzonechange completion 
+sleep 3
+mass tp XYZ(-989.2362670898438, 1280.56689453125, 4734.236328125)
+sleep 3
+mass sendkey X, 0.5
+sleep 3
+mass tp XYZ(-1386.6668701171875, 11579.4345703125, 4734.21142578125)
+mass waitforzonechange completion
+sleep 3
+mass tp XYZ(1476.91552734375, 8813.9052734375, 410.40386962890625)
+mass waitforfree
+sleep 3
+mass waitforfree
+sleep 1
+mass tp XYZ(-1008.9725341796875, 4916.07763671875, 562.7764892578125)
+sleep 3
+mass sendkey END, 0.1
+mass waitforzonechange competion
+sleep 3
+mass tp XYZ(-140.0789794921875, 4339.74462890625, -999.996826171875)
+kill
