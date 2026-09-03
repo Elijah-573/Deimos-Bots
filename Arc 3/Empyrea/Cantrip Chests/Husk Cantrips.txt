@@ -1,0 +1,81 @@
+###deimos_expertmode
+
+p1 tp XYZ(-1836.636, 20947.439, 1987.074)
+while inrange "EM-Chest-Ritual-01" {
+    p1 entitytp EM-Chest-Ritual-01
+    p1 minustp XYZ(0, 175, 0)
+    sleep 1
+    kill
+}
+
+p1 tp XYZ(9550.400, 17132.349, 3114.874)
+while inrange "EM-Chest-Ritual-01" {
+    p1 entitytp EM-Chest-Ritual-01
+    p1 minustp XYZ(0, 175, 0)
+    sleep 1
+    kill
+}
+
+p1 tp XYZ(10990.249, 18168.140, 3148.409)
+while inrange "EM-Chest-Ritual-01" {
+    p1 entitytp EM-Chest-Ritual-01
+    p1 minustp XYZ(0, 175, 0)
+    sleep 1
+    kill
+}
+
+p1 tp XYZ(1016.202, 976.661, -883.126)
+while inrange "EM-Chest-Ritual-01" {
+    p1 entitytp EM-Chest-Ritual-01
+    p1 minustp XYZ(0, 175, 0)
+    sleep 1
+    kill
+}
+
+p1 tp XYZ(-13507.049, 21726.439, 1155.666)
+while inrange "EM-Chest-Ritual-01" {
+    p1 entitytp EM-Chest-Ritual-01
+    p1 minustp XYZ(0, 175, 0)
+    sleep 1
+    kill
+}
+
+p1 tp XYZ(-11769.700, 15092.660, 1088.682)
+while inrange "EM-Chest-Ritual-01" {
+    p1 entitytp EM-Chest-Ritual-01
+    p1 minustp XYZ(0, 175, 0)
+    sleep 1
+    kill
+}
+
+p1 tp XYZ(-14840.030, 7858.560, 553.362)
+while inrange "EM-Chest-Ritual-01" {
+    p1 entitytp EM-Chest-Ritual-01
+    p1 minustp XYZ(0, 175, 0)
+    sleep 1
+    kill
+}
+
+p1 tp XYZ(-6973.666, 5304.162, 472.118)
+while inrange "EM-Chest-Ritual-01" {
+    p1 entitytp EM-Chest-Ritual-01
+    p1 minustp XYZ(0, 175, 0)
+    sleep 1
+    kill
+}
+
+p1 tp XYZ(2007.578, 6697.261, -407.133)
+while inrange "EM-Chest-Ritual-01" {
+    p1 entitytp EM-Chest-Ritual-01
+    p1 minustp XYZ(0, 175, 0)
+    sleep 1
+    kill
+}
+
+p1 tp XYZ(5173.220, 23498.859, 1961.283)
+while inrange "EM-Chest-Ritual-01" {
+    p1 entitytp EM-Chest-Ritual-01
+    p1 minustp XYZ(0, 175, 0)
+    sleep 1
+    kill
+}
