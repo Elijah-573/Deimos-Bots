@@ -1,0 +1,34 @@
+###deimos_expertmode 
+# Start in: Cave of Solitude, Mooshu
+# Mobs Farmed & Extracted: Corrupted Earth Spirit
+
+# Playstyle - Waits for all 4 mobs
+loadplaystyle `
+any<aoe>[colossus] @ enemy (1) | pass
+`
+# Mob Farm
+sleep 0.5
+while not incombat {
+    entitytp Colossus-Stone-Elite-L43
+    sleep 1
+}
+if incombat {
+    waitforcombat completion
+    sleep 0.5
+    entitytp health
+    sleep 1
+}
+
+# Potion check
+usepotion 30 10
+sleep 0.2
+
+# Out of immunity quicker
+mass sendkey A, 0.3 
+sleep 0.1
+mass sendkey D, 0.3
+sleep 0.1
+mass sendkey A, 0.3 
+sleep 0.1
+mass sendkey D, 0.3
+sleep 0.1
