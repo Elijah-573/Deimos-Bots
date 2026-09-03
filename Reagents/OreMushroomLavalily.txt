@@ -1,0 +1,167 @@
+#Run in Necropolis
+#If utilizing multiple clients, run bot with them in different realms
+
+#Sigil
+mass tp XYZ(-7772.45361328125, 10164.1083984375, 200.04010009765625)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+
+#Lilys
+mass tp XYZ(-16124.650390625, 4183.98779296875, -396.9088134765625)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(35.42633056640625, -3105.531982421875, -0.760894775390625)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-6750.80712890625, -6265.18408203125, -396.90863037109375)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(370.76141357421875, -5290.208984375, -0.760894775390625)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-1667.77197265625, -13433.0302734375, -396.9088134765625)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-14920.3896484375, 5152.27294921875, -396.90863037109375)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(896.6112060546875, -10899.7802734375, -396.90887451171875)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-8510.3515625, -21108.529296875, -0.7606964111328125)
+sleep 0.5
+mass sendkey X, 0.1
+
+#Ore
+mass tp XYZ(-3270.0390625, -2031.9169921875, 30.00360107421875)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(283.60400390625, -13591.0498046875, -269.9999084472656)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-4598.76220703125, -23396.94921875, 30.00482177734375)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(2671.43994140625, -2080.06591796875, 30.004974365234375)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(2737.43505859375, -5987.5859375, 30.004913330078125)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-10136.7197265625, 8514.6220703125, 30.005126953125)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-16124.650390625, 4183.98779296875, -396.9088134765625)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-2150.75390625, -23269.58984375, 29.987518310546875)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-5351.1572265625, 2159.8701171875, 30.007110595703125)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-10675.33984375, -21925.25, 30.004974365234375)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-3478.93603515625, -18007.140625, 29.993408203125)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-10641.1201171875, -18072.060546875, 30.004913330078125)
+sleep 0.5
+mass sendkey X, 0.1
+
+#Mushroom
+mass tp XYZ(-7180.7900390625, -3251.72607421875, 40.000091552734375)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-7220.087890625, -12756.0703125, 40.000091552734375)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(6.820312976837158, -4026.861083984375, -65.27566528320312)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-768.146728515625, -11214.599609375, 40.000091552734375)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(168.00889587402344, -22533.76953125, -360.0115051269531)
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-8003.5087890625, -19981.91015625, -66.042724609375)
+sleep 0.5
+mass sendkey X, 0.1
+
+#Chests
+mass tp XYZ(1885.9677734375, -9624.1025390625, -211.82037353515625)
+mass entitytp DS-Chest-Common-001
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(18406.07421875, 17825.833984375, -60.000885009765625)
+mass entitytp DS-Chest-Common-001
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-5732.48974609375, -2071.31298828125, 30.003875732421875)
+mass entitytp DS-Chest-Common-001
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-10275.751953125, -9664.27734375, -269.9985656738281)
+mass entitytp DS-Chest-Common-001
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-1671.176513671875, 13371.1953125, -127.89202880859375)
+mass entitytp DS-Chest-Common-001
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-17988.384765625, 2572.703125, -291.7704162597656)
+mass entitytp DS-Chest-Common-001
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(3326.291259765625, -742.8920288085938, 30.004913330078125)
+mass entitytp DS-Chest-Common-001
+sleep 0.5
+mass sendkey X, 0.1
+
+mass tp XYZ(-5729.7421875, -22139.99609375, 30.0028076171875)
+mass entitytp DS-Chest-Common-001
+sleep 0.5
+mass sendkey X, 0.1
+
+#Exit Instance
+mass tp XYZ(24974.0390625, 14458.41015625, 2.344818115234375)
+mass waitforpath ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+mass clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton']
+mass waitforzonechange completion
+sleep 1
