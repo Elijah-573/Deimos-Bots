@@ -1,0 +1,87 @@
+###deimos_expertmode
+## INSTRUCTIONS ##
+## Don't be a friendly wizard, and disable friend ports obviously. ##
+## Disable endorsements. ##
+## Enable remember realm and pick a dead realm. ##
+## Disable friend requests, group invites, and guild invites. ##
+## Enable autocombat ##
+## Start the bot while anywhere in Wallaru ##
+## Set mark at Crash cave sigil ##
+## Activate necessary playstyle if needed, I run with a 180 Ice with 2x iceblade, sharpen, frenzy, and shadow enhanced snowball barrage with epic ##
+block toBase {
+	log "Going to Hope Springs - toBase function"
+	if not p1 inzone Wallaru/WL_Z01_Hub {
+		if windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+			sleep 1.0
+			call toBase
+		}
+		p1 clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton']
+		until p1 inzone Wallaru/WL_Z01_Hub {
+			sleep 0.5
+		}
+	}
+}
+block replenish {
+	if p1 healthbelow 90% {
+		if p1 inrange "health" {
+			times 3 {
+				p1 entitytp WC_WispHealth
+				sleep 1.5
+			}
+		}
+	}
+	if p1 manabelow 30% {
+		call toBase
+		until p1 inzone Wallaru/WL_Z01_Hub {
+			sleep 0.5
+		}
+		if p1 inrange "mana" {
+			times 10 {
+				p1 entitytp WC_WispMana
+				sleep 1.5
+			}
+		}
+	}
+	log "Full resources, continuing..."
+}
+block toCrash {
+	call replenish
+	until p1 inzone Wallaru/WL_Z05_Wobbegong_JT {
+		sleep 5.0
+		p1 sendkey PAGE_UP, 0.1
+	}
+	until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton'] {
+		p1 tp XYZ(-5919.602, -2044.243, 196.932)
+		sleep 1.0
+	}
+	until p1 inzone Wallaru/Interiors/WL_Z05_BanditCootCave {
+		log "Entering Crash Bandit Coot Instance"
+		p1 sendkey X, 0.1
+		sleep 1.0
+	}
+	sleep 4.0
+	# Looking for Crash
+	if p1 inrange "Crash" {
+		# Found Crash, teleporting
+		p1 entitytp WL_Dingo_Crash_A_01
+		sleep 5.0
+	}
+	else {
+		log "No Crash found, leaving"
+		until p1 inzone Wallaru/WL_Z05_Wobbegong_JT {
+			p1 tp XYZ(818.536, -11867.443, -976.904)
+			if p1 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton'] {
+				p1 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'leftButton']
+			}
+		}
+	}
+	until p1 windowvisible ['WorldView', 'windowHUD', 'TradeRequestWindow', 'TipWindow', 'image'] {
+		sleep 1.0
+	}
+	# waitforcombat completion
+	log "Combat ended leaving zone"
+	until p1 inzone Wallaru/WL_Z05_Wobbegong_JT {
+		p1 tp XYZ(818.536, -11867.443, -976.904)
+	}
+}
+call toCrash

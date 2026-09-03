@@ -1,0 +1,60 @@
+###deimos_expertmode
+
+block wait_after_teleport {
+   sleep 1.0
+}
+
+block check_and_loot {
+   call wait_after_teleport 
+   if mass inrange "DM-ScholoDung-Swords-PU-001" {
+        mass entitytp DM-ScholoDung-Swords-PU-001
+        mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+        mass sendkey X, 0.1
+        mass sendkey X, 0.1
+        mass tp XYZ(7059.774, 12168.379, 230.161)
+        call wait_after_teleport
+        mass sendkey X, 0.1
+        mass sendkey X, 0.1
+        mass tp XYZ(7218.864, 12338.983, 230.161)
+        call wait_after_teleport
+        mass sendkey X, 0.1
+        mass sendkey X, 0.1
+        mass tp XYZ(7066.743, 12497.300, 230.161)
+        call wait_after_teleport
+        mass sendkey X, 0.1
+        mass sendkey X, 0.1
+        mass tp XYZ(6895.348, 12331.624, 230.161)
+        call wait_after_teleport
+        mass sendkey X, 0.1
+        mass sendkey X, 0.1
+    }
+}
+
+# Main execution loop
+mass tp XYZ(2227.105, 2522.927, 244.127)
+call check_and_loot
+
+mass tp XYZ(2526.127, 13652.530, 199.189)
+call check_and_loot
+
+mass tp XYZ(4449.328, 17469.589, 199.629)
+call check_and_loot
+
+mass tp XYZ(7277.378, 6972.365, -617.350)
+call check_and_loot
+
+mass tp XYZ(11921.589, 18383.970, 199.598)
+call check_and_loot
+
+mass tp XYZ(12358.870, 9294.728, 199.630)
+call check_and_loot
+
+mass tp XYZ(12978.669, 3366.798, 199.630)
+call check_and_loot
+
+mass tp XYZ(15765.950, 12500.400, -616.894)
+call check_and_loot
+
+# Teleport to gate
+mass tp XYZ(-192.723, 19612.156, -616.396)
+kill
