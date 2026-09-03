@@ -1,0 +1,112 @@
+###deimos_expertmode 
+block load {
+    # 5 seconds for loading to pass, and handles loading if occurs
+    times 5 {
+        if p1 loading {
+            break
+        } else {
+            sleep 1
+        }
+    }
+    while p1 loading {
+        sleep 1.25
+    }
+}
+
+block dialogue {
+    block dialoguestall {
+        times 4 {
+            if p1 windowvisible ['WorldView', 'wndDialogMain'] {
+                break
+            } else {
+                sleep 0.25
+            }
+        }
+    }
+    call dialoguestall
+    block dialoguebusiness {
+        while p1 windowvisible ['WorldView', 'wndDialogMain'] {
+            sendkey SPACEBAR, 0.1
+            sleep 0.1
+        }
+    }
+    call dialoguebusiness
+}
+
+block xwork {
+    # 2 seconds for the reagent prompt to pass, and handles business if it occcurs
+    times 4 {
+        if p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+            break
+        } else {
+            sleep 0.5
+        }
+    }
+    while p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+        p1 sendkey X, 0.1 
+    }
+}
+
+block reagent {
+    loop {
+        if p1 inrange "Parchment" {
+            print parchment detected 
+            p1 entitytp Parchment
+            call dialogue 
+            call xwork
+            sleep 0.5
+        } else {
+            break
+        }
+    }
+}
+
+# Bot 
+# Begin in palace of fire
+# Bot will farm the throne room of fire sigil for parchment 
+
+if p1 inzone Krokotopia/KT_Pyramid/KT_PalaceOfFire {
+    print entering dungeon 
+    p1 tp XYZ(-2502.5, -14999.3896484375, 1.388214111328125)
+    sleep 0.5
+    p1 tp XYZ(-2133.739990234375, -14999.3896484375, 2.417327880859375)
+    times 4 {
+        if p1 windowvisible ['WorldView', 'windowHUD', 'windowForTopRowButtons', 'containerForTeamUp', 'btnTeamUp'] {
+            break
+        } else {
+            sleep 1
+        }
+    }
+    while p1 windowvisible ['WorldView', 'windowHUD', 'windowForTopRowButtons', 'containerForTeamUp', 'btnTeamUp'] {
+        p1 sendkey X, 0.1
+    }
+    call load
+    print entered dungeon 
+}
+
+if p1 inzone Krokotopia/KT_Pyramid/KT_ThroneRoom {
+    print checking first spot
+    p1 tp XYZ(-18066.228515625, -3840.22900390625, -9.1552734375e-05)
+    sleep 0.25
+    call reagent
+
+    print checking second spot 
+    p1 tp XYZ(-12059.03515625, 28469.875, -9.1552734375e-05)
+    sleep 0.25
+    call reagent 
+
+    print all locations checked, exiting dungeon
+    p1 tp XYZ(60.08946228027344, 4318.8583984375, 58.7784423828125)
+    times 4 {
+        if p1 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton'] {
+            break
+        } else {
+            sleep 0.5
+        }
+    }
+    while p1 windowvisible ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton'] {
+        p1 clickwindow ['MessageBoxModalWindow', 'messageBoxBG', 'messageBoxLayout', 'AdjustmentWindow', 'Layout', 'centerButton'] 
+    }
+    call load 
+    print exited dungeon 
+}

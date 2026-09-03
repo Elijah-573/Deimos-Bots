@@ -1,0 +1,77 @@
+mass tp XYZ(9742.9169921875, -3041.139404296875, 219.37802124023438)
+sleep 1
+mass walkto XYZ(9722.3193359375, -3389.72998046875, 219.38595581054688)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 2
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+mass tp XYZ(2754.87646484375, -3557.243896484375, 253.35955810546875)
+sleep 1
+mass tp XYZ(791.6262817382812, -3202.9501953125, 81.455322265625)
+sleep 2
+mass sendkey X, 0.1
+sleep 3
+mass tp XYZ(172.47251892089844, 395.7432861328125, 83.26559448242188)
+sleep 2
+mass tp closestmob
+mass waitforcombat completion
+sleep 2
+mass tp XYZ(-3.4234628677368164, 6073.76416015625, 489.66168212890625)
+sleep 1
+mass walkto XYZ(-4.380486011505127, 6563.3662109375, 618.73095703125)
+mass waitforzonechange completion
+sleep 1
+mass walkto XYZ(-167.89080810546875, -576.9623413085938, 500.9395446777344)
+sleep 2
+mass tp XYZ(109.93245697021484, 2020.868896484375, 242.956298828125)
+sleep 1
+mass tp closestmob
+mass waitforcombat completion
+sleep 2
+mass tp XYZ(4786.45947265625, 12091.3095703125, 97.70565795898438)
+sleep 1
+p1 walkto XYZ(4731.88671875, 13794.4365234375, 85.39102172851562)
+sleep 1
+mass tp XYZ(4731.88671875, 13794.4365234375, 85.39102172851562)
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(5743.7197265625, 14224.1708984375, 85.39102172851562)
+sleep 1
+mass walkto XYZ(6449.45947265625, 14502.72265625, 146.6444091796875)
+sleep 5
+mass tp XYZ(-3540.291748046875, -18.994192123413086, 155.91201782226562)
+sleep 2
+mass tp XYZ(-1962.66455078125, -45.832340240478516, -33.333465576171875)
+sleep 1
+mass tp closestmob
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(3096.55419921875, -162.55404663085938, 391.4023132324219)
+sleep 2
+p1 tp XYZ(6613.064453125, 35.2988395690918, -49.57598876953125)
+sleep 1
+mass tp XYZ(6613.064453125, 35.2988395690918, -49.57598876953125)
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(6629.0810546875, -1793.397705078125, 164.21450805664062)
+sleep 1
+mass walkto XYZ(6634.0107421875, -2348.375732421875, 407.484619140625)
+mass waitforzonechange completion
+sleep 2
+mass tp XYZ(-4648.19091796875, -4214.6416015625, -3227.29833984375)
+sleep 1
+mass tp XYZ(-6446.08984375, -4055.74755859375, -3316.802001953125)
+p1 tp closestmob
+sleep 1
+except p1 tp p1
+mass waitforcombat completion
+sleep 1
+mass sendkey END, 0.1
+mass waitforzonechange completion
+sleep 1
+mass buypotions ifneeded
+mass usepotion 50,15
+sleep 1
+mass tp XYZ(9685.8515625, -2384.86474609375, 204.12179565429688)

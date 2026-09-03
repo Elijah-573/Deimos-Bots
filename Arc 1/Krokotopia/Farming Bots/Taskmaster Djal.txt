@@ -1,0 +1,15 @@
+sleep 1
+p1 tp XYZ(-33085.1, 38102.8, 0.0)
+sleep 1
+mass sendkey X, 0.5
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+p1 waitforzonechange Krokotopia/KT_Tomb/KT_Barracks
+sleep 1
+p1 tp closestmob
+sleep 1
+mass waitforcombat completion
+sleep 2
+p1 tp XYZ(4.16, -3189.03, 100)
+p1 waitforzonechange Krokotopia/KT_Tomb/KT_Barracks
+sleep 1.5

@@ -1,0 +1,84 @@
+#HOLLOW MOUNTAIN
+mass tp XYZ(3096.688232421875, -11221.23046875, 3738.93310546875)
+sleep 1
+mass walkto XYZ(3512.336669921875, -11449.0771484375, 3738.933349609375)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+mass tp XYZ(-630.3233642578125, -690.273681640625, 105.68154907226562)
+mass waitforfree
+sleep 1
+mass tp XYZ(-1992.466552734375, -1753.5452880859375, 127.95648193359375)
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(-5349.677734375, -2679.064697265625, 460.4263610839844)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+mass sendkey X, 0.1
+mass waitforfree
+sleep 1
+mass tp XYZ(-7354.40576171875, -286.8503112792969, 708.55126953125)
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+mass tp XYZ(-6387.16357421875, 2988.082763671875, 932.6387939453125)
+mass waitforzonechange completion
+sleep 1
+mass tp XYZ(1355.060302734375, -7016.0830078125, -2622.428955078125)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+mass sendkey X, 0.1
+mass tp XYZ(882.3890991210938, -7554.302734375, -2622.428955078125)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+mass sendkey X, 0.1
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+mass sendkey X, 0.1
+mass tp XYZ(6.241667747497559, -7545.92041015625, -2622.428955078125)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+mass sendkey X, 0.1
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+mass sendkey X, 0.1
+mass tp XYZ(-313.102294921875, -6951.6455078125, -2622.428955078125)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+mass sendkey X, 0.1
+mass waitforfree
+sleep 1
+mass tp XYZ(500.5184631347656, -9725.3935546875, -2023.305419921875)
+sleep 0.5
+mass walkto XYZ(456.949462890625, -10231.2958984375, -1872.85400390625)
+mass waitforzonechange completion
+sleep 1
+
+#AFTERWOODENKEY
+mass tp XYZ(2.9033937454223633, -2117.658203125, 0.199951171875)
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+mass tp XYZ(-79.78257751464844, 1854.5479736328125, 0.199981689453125)
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+mass tp XYZ(60.78812026977539, 6000.263671875, 0.2113037109375)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+mass tp XYZ(-1.1581605672836304, -1560.451904296875, 0.19964599609375)
+mass waitforfree
+sleep 1
+mass tp XYZ(74.8673095703125, -78.23072814941406, 0.20001220703125)
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+mass sendkey END, 0.1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1

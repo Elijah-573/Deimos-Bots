@@ -1,0 +1,24 @@
+mass tp XYZ(2169.3134765625, 21.97576332092285, 1.0)
+sleep 1.5
+mass walkto XYZ(2527.51904296875, 12.960759162902832, 1.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1.5
+mass sendkey X, 0.1
+mass waitforzonechange completion
+mass walkto XYZ(823.158935546875, 0.20143213868141174, 1.0)
+sleep 1
+mass sendkey X, 0.1
+mass tp XYZ(143.36341857910156, 2.7217297554016113, 1.0)
+mass walkto XYZ(823.158935546875, 0.20143213868141174, 1.0)
+mass waitforzonechange completion
+mass tp XYZ(1429.2926025390625, 21.7746639251709, 1.0)
+mass walkto XYZ(-80.32859802246094, -15.017019271850586, 1.0)
+mass waitforcombat completion
+mass tp XYZ(1941.3515625, 14.819899559020996, 1.0)
+sleep 1.5
+mass walkto XYZ(2882.431396484375, 39.952327728271484, 1.0)
+sleep 4
+mass tp XYZ(273.297607421875, 6.455124378204346, 1.0)
+sleep 1.5
+mass walkto XYZ(-924.8734741210938, -21.198575973510742, 1.000030517578125)
+mass waitforzonechange completion

@@ -1,0 +1,5829 @@
+###deimos_expertmode
+###Last Update: 11/1/2024
+
+############################
+###     Krokotopia       ###
+############################
+
+block Krokotopia_Main_Quest_Tree {
+
+############################
+###      Settings        ###
+############################
+
+block Main_Account_Teleport_P2 {
+	p1 friendtp CHANGENAME					# Change to the name of the account on client P2 (If not using client P2, just leave as-is)
+}
+block Main_Account_Teleport_P3 {
+	p1 friendtp CHANGENAME					# Change to the name of the account on client P1 (If not using client P3, just leave as-is)
+}
+block Main_Account_Teleport_P4 {
+	p1 friendtp CHANGENAME					# Change to the name of the account on client P4 (If not using client P4, just leave as-is)
+}
+block SpeedDelay {
+	sleep 1							# Change "1" to however fast you'll like the bot to run. Between ( .1 - 2 ) is best for most 
+}
+########## Playstyle Editor Below ##########################################################
+# For questions on how to setup a playstyle within this script, please refer to this link. #
+# https://discord.com/channels/912917467792281600/912927606070988810/1294315527572946944   #
+############################################################################################
+
+#No solo instances inside Krokotopia. Please use default combat tab for setting up a playstyle.
+
+################ ******************************** ######################
+################ ***DON'T TOUCH ANYTHING BELOW*** ######################
+################ ******************************** ######################
+#_______________________________________________________________________
+############################
+### Functional Blocks    ###
+############################
+############################
+# Other Functional Blocks  #	
+############################
+block X_Interact_MASS {
+	sleep 3
+	times 20 {
+		sendkey X, .1
+	}
+	sleep 2
+}
+block ZoneChange_MASS {
+	waitforzonechange completion
+	sleep 2
+}
+block Waiting_All_Arrival_Message {
+	print "Waiting for all clients to reach this sigil."
+}
+block Combat_Dungeon_Complete_MASS {
+	waitforcombat completion
+	times 4 {
+		entitytp Health
+		entitytp Mana
+	}
+}
+block Dungeon_X_Key_SOLO {
+	sleep 3
+	sendkey X, .5
+}
+block Dungeon_X_Key_MASS {
+	sleep 5
+	until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	sleep 1
+	sendkey X, .5
+}
+block Exit_Quest_Menu {
+	times 10 {
+	clickwindow ['WorldView', 'NPCServicesWin', 'wndDialogMain', 'Exit']
+	}
+}
+block Main_Is_Busy_On_Off {
+	if p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+		until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+			p1 sendkey F, .25
+			sleep .5
+		}
+	} else {
+		until p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+			p1 sendkey F, .25
+			sleep .5
+		}
+	}
+}
+block Teleport_Main_To_Help_P1 {
+	sleep .1
+}
+block Teleport_Main_To_Help_P2 {
+	while p1 loading {
+		sleep 2
+	}
+	sleep 1
+	if NOT p1 loading {
+		if NOT p1 incombat {
+			until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+				sleep .1
+			}
+			if NOT p1:p2 sameplace {
+				if NOT p1:p2 samezone {
+					call Main_Account_Teleport_P2
+					sleep 2
+				} else {
+					call Main_Account_Teleport_P2
+					while NOT p1:p2 sameplace {
+						sleep 2
+					}
+				}
+			}
+		}
+	}
+}
+block Teleport_Main_To_Help_P3 {
+	while p1 loading {
+		sleep 2
+	}
+	sleep 1
+	if NOT p1 loading {
+		if NOT p1 incombat {
+			until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+				sleep .1
+			}
+			if NOT p1:p3 sameplace {
+				if NOT p1:p3 samezone {
+					call Main_Account_Teleport_P3
+					sleep 2
+				} else {
+					call Main_Account_Teleport_P3
+					while NOT p1:p3 sameplace {
+						sleep 2
+					}
+				}
+			}
+		}
+	}
+}		
+block Teleport_Main_To_Help_P4 {
+	while p1 loading {
+		sleep 2
+	}
+	sleep 1
+	if NOT p1 loading {
+		if NOT p1 incombat {
+			until NOT p1 windowvisible ['WorldView', 'windowHUD', 'wndFriendsList'] {
+				sleep .1
+			}
+			if NOT p1:p4 sameplace {
+				if NOT p1:p4 samezone {
+					call Main_Account_Teleport_P4
+					sleep 2
+				} else {
+					call Main_Account_Teleport_P4
+					while NOT p1:p4 sameplace {
+						sleep 2
+					}
+				}
+			}
+		}
+	}
+}
+############################
+### P1 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P1 {
+	if NOT p1 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p1 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p1 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p1 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p1 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p1 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p1 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p1 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P1 {
+	until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p1 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P1 {
+	sleep 2
+	while p1 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P1 {
+	p1 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P1 {
+	p1 waitforcombat completion
+	times 2 {
+		p1 entitytp Health
+		sleep .2
+		p1 entitytp Mana
+		sleep .2
+	}
+}
+############################
+### P2 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P2 {
+	if NOT p2 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p2 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p2 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p2 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p2 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p2 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p2 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p2 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P2 {
+	until p2 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p2 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P2 {
+	sleep 2
+	while p2 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P2 {
+	p2 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P2 {
+	p2 waitforcombat completion
+	times 2 {
+		p2 entitytp Health
+		sleep .2
+		p2 entitytp Mana
+		sleep .2
+	}
+	until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+		sleep .1
+	}
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+}
+############################
+### P3 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P3 {
+	if NOT p3 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p3 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p3 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p3 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p3 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p3 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p3 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p3 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P3 {
+	until p3 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p3 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P3 {
+	sleep 2
+	while p3 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P3 {
+	p3 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P3 {
+	p3 waitforcombat completion
+	times 2 {
+		p3 entitytp Health
+		sleep .2
+		p3 entitytp Mana
+		sleep .2
+	}
+	until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+		sleep .1
+	}
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+}
+############################
+### P4 Functional Blocks ###
+############################
+block Quest_Follow_Checker_P4 {
+	if NOT p4 windowvisible ['WorldView', 'windowHUD', 'QuestHelperHud', 'ElementWindow'] {
+		while NOT p4 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p4 sendkey Q, .5
+			sleep 1
+		}
+		times 2 {
+			p4 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton']
+		}
+		if p4 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0', 'questInfoWindow', 'wndQuestInfo', 'LeftMainline'] {
+			times 2 {
+				p4 clickwindow ['WorldView', 'DeckConfiguration', 'wndQuestList', 'wndQuestInfo0']
+			}
+		} else {
+			print "Unable to select main quest. Please select main quest."
+		}
+		while p4 windowvisible ['WorldView', 'DeckConfiguration', 'wndQuestList', 'QuestLogMainlineAndSideButton'] {
+			p4 sendkey Q, .5
+			sleep 1
+		}
+	}
+}
+block X_Interact_P4 {
+	until p4 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+		sleep .1
+	}
+	call SpeedDelay
+	times 10 {
+		p4 sendkey X, .1
+	}
+}
+block Dialogue_Complete_P4 {
+	sleep 2
+	while p4 hasdialogue {
+		call SpeedDelay
+		call Exit_Quest_Menu
+	}
+	call Exit_Quest_Menu
+}
+block ZoneChange_P4 {
+	p4 waitforzonechange completion
+	sleep 2
+}
+block Combat_Complete_P4 {
+	p4 waitforcombat completion
+	times 2 {
+		p4 entitytp Health
+		sleep .2
+		p4 entitytp Mana
+		sleep .2
+	}
+	until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+		sleep .1
+	}
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+	p1 sendkey END, .2
+}
+########################################################################
+########################################################################
+########################################################################
+#_______________________________________________________________________
+#_______________________________________________________________________
+#_______________________________________________________________________
+block P1QuestsHandler {
+	if p1 tracking_quest "a whole new world" {
+		if p1 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p1 tp XYZ(16.75507164001465, -2981.96826171875, 627.591796875)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "digging in the dirt" {
+		if p1 tracking_goal "talk to professor winthrop in altar of kings" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "make some rubbings" {
+		if p1 tracking_goal "rub obelisk in royal hall" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp XYZ(15133.115234375, -24907.416015625, 0.0)
+			call X_Interact_P1
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "talk to professor winthrop in altar of kings" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "fragments of a key" {
+		if p1 tracking_goal "defeat any nirini and collect key in royal hall" {
+			if p1 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p1 tp quest	
+				call ZoneChange_P1
+			}
+			while p1 tracking_goal "defeat any nirini and collect key in royal hall" {
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P1
+				call Combat_Complete_P1
+			}
+		}
+		if p1 tracking_goal "talk to professor winthrop in altar of kings" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "the final rubbing" {
+		if p1 tracking_goal "defeat biti nirini and collect tablet in biti's chamber" {
+			if p1 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				until p1 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p1 sendkey X, .5
+				call ZoneChange_P1
+				p1 tp XYZ(16.449310302734375, -61.78489685058594, -222.02255249023438)
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					sleep 5
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(16.449310302734375, -61.78489685058594, -222.02255249023438)
+					waitforcombat completion
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					call ZoneChange_P1
+				} else {
+					print "Waiting for all clients to reach this sigil."
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to professor winthrop in altar of kings" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "speak to the assistant" {
+		if p1 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "find my colleague" {
+		if p1 tracking_goal "talk to robert lancaster in chamber of fire" {			
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "new digs" {
+		if p1 tracking_goal "find key stone pile of dirt in royal hall" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "quarter master" { 
+		if p1 tracking_goal "defeat nirini quartermaster and collect key piece in chamber of fire" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp XYZ(-32.6485595703125, 162.5439453125, -222.02249145507812)
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-32.6485595703125, 162.5439453125, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to assistant danforth in chamber of fire" {	
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p1 tracking_quest "back to the archeologist" {
+		if p1 tracking_goal "talk to professor winthrop in altar of kings" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "assault on the palace" {
+		if p1 tracking_goal "talk to lieutenant standish in palace of fire" {
+			p1 tp XYZ(4557.80029296875, 7053.4970703125, 950.0)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			sleep 2
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p1 tracking_quest "gather the troops" {
+		if p1 tracking_goal "talk to private farnsworth in palace of fire" {
+			return
+		}
+		if p1 tracking_goal "talk to private primwell in palace of fire" {
+			return
+		}
+		if p1 tracking_goal "talk to lieutenant standish in palace of fire" {
+			return
+		}
+	}
+	if p1 tracking_quest "payback" {
+		while p1 tracking_goal "defeat nirini warrior in palace of fire" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		while p1 tracking_goal "defeat flame guardian in palace of fire" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to lieutenant standish in palace of fire" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "give 'em another round" {
+		if p1 tracking_goal "defeat edo nirini in palace of fire" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp XYZ(162.13348388671875, -269.1477355957031, -222.02255249023438)
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(162.13348388671875, -269.1477355957031, -222.02255249023438)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "defeat akori nirini in akori's chamber" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp XYZ(-35.99755859375, 406.6820373535156, -222.02249145507812)
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-35.99755859375, 406.6820373535156, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "defeat nebit nirini in palace of fire" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp XYZ(-4.3842692375183105, 165.291015625, -222.02252197265625)
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-4.3842692375183105, 165.291015625, -222.02252197265625)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "defeat shai nirini in palace of fire" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp XYZ(-70.8246078491211, 266.0525207519531, -222.02249145507812)
+				call Combat_Complete_P1
+				p1 tp XYZ(2.408529281616211, 3191.078369140625, 99.99990844726562)
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-70.8246078491211, 266.0525207519531, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(2.408529281616211, 3191.078369140625, 99.99990844726562)
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to lieutenant standish in palace of fire" {	
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "back to winthrop" {
+		if p1 tracking_goal "talk to professor winthrop in altar of kings" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "into the map room" {
+		if p1 tracking_goal "talk to professor winthrop in throne room of fire" {	
+			if p1 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p1 tp XYZ(4555.5908203125, 7029.90576171875, 950.0)
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(-11916.955078125, 29935.68359375, -9.1552734375e-05)
+				call Combat_Complete_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(-17936.69140625, -6149.966796875, -9.1552734375e-05)
+				call Combat_Complete_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(-7369.02001953125, 4291.02978515625, -103.07530212402344)
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				sleep 2
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					sendkey X, .5
+					sleep 2
+					tp XYZ(-11916.955078125, 29935.68359375, -9.1552734375e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					sleep 3
+					sendkey X, .5
+					sleep 2
+					tp XYZ(-17936.69140625, -6149.966796875, -9.1552734375e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					sleep 3
+					sendkey X, .2
+					sleep 2
+					tp XYZ(-7369.02001953125, 4291.02978515625, -103.07530212402344)
+					sleep 3
+					sendkey X, .5
+					sleep 3
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to professor winthrop in altar of kings" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "permission to enter" {
+		if p1 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "fangdango" {
+		if p1 tracking_goal "go to the order of the fang in balance school" {	
+			p1 tp XYZ(4446.40576171875, 3151.96142578125, 25.792266845703125)
+			call X_Interact_P1
+			sleep 5
+			call X_Interact_P1
+			call ZoneChange_P1
+			p1 tp XYZ(14152.5576171875, 1961.5831298828125, 1139.239013671875)
+			until NOT p1 inzone Krokotopia/KT_Hub_Sphinx {
+				p1 sendkey X, .3
+			}
+			sleep 5
+			p1 tp quest
+			sleep 2
+			return
+		}
+		if p1 tracking_goal "talk to alhazred in balance school" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "order at last" {
+		if p1 tracking_goal "talk to shalek the wise in entrance hall" {
+			p1 tp XYZ(-589.76513671875, 28.27214813232422, 2.0)
+			call X_Interact_P1
+			call ZoneChange_P1
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "the great general" {
+		if p1 tracking_goal "talk to rami in hall of champions" {
+			p1 tp XYZ(4621.03173828125, -3939.093505859375, -0.019500732421875)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "minion massacre" {
+		while p1 tracking_goal "defeat any sphinx sokkwi in hall of champions" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to rami in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "search for the seal" {
+		if p1 tracking_goal "defeat nekhbet and collect seal of the fang in hall of champions" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp XYZ(-16.584186553955078, 378.44305419921875, -222.02249145507812)
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-16.584186553955078, 378.44305419921875, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to rami in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "general admission" {
+		if p1 tracking_goal "talk to general khaba in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "coin of destiny" {
+		if p1 tracking_goal "defeat soul scavenger and collect coin of destiny in hall of champions" {	
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp XYZ(-77.41630554199219, 237.56109619140625, -222.02249145507812)
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-77.41630554199219, 237.56109619140625, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to general khaba in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "lay of the land" {
+		if p1 tracking_goal "talk to rami in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to general khaba in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "blades of ice" {
+		while p1 tracking_goal "defeat glacial avenger and collect ice shards in hall of champions" {	
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to general khaba in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "armor handle" {
+		while p1 tracking_goal "defeat ice weaver and collect carapace in grand arena" {
+			if p1 inzone Krokotopia/KT_Krokosphinx/KT_ChampHall {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+			if p1 inzone Krokotopia/KT_Krokosphinx/KT_EntranceHall {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to general khaba in hall of champions" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp XYZ(4616.3779296875, -3884.469970703125, -0.0194091796875)
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "get some bling" {
+		until NOT p1 tracking_goal "collect gemstones in hall of champions" {
+			p1 tp XYZ(-21724.84375, -5438.15966796875, 0.0)
+			p1 turncam 6.26
+			call X_Interact_P1
+			call SpeedDelay
+			p1 tp XYZ(-20420.736328125, -9709.4384765625, -9.1552734375e-05)
+			p1 turncam 2.83
+			call X_Interact_P1
+			call SpeedDelay
+		}
+		if p1 tracking_goal "talk to general khaba in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "grip it!" {
+		while p1 tracking_goal "defeat hall servant and collect leather straps in hall of champions" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to general khaba in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "forge key" {
+		while p1 tracking_goal "defeat sokkwi crusher and collect key in hall of champions" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to general khaba in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "taking it to the tuts" {
+		if p1 tracking_goal "defeat odji sokkwi in hall of champions" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P1
+				p1 tp XYZ(-268.22705078125, 1552.5489501953125, -222.02252197265625)
+				call X_Interact_P1
+				sleep 2
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-268.22705078125, 1552.5489501953125, -222.02252197265625)
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to general khaba in hall of champions" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "back among the fold" {
+		if p1 tracking_goal "talk to shalek the wise in entrance hall" {			
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "quest for the warrior" {
+		if p1 tracking_goal "talk to ako in grand arena" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "mark of the gladiator" {
+		while p1 tracking_goal "defeat any sokkwi in the arena and collect gladiator mark in grand arena" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to ako in grand arena" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "gladiator games" {
+		if p1 tracking_goal "talk to arena master in grand arena" {
+			p1 tp XYZ(-5988.65966796875, 24403.84765625, 0.5)
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "are you experienced?" {
+		while p1 tracking_goal "defeat sokkwi ripper in grand arena" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to arena master in grand arena" {
+			p1 tp XYZ(-5988.65966796875, 24403.84765625, 0.5)
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "battle of the sunbird" {
+		if p1 tracking_goal "defeat wild sunbird in grand arena" {
+			p1 tp quest
+			call ZoneChange_P1
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+			p1 tp quest
+			call ZoneChange_P1
+			return
+		}
+		if p1 tracking_goal "talk to arena master in grand arena" {
+			p1 tp XYZ(-5981.22412109375, 24403.171875, 0.5)
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "along came a spider" {
+		while p1 tracking_goal "defeat ice weavers and collect spider eyes in grand arena" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to arena master in grand arena" {
+			p1 tp XYZ(-6067.9697265625, 24403.84765625, 0.500030517578125)
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "stonechin" {
+		if p1 tracking_goal "defeat krag stonechin in grand arena" {
+			p1 tp quest
+			call ZoneChange_P1
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+			p1 tp quest
+			call ZoneChange_P1
+			return
+		}
+		if p1 tracking_goal "talk to arena master in grand arena" {
+			p1 tp XYZ(-5991.1376953125, 24403.509765625, 0.5)
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "enter sandman" {
+		while p1 tracking_goal "defeat sand stalkers in grand arena" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to arena master in grand arena" {
+			p1 tp XYZ(-6008.48681640625, 24403.228515625, 0.500030517578125)
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "malletmane" {
+		if p1 tracking_goal "defeat bort malletmane in grand arena" {
+			p1 tp quest
+			call ZoneChange_P1
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+			p1 tp quest
+			call ZoneChange_P1
+			return
+		}
+		if p1 tracking_goal "talk to arena master in grand arena" {
+			p1 tp XYZ(-6067.9697265625, 24404.185546875, 0.500030517578125)
+			call X_Interact_P1
+			sleep 2
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "krokotopian idol" {
+		while p1 tracking_goal "defeat sokkwi gougers in grand arena" {
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to arena master in grand arena" {
+			p1 tp XYZ(-6058.0556640625, 24403.509765625, 0.500030517578125)
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "who's more amazing?" {
+		if p1 tracking_goal "defeat itennu sokkwi in grand arena" {
+			p1 tp quest
+			call ZoneChange_P1
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+			p1 tp XYZ(-17.396953582763672, -3371.92236328125, 92.73086547851562)
+			call ZoneChange_P1
+			return
+		}
+		if p1 tracking_goal "talk to arena master in grand arena" {
+			p1 tp XYZ(-6065.4912109375, 24403.84765625, 0.500030517578125)
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "the ultimate battle" {
+		if p1 tracking_goal "defeat khai amahte the great in grand arena" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				until p1 incombat {
+					p1 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P1
+				p1 tp XYZ(591.670654296875, -636.8513793945312, -222.0225372314453)
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+				return
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(591.670654296875, -636.8513793945312, -222.0225372314453)
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					tp quest
+					waitforzonechange completion
+					sleep 2
+					return
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+	}
+	if p1 tracking_quest "return to shalek" {
+		if p1 tracking_goal "talk to shalek the wise in entrance hall" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			sleep 2
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "find the fang" {
+		if p1 tracking_goal "talk to shalek the wise in the vault of ice" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(6123.44580078125, 2934.329833984375, -3.0517578125e-05)
+				call Combat_Complete_P1
+				p1 tp XYZ(38.05470657348633, -1419.8187255859375, 101.52520751953125)
+				sleep 3
+				p1 sendkey ENTER, .5
+				sleep 10
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(6123.44580078125, 2934.329833984375, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(38.05470657348633, -1419.8187255859375, 101.52520751953125)
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to shalek the wise in entrance hall" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "retribution" {
+		if p1 tracking_goal "talk to shalek the wise in emperor's retreat" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call X_Interact_P1
+				call Dialogue_Complete_P1
+				p1 tp XYZ(-6507.53369140625, 38242.3984375, 0.0)
+				sleep 2
+				p1 tp XYZ(-6511.37255859375, 39343.3984375, -3.0517578125e-05)
+				call Combat_Complete_P1
+				p1 tp XYZ(-497.7257995605469, -1235.4468994140625, 16.42572021484375)
+				sleep 3
+				p1 sendkey ENTER, .5
+				call ZoneChange_P1
+				return
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					sendkey X, .3
+					sleep 2
+					tp XYZ(-6507.53369140625, 38242.3984375, 0.0)
+					sleep 2
+					tp XYZ(-6511.37255859375, 39343.3984375, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-497.7257995605469, -1235.4468994140625, 16.42572021484375)
+					sleep 3
+					sendkey ENTER, .5
+					waitforzonechange completion
+					sleep 2
+					return
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to shalek the wise in entrance hall" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "back to balance" {
+		if p1 tracking_goal "talk to alhazred in balance school" {
+			p1 tp XYZ(-600.8377685546875, 43.37891387939453, -3.0517578125e-05)
+			call ZoneChange_P1
+			p1 tp XYZ(14167.2255859375, 1965.301025390625, 1139.239013671875)
+			call X_Interact_P1
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p1 tp XYZ(-580.5025024414062, 19.410446166992188, 2.0)
+			call X_Interact_P1
+			call ZoneChange_P1
+			p1 tp XYZ(11743.2822265625, -187.52777099609375, 1219.797119140625)
+			call X_Interact_P1
+			sleep 4
+			call X_Interact_P1
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			sleep 2
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "tomb of storms" {
+		if p1 tracking_goal "talk to hetch al'dim in the oasis" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+		if p1 tracking_goal "go to the tomb of storms in well of spirits" {
+			p1 tp XYZ(-4225.654296875, -1348.303466796875, -35.353363037109375)
+			call X_Interact_P1
+			sleep 1
+			p1 tp XYZ(-4550.90234375, -2568.392822265625, -35.35382080078125)
+			call X_Interact_P1
+			sleep 1
+			p1 tp XYZ(-3302.143798828125, -2836.3349609375, -35.353057861328125)
+			call X_Interact_P1
+			sleep 1
+			p1 tp XYZ(-2632.9365234375, -1355.3267822265625, -118.40469360351562)
+			sleep 15
+			p1 tp XYZ(-3359.141357421875, -1785.3035888671875, -35.353973388671875)
+			call ZoneChange_P1
+			p1 tp XYZ(-10535.1640625, -8437.8017578125, -372.9991149902344)
+			call ZoneChange_P1
+			return
+		}
+		if p1 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "de-cipher the ahnics" {
+		if p1 tracking_goal "defeat king uro ahnic and collect cipher part 1 in ahnic family tomb" {	
+			p1 tp quest
+			call ZoneChange_P1
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+		}
+		if p1 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "de-cipher the djeserits" {
+		if p1 tracking_goal "defeat king shemet djeserit and collect cipher part 2 in djeserit family tomb" {
+			p1 tp quest
+			call ZoneChange_P1
+			until p1 incombat {
+				p1 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P1
+			call Combat_Complete_P1
+			p1 tp quest
+			call ZoneChange_P1
+			return
+		}
+		if p1 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "the key to the temple" {
+		if p1 tracking_goal "defeat prince mkhai karanahn in karanahn palace" {
+			if p1 inzone Krokotopia/KT_Tomb/KT_WellOfSpirits {
+				p1 tp quest
+				call ZoneChange_P1
+			}
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp quest
+				call Combat_Complete_P1
+				p1 tp quest
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p1 tp quest
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "temple dweller" {
+		if p1 tracking_goal "defeat krokopatra in temple of storms" {
+			p1 tp quest
+			call Teleport_Main_To_Help_P1
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P1
+				p1 tp XYZ(18338.630859375, 21024.689453125, -1000.0)
+				call Combat_Complete_P1
+				p1 tp XYZ(-25.568254470825195, 1338.7327880859375, 68.86993408203125)
+				sleep 3
+				p1 sendkey ENTER, .3
+				call ZoneChange_P1
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(18338.630859375, 21024.689453125, -1000.0)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-25.568254470825195, 1338.7327880859375, 68.86993408203125)
+					sleep 3
+					sendkey ENTER, .3
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p1 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "triumphant return!" {
+		if p1 tracking_goal "talk to sergeant major talbot in the oasis" {
+			until NOT p1 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			sleep 2
+			p1 sendkey END, .2
+			call ZoneChange_P1
+			p1 tp quest
+			call X_Interact_P1
+			call Dialogue_Complete_P1
+			return
+		}
+	}
+	if p1 tracking_quest "missing souls" {
+		if p1 tracking_goal "talk to private kinchley in wolfminster abbey" {
+			if NOT p1 inzone Marleybone/Interiors/MB_WolfminsterAbbey {
+				p1 tp XYZ(15.890161514282227, -95.3442153930664, -59.308319091796875)
+				call ZoneChange_P1
+				p1 tp XYZ(9.063953399658203, -140.64892578125, 134.36676025390625)
+				call X_Interact_P1
+				sleep 3
+				until NOT p1 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+					p1 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+					sleep .1
+				}
+				call ZoneChange_P1
+				call SpeedDelay
+				return
+			}
+		}
+	}
+} #End of P1 Quest Handler
+block P2QuestsHandler {
+	if p2 tracking_quest "a whole new world" {
+		if p2 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p2 tp XYZ(16.75507164001465, -2981.96826171875, 627.591796875)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "digging in the dirt" {
+		if p2 tracking_goal "talk to professor winthrop in altar of kings" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "make some rubbings" {
+		if p2 tracking_goal "rub obelisk in royal hall" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp XYZ(15133.115234375, -24907.416015625, 0.0)
+			call X_Interact_P2
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "talk to professor winthrop in altar of kings" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "fragments of a key" {
+		if p2 tracking_goal "defeat any nirini and collect key in royal hall" {
+			if p2 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p2 tp quest	
+				call ZoneChange_P2
+			}
+			while p2 tracking_goal "defeat any nirini and collect key in royal hall" {
+				until p2 incombat {
+					p2 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P2
+				call Combat_Complete_P2
+			}
+		}
+		if p2 tracking_goal "talk to professor winthrop in altar of kings" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "the final rubbing" {
+		if p2 tracking_goal "defeat biti nirini and collect tablet in biti's chamber" {
+			if p2 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				until p2 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p2 sendkey X, .5
+				call ZoneChange_P2
+				p2 tp XYZ(16.449310302734375, -61.78489685058594, -222.02255249023438)
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					sleep 5
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(16.449310302734375, -61.78489685058594, -222.02255249023438)
+					waitforcombat completion
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					call ZoneChange_P2
+				} else {
+					print "Waiting for all clients to reach this sigil."
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to professor winthrop in altar of kings" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "speak to the assistant" {
+		if p2 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "find my colleague" {
+		if p2 tracking_goal "talk to robert lancaster in chamber of fire" {			
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "new digs" {
+		if p2 tracking_goal "find key stone pile of dirt in royal hall" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "quarter master" { 
+		if p2 tracking_goal "defeat nirini quartermaster and collect key piece in chamber of fire" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp XYZ(-32.6485595703125, 162.5439453125, -222.02249145507812)
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-32.6485595703125, 162.5439453125, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to assistant danforth in chamber of fire" {	
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p2 tracking_quest "back to the archeologist" {
+		if p2 tracking_goal "talk to professor winthrop in altar of kings" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "assault on the palace" {
+		if p2 tracking_goal "talk to lieutenant standish in palace of fire" {
+			p2 tp XYZ(4557.80029296875, 7053.4970703125, 950.0)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			sleep 2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p2 tracking_quest "gather the troops" {
+		if p2 tracking_goal "talk to private farnsworth in palace of fire" {
+			return
+		}
+		if p2 tracking_goal "talk to private primwell in palace of fire" {
+			return
+		}
+		if p2 tracking_goal "talk to lieutenant standish in palace of fire" {
+			return
+		}
+	}
+	if p2 tracking_quest "payback" {
+		while p2 tracking_goal "defeat nirini warrior in palace of fire" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		while p2 tracking_goal "defeat flame guardian in palace of fire" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to lieutenant standish in palace of fire" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "give 'em another round" {
+		if p2 tracking_goal "defeat edo nirini in palace of fire" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp XYZ(162.13348388671875, -269.1477355957031, -222.02255249023438)
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(162.13348388671875, -269.1477355957031, -222.02255249023438)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "defeat akori nirini in akori's chamber" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp XYZ(-35.99755859375, 406.6820373535156, -222.02249145507812)
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-35.99755859375, 406.6820373535156, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "defeat nebit nirini in palace of fire" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp XYZ(-4.3842692375183105, 165.291015625, -222.02252197265625)
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-4.3842692375183105, 165.291015625, -222.02252197265625)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "defeat shai nirini in palace of fire" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp XYZ(-70.8246078491211, 266.0525207519531, -222.02249145507812)
+				call Combat_Complete_P2
+				p2 tp XYZ(2.408529281616211, 3191.078369140625, 99.99990844726562)
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-70.8246078491211, 266.0525207519531, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(2.408529281616211, 3191.078369140625, 99.99990844726562)
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to lieutenant standish in palace of fire" {	
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "back to winthrop" {
+		if p2 tracking_goal "talk to professor winthrop in altar of kings" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "into the map room" {
+		if p2 tracking_goal "talk to professor winthrop in throne room of fire" {	
+			if p2 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p2 tp XYZ(4555.5908203125, 7029.90576171875, 950.0)
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(-11916.955078125, 29935.68359375, -9.1552734375e-05)
+				call Combat_Complete_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(-17936.69140625, -6149.966796875, -9.1552734375e-05)
+				call Combat_Complete_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(-7369.02001953125, 4291.02978515625, -103.07530212402344)
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				sleep 2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					sendkey X, .5
+					sleep 2
+					tp XYZ(-11916.955078125, 29935.68359375, -9.1552734375e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					sleep 3
+					sendkey X, .5
+					sleep 2
+					tp XYZ(-17936.69140625, -6149.966796875, -9.1552734375e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					sleep 3
+					sendkey X, .2
+					sleep 2
+					tp XYZ(-7369.02001953125, 4291.02978515625, -103.07530212402344)
+					sleep 3
+					sendkey X, .5
+					sleep 3
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to professor winthrop in altar of kings" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "permission to enter" {
+		if p2 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "fangdango" {
+		if p2 tracking_goal "go to the order of the fang in balance school" {	
+			p2 tp XYZ(4446.40576171875, 3151.96142578125, 25.792266845703125)
+			call X_Interact_P2
+			sleep 5 
+			call X_Interact_P2
+			call ZoneChange_P2
+			p2 tp XYZ(14152.5576171875, 1961.5831298828125, 1139.239013671875)
+			until NOT p2 inzone Krokotopia/KT_Hub_Sphinx {
+				p2 sendkey X, .3
+			}
+			sleep 5
+			p2 tp quest
+			sleep 2
+			return
+		}
+		if p2 tracking_goal "talk to alhazred in balance school" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "order at last" {
+		if p2 tracking_goal "talk to shalek the wise in entrance hall" {
+			p2 tp XYZ(-589.76513671875, 28.27214813232422, 2.0)
+			call X_Interact_P2
+			call ZoneChange_P2
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "the great general" {
+		if p2 tracking_goal "talk to rami in hall of champions" {
+			p2 tp XYZ(4621.03173828125, -3939.093505859375, -0.019500732421875)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "minion massacre" {
+		while p2 tracking_goal "defeat any sphinx sokkwi in hall of champions" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to rami in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "search for the seal" {
+		if p2 tracking_goal "defeat nekhbet and collect seal of the fang in hall of champions" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp XYZ(-16.584186553955078, 378.44305419921875, -222.02249145507812)
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-16.584186553955078, 378.44305419921875, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to rami in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "general admission" {
+		if p2 tracking_goal "talk to general khaba in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "coin of destiny" {
+		if p2 tracking_goal "defeat soul scavenger and collect coin of destiny in hall of champions" {	
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp XYZ(-77.41630554199219, 237.56109619140625, -222.02249145507812)
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-77.41630554199219, 237.56109619140625, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to general khaba in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "lay of the land" {
+		if p2 tracking_goal "talk to rami in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to general khaba in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "blades of ice" {
+		while p2 tracking_goal "defeat glacial avenger and collect ice shards in hall of champions" {	
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to general khaba in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "armor handle" {
+		while p2 tracking_goal "defeat ice weaver and collect carapace in grand arena" {
+			if p2 inzone Krokotopia/KT_Krokosphinx/KT_ChampHall {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+			if p2 inzone Krokotopia/KT_Krokosphinx/KT_EntranceHall {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to general khaba in hall of champions" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp XYZ(4616.3779296875, -3884.469970703125, -0.0194091796875)
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "get some bling" {
+		until NOT p2 tracking_goal "collect gemstones in hall of champions" {
+			p2 tp XYZ(-21724.84375, -5438.15966796875, 0.0)
+			p2 turncam 6.26
+			call X_Interact_P2
+			call SpeedDelay
+			p2 tp XYZ(-20420.736328125, -9709.4384765625, -9.1552734375e-05)
+			p2 turncam 2.83
+			call X_Interact_P2
+			call SpeedDelay
+		}
+		if p2 tracking_goal "talk to general khaba in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "grip it!" {
+		while p2 tracking_goal "defeat hall servant and collect leather straps in hall of champions" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to general khaba in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "forge key" {
+		while p2 tracking_goal "defeat sokkwi crusher and collect key in hall of champions" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to general khaba in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "taking it to the tuts" {
+		if p2 tracking_goal "defeat odji sokkwi in hall of champions" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				until p2 incombat {
+					p2 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P2
+				p2 tp XYZ(-268.22705078125, 1552.5489501953125, -222.02252197265625)
+				call X_Interact_P2
+				sleep 2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-268.22705078125, 1552.5489501953125, -222.02252197265625)
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to general khaba in hall of champions" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "back among the fold" {
+		if p2 tracking_goal "talk to shalek the wise in entrance hall" {			
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "quest for the warrior" {
+		if p2 tracking_goal "talk to ako in grand arena" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "mark of the gladiator" {
+		while p2 tracking_goal "defeat any sokkwi in the arena and collect gladiator mark in grand arena" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to ako in grand arena" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "gladiator games" {
+		if p2 tracking_goal "talk to arena master in grand arena" {
+			p2 tp XYZ(-5988.65966796875, 24403.84765625, 0.5)
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "are you experienced?" {
+		while p2 tracking_goal "defeat sokkwi ripper in grand arena" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to arena master in grand arena" {
+			p2 tp XYZ(-5988.65966796875, 24403.84765625, 0.5)
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "battle of the sunbird" {
+		if p2 tracking_goal "defeat wild sunbird in grand arena" {
+			p2 tp quest
+			call ZoneChange_P2
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+			p2 tp quest
+			call ZoneChange_P2
+			return
+		}
+		if p2 tracking_goal "talk to arena master in grand arena" {
+			p2 tp XYZ(-5981.22412109375, 24403.171875, 0.5)
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "along came a spider" {
+		while p2 tracking_goal "defeat ice weavers and collect spider eyes in grand arena" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to arena master in grand arena" {
+			p2 tp XYZ(-6067.9697265625, 24403.84765625, 0.500030517578125)
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "stonechin" {
+		if p2 tracking_goal "defeat krag stonechin in grand arena" {
+			p2 tp quest
+			call ZoneChange_P2
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+			p2 tp quest
+			call ZoneChange_P2
+			return
+		}
+		if p2 tracking_goal "talk to arena master in grand arena" {
+			p2 tp XYZ(-5991.1376953125, 24403.509765625, 0.5)
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "enter sandman" {
+		while p2 tracking_goal "defeat sand stalkers in grand arena" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to arena master in grand arena" {
+			p2 tp XYZ(-6008.48681640625, 24403.228515625, 0.500030517578125)
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "malletmane" {
+		if p2 tracking_goal "defeat bort malletmane in grand arena" {
+			p2 tp quest
+			call ZoneChange_P2
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+			p2 tp quest
+			call ZoneChange_P2
+			return
+		}
+		if p2 tracking_goal "talk to arena master in grand arena" {
+			p2 tp XYZ(-6067.9697265625, 24404.185546875, 0.500030517578125)
+			call X_Interact_P2
+			sleep 2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "krokotopian idol" {
+		while p2 tracking_goal "defeat sokkwi gougers in grand arena" {
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to arena master in grand arena" {
+			p2 tp XYZ(-6058.0556640625, 24403.509765625, 0.500030517578125)
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "who's more amazing?" {
+		if p2 tracking_goal "defeat itennu sokkwi in grand arena" {
+			p2 tp quest
+			call ZoneChange_P2
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+			p2 tp XYZ(-17.396953582763672, -3371.92236328125, 92.73086547851562)
+			call ZoneChange_P2
+			return
+		}
+		if p2 tracking_goal "talk to arena master in grand arena" {
+			p2 tp XYZ(-6065.4912109375, 24403.84765625, 0.500030517578125)
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "the ultimate battle" {
+		if p2 tracking_goal "defeat khai amahte the great in grand arena" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				until p2 incombat {
+					p2 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P2
+				p2 tp XYZ(591.670654296875, -636.8513793945312, -222.0225372314453)
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+				return
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(591.670654296875, -636.8513793945312, -222.0225372314453)
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					tp quest
+					waitforzonechange completion
+					sleep 2
+					return
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+	}
+	if p2 tracking_quest "return to shalek" {
+		if p2 tracking_goal "talk to shalek the wise in entrance hall" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			sleep 2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "find the fang" {
+		if p2 tracking_goal "talk to shalek the wise in the vault of ice" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(6123.44580078125, 2934.329833984375, -3.0517578125e-05)
+				call Combat_Complete_P2
+				p2 tp XYZ(38.05470657348633, -1419.8187255859375, 101.52520751953125)
+				sleep 3
+				p2 sendkey ENTER, .5
+				sleep 10
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(6123.44580078125, 2934.329833984375, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(38.05470657348633, -1419.8187255859375, 101.52520751953125)
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to shalek the wise in entrance hall" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "retribution" {
+		if p2 tracking_goal "talk to shalek the wise in emperor's retreat" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call X_Interact_P2
+				call Dialogue_Complete_P2
+				p2 tp XYZ(-6507.53369140625, 38242.3984375, 0.0)
+				sleep 2
+				p2 tp XYZ(-6511.37255859375, 39343.3984375, -3.0517578125e-05)
+				call Combat_Complete_P2
+				p2 tp XYZ(-497.7257995605469, -1235.4468994140625, 16.42572021484375)
+				sleep 3
+				p2 sendkey ENTER, .5
+				call ZoneChange_P2
+				return
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					sendkey X, .3
+					sleep 2
+					tp XYZ(-6507.53369140625, 38242.3984375, 0.0)
+					sleep 2
+					tp XYZ(-6511.37255859375, 39343.3984375, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-497.7257995605469, -1235.4468994140625, 16.42572021484375)
+					sleep 3
+					sendkey ENTER, .5
+					waitforzonechange completion
+					sleep 2
+					return
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to shalek the wise in entrance hall" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "back to balance" {
+		if p2 tracking_goal "talk to alhazred in balance school" {
+			p2 tp XYZ(-600.8377685546875, 43.37891387939453, -3.0517578125e-05)
+			call ZoneChange_P2
+			p2 tp XYZ(14167.2255859375, 1965.301025390625, 1139.239013671875)
+			call X_Interact_P2
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p2 tp XYZ(-580.5025024414062, 19.410446166992188, 2.0)
+			call X_Interact_P2
+			call ZoneChange_P2
+			p2 tp XYZ(11743.2822265625, -187.52777099609375, 1219.797119140625)
+			call X_Interact_P2
+			sleep 4
+			call X_Interact_P2
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			sleep 2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "tomb of storms" {
+		if p2 tracking_goal "talk to hetch al'dim in the oasis" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+		if p2 tracking_goal "go to the tomb of storms in well of spirits" {
+			p2 tp XYZ(-4225.654296875, -1348.303466796875, -35.353363037109375)
+			call X_Interact_P2
+			sleep 1
+			p2 tp XYZ(-4550.90234375, -2568.392822265625, -35.35382080078125)
+			call X_Interact_P2
+			sleep 1
+			p2 tp XYZ(-3302.143798828125, -2836.3349609375, -35.353057861328125)
+			call X_Interact_P2
+			sleep 1
+			p2 tp XYZ(-2632.9365234375, -1355.3267822265625, -118.40469360351562)
+			sleep 15
+			p2 tp XYZ(-3359.141357421875, -1785.3035888671875, -35.353973388671875)
+			call ZoneChange_P2
+			p2 tp XYZ(-10535.1640625, -8437.8017578125, -372.9991149902344)
+			call ZoneChange_P2
+			return
+		}
+		if p2 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "de-cipher the ahnics" {
+		if p2 tracking_goal "defeat king uro ahnic and collect cipher part 1 in ahnic family tomb" {	
+			p2 tp quest
+			call ZoneChange_P2
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+		}
+		if p2 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "de-cipher the djeserits" {
+		if p2 tracking_goal "defeat king shemet djeserit and collect cipher part 2 in djeserit family tomb" {
+			p2 tp quest
+			call ZoneChange_P2
+			until p2 incombat {
+				p2 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P2
+			call Combat_Complete_P2
+			p2 tp quest
+			call ZoneChange_P2
+			return
+		}
+		if p2 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "the key to the temple" {
+		if p2 tracking_goal "defeat prince mkhai karanahn in karanahn palace" {
+			if p2 inzone Krokotopia/KT_Tomb/KT_WellOfSpirits {
+				p2 tp quest
+				call ZoneChange_P2
+			}
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp quest
+				call Combat_Complete_P2
+				p2 tp quest
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p2 tp quest
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "temple dweller" {
+		if p2 tracking_goal "defeat krokopatra in temple of storms" {
+			p2 tp quest
+			call Teleport_Main_To_Help_P2
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P2
+				p2 tp XYZ(18338.630859375, 21024.689453125, -1000.0)
+				call Combat_Complete_P2
+				p2 tp XYZ(-25.568254470825195, 1338.7327880859375, 68.86993408203125)
+				sleep 3
+				p2 sendkey ENTER, .3
+				call ZoneChange_P2
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(18338.630859375, 21024.689453125, -1000.0)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-25.568254470825195, 1338.7327880859375, 68.86993408203125)
+					sleep 3
+					sendkey ENTER, .3
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p2 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "triumphant return!" {
+		if p2 tracking_goal "talk to sergeant major talbot in the oasis" {
+			until NOT p2 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			sleep 2
+			p2 sendkey END, .2
+			call ZoneChange_P2
+			p2 tp quest
+			call X_Interact_P2
+			call Dialogue_Complete_P2
+			return
+		}
+	}
+	if p2 tracking_quest "missing souls" {
+		if p2 tracking_goal "talk to private kinchley in wolfminster abbey" {
+			if NOT p2 inzone Marleybone/Interiors/MB_WolfminsterAbbey {
+				p2 tp XYZ(15.890161514282227, -95.3442153930664, -59.308319091796875)
+				call ZoneChange_P2
+				p2 tp XYZ(9.063953399658203, -140.64892578125, 134.36676025390625)
+				call X_Interact_P2
+				sleep 3
+				until NOT p2 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+					p2 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+					sleep .1
+				}
+				call ZoneChange_P2
+				call SpeedDelay
+				return
+			}
+		}
+	}
+} #End of P2 Quest Handler
+block P3QuestsHandler {
+	if p3 tracking_quest "a whole new world" {
+		if p3 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p3 tp XYZ(16.75507164001465, -2981.96826171875, 627.591796875)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "digging in the dirt" {
+		if p3 tracking_goal "talk to professor winthrop in altar of kings" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "make some rubbings" {
+		if p3 tracking_goal "rub obelisk in royal hall" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp XYZ(15133.115234375, -24907.416015625, 0.0)
+			call X_Interact_P3
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "talk to professor winthrop in altar of kings" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "fragments of a key" {
+		if p3 tracking_goal "defeat any nirini and collect key in royal hall" {
+			if p3 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p3 tp quest	
+				call ZoneChange_P3
+			}
+			while p3 tracking_goal "defeat any nirini and collect key in royal hall" {
+				until p3 incombat {
+					p3 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P3
+				call Combat_Complete_P3
+			}
+		}
+		if p3 tracking_goal "talk to professor winthrop in altar of kings" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "the final rubbing" {
+		if p3 tracking_goal "defeat biti nirini and collect tablet in biti's chamber" {
+			if p3 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				until p3 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p3 sendkey X, .5
+				call ZoneChange_P3
+				p3 tp XYZ(16.449310302734375, -61.78489685058594, -222.02255249023438)
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					sleep 5
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(16.449310302734375, -61.78489685058594, -222.02255249023438)
+					waitforcombat completion
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					call ZoneChange_P3
+				} else {
+					print "Waiting for all clients to reach this sigil."
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to professor winthrop in altar of kings" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "speak to the assistant" {
+		if p3 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "find my colleague" {
+		if p3 tracking_goal "talk to robert lancaster in chamber of fire" {			
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "new digs" {
+		if p3 tracking_goal "find key stone pile of dirt in royal hall" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "quarter master" { 
+		if p3 tracking_goal "defeat nirini quartermaster and collect key piece in chamber of fire" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp XYZ(-32.6485595703125, 162.5439453125, -222.02249145507812)
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-32.6485595703125, 162.5439453125, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to assistant danforth in chamber of fire" {	
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p3 tracking_quest "back to the archeologist" {
+		if p3 tracking_goal "talk to professor winthrop in altar of kings" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "assault on the palace" {
+		if p3 tracking_goal "talk to lieutenant standish in palace of fire" {
+			p3 tp XYZ(4557.80029296875, 7053.4970703125, 950.0)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			sleep 2
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p3 tracking_quest "gather the troops" {
+		if p3 tracking_goal "talk to private farnsworth in palace of fire" {
+			return
+		}
+		if p3 tracking_goal "talk to private primwell in palace of fire" {
+			return
+		}
+		if p3 tracking_goal "talk to lieutenant standish in palace of fire" {
+			return
+		}
+	}
+	if p3 tracking_quest "payback" {
+		while p3 tracking_goal "defeat nirini warrior in palace of fire" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		while p3 tracking_goal "defeat flame guardian in palace of fire" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to lieutenant standish in palace of fire" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "give 'em another round" {
+		if p3 tracking_goal "defeat edo nirini in palace of fire" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp XYZ(162.13348388671875, -269.1477355957031, -222.02255249023438)
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(162.13348388671875, -269.1477355957031, -222.02255249023438)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "defeat akori nirini in akori's chamber" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp XYZ(-35.99755859375, 406.6820373535156, -222.02249145507812)
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-35.99755859375, 406.6820373535156, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "defeat nebit nirini in palace of fire" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp XYZ(-4.3842692375183105, 165.291015625, -222.02252197265625)
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-4.3842692375183105, 165.291015625, -222.02252197265625)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "defeat shai nirini in palace of fire" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp XYZ(-70.8246078491211, 266.0525207519531, -222.02249145507812)
+				call Combat_Complete_P3
+				p3 tp XYZ(2.408529281616211, 3191.078369140625, 99.99990844726562)
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-70.8246078491211, 266.0525207519531, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(2.408529281616211, 3191.078369140625, 99.99990844726562)
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to lieutenant standish in palace of fire" {	
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "back to winthrop" {
+		if p3 tracking_goal "talk to professor winthrop in altar of kings" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "into the map room" {
+		if p3 tracking_goal "talk to professor winthrop in throne room of fire" {	
+			if p3 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p3 tp XYZ(4555.5908203125, 7029.90576171875, 950.0)
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(-11916.955078125, 29935.68359375, -9.1552734375e-05)
+				call Combat_Complete_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(-17936.69140625, -6149.966796875, -9.1552734375e-05)
+				call Combat_Complete_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(-7369.02001953125, 4291.02978515625, -103.07530212402344)
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				sleep 2
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					sendkey X, .5
+					sleep 2
+					tp XYZ(-11916.955078125, 29935.68359375, -9.1552734375e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					sleep 3
+					sendkey X, .5
+					sleep 2
+					tp XYZ(-17936.69140625, -6149.966796875, -9.1552734375e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					sleep 3
+					sendkey X, .2
+					sleep 2
+					tp XYZ(-7369.02001953125, 4291.02978515625, -103.07530212402344)
+					sleep 3
+					sendkey X, .5
+					sleep 3
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to professor winthrop in altar of kings" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "permission to enter" {
+		if p3 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "fangdango" {
+		if p3 tracking_goal "go to the order of the fang in balance school" {	
+			p3 tp XYZ(4446.40576171875, 3151.96142578125, 25.792266845703125)
+			call X_Interact_P3
+			sleep 5 
+			call X_Interact_P3
+			call ZoneChange_P3
+			p3 tp XYZ(14152.5576171875, 1961.5831298828125, 1139.239013671875)
+			until NOT p3 inzone Krokotopia/KT_Hub_Sphinx {
+				p3 sendkey X, .3
+			}
+			sleep 5
+			p3 tp quest
+			sleep 2
+			return
+		}
+		if p3 tracking_goal "talk to alhazred in balance school" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "order at last" {
+		if p3 tracking_goal "talk to shalek the wise in entrance hall" {
+			p3 tp XYZ(-589.76513671875, 28.27214813232422, 2.0)
+			call X_Interact_P3
+			call ZoneChange_P3
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "the great general" {
+		if p3 tracking_goal "talk to rami in hall of champions" {
+			p3 tp XYZ(4621.03173828125, -3939.093505859375, -0.019500732421875)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "minion massacre" {
+		while p3 tracking_goal "defeat any sphinx sokkwi in hall of champions" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to rami in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "search for the seal" {
+		if p3 tracking_goal "defeat nekhbet and collect seal of the fang in hall of champions" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp XYZ(-16.584186553955078, 378.44305419921875, -222.02249145507812)
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-16.584186553955078, 378.44305419921875, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to rami in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "general admission" {
+		if p3 tracking_goal "talk to general khaba in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "coin of destiny" {
+		if p3 tracking_goal "defeat soul scavenger and collect coin of destiny in hall of champions" {	
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp XYZ(-77.41630554199219, 237.56109619140625, -222.02249145507812)
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-77.41630554199219, 237.56109619140625, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to general khaba in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "lay of the land" {
+		if p3 tracking_goal "talk to rami in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to general khaba in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "blades of ice" {
+		while p3 tracking_goal "defeat glacial avenger and collect ice shards in hall of champions" {	
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to general khaba in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "armor handle" {
+		while p3 tracking_goal "defeat ice weaver and collect carapace in grand arena" {
+			if p3 inzone Krokotopia/KT_Krokosphinx/KT_ChampHall {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+			if p3 inzone Krokotopia/KT_Krokosphinx/KT_EntranceHall {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to general khaba in hall of champions" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp XYZ(4616.3779296875, -3884.469970703125, -0.0194091796875)
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "get some bling" {
+		until NOT p3 tracking_goal "collect gemstones in hall of champions" {
+			p3 tp XYZ(-21724.84375, -5438.15966796875, 0.0)
+			p3 turncam 6.26
+			call X_Interact_P3
+			call SpeedDelay
+			p3 tp XYZ(-20420.736328125, -9709.4384765625, -9.1552734375e-05)
+			p3 turncam 2.83
+			call X_Interact_P3
+			call SpeedDelay
+		}
+		if p3 tracking_goal "talk to general khaba in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "grip it!" {
+		while p3 tracking_goal "defeat hall servant and collect leather straps in hall of champions" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to general khaba in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "forge key" {
+		while p3 tracking_goal "defeat sokkwi crusher and collect key in hall of champions" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to general khaba in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "taking it to the tuts" {
+		if p3 tracking_goal "defeat odji sokkwi in hall of champions" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				until p3 incombat {
+					p3 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P3
+				p3 tp XYZ(-268.22705078125, 1552.5489501953125, -222.02252197265625)
+				call X_Interact_P3
+				sleep 2
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-268.22705078125, 1552.5489501953125, -222.02252197265625)
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to general khaba in hall of champions" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "back among the fold" {
+		if p3 tracking_goal "talk to shalek the wise in entrance hall" {			
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "quest for the warrior" {
+		if p3 tracking_goal "talk to ako in grand arena" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "mark of the gladiator" {
+		while p3 tracking_goal "defeat any sokkwi in the arena and collect gladiator mark in grand arena" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to ako in grand arena" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "gladiator games" {
+		if p3 tracking_goal "talk to arena master in grand arena" {
+			p3 tp XYZ(-5988.65966796875, 24403.84765625, 0.5)
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "are you experienced?" {
+		while p3 tracking_goal "defeat sokkwi ripper in grand arena" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to arena master in grand arena" {
+			p3 tp XYZ(-5988.65966796875, 24403.84765625, 0.5)
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "battle of the sunbird" {
+		if p3 tracking_goal "defeat wild sunbird in grand arena" {
+			p3 tp quest
+			call ZoneChange_P3
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+			p3 tp quest
+			call ZoneChange_P3
+			return
+		}
+		if p3 tracking_goal "talk to arena master in grand arena" {
+			p3 tp XYZ(-5981.22412109375, 24403.171875, 0.5)
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "along came a spider" {
+		while p3 tracking_goal "defeat ice weavers and collect spider eyes in grand arena" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to arena master in grand arena" {
+			p3 tp XYZ(-6067.9697265625, 24403.84765625, 0.500030517578125)
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "stonechin" {
+		if p3 tracking_goal "defeat krag stonechin in grand arena" {
+			p3 tp quest
+			call ZoneChange_P3
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+			p3 tp quest
+			call ZoneChange_P3
+			return
+		}
+		if p3 tracking_goal "talk to arena master in grand arena" {
+			p3 tp XYZ(-5991.1376953125, 24403.509765625, 0.5)
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "enter sandman" {
+		while p3 tracking_goal "defeat sand stalkers in grand arena" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to arena master in grand arena" {
+			p3 tp XYZ(-6008.48681640625, 24403.228515625, 0.500030517578125)
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "malletmane" {
+		if p3 tracking_goal "defeat bort malletmane in grand arena" {
+			p3 tp quest
+			call ZoneChange_P3
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+			p3 tp quest
+			call ZoneChange_P3
+			return
+		}
+		if p3 tracking_goal "talk to arena master in grand arena" {
+			p3 tp XYZ(-6067.9697265625, 24404.185546875, 0.500030517578125)
+			call X_Interact_P3
+			sleep 2
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "krokotopian idol" {
+		while p3 tracking_goal "defeat sokkwi gougers in grand arena" {
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to arena master in grand arena" {
+			p3 tp XYZ(-6058.0556640625, 24403.509765625, 0.500030517578125)
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "who's more amazing?" {
+		if p3 tracking_goal "defeat itennu sokkwi in grand arena" {
+			p3 tp quest
+			call ZoneChange_P3
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+			p3 tp XYZ(-17.396953582763672, -3371.92236328125, 92.73086547851562)
+			call ZoneChange_P3
+			return
+		}
+		if p3 tracking_goal "talk to arena master in grand arena" {
+			p3 tp XYZ(-6065.4912109375, 24403.84765625, 0.500030517578125)
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "the ultimate battle" {
+		if p3 tracking_goal "defeat khai amahte the great in grand arena" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				until p3 incombat {
+					p3 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P3
+				p3 tp XYZ(591.670654296875, -636.8513793945312, -222.0225372314453)
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+				return
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(591.670654296875, -636.8513793945312, -222.0225372314453)
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					tp quest
+					waitforzonechange completion
+					sleep 2
+					return
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+	}
+	if p3 tracking_quest "return to shalek" {
+		if p3 tracking_goal "talk to shalek the wise in entrance hall" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			sleep 2
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "find the fang" {
+		if p3 tracking_goal "talk to shalek the wise in the vault of ice" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(6123.44580078125, 2934.329833984375, -3.0517578125e-05)
+				call Combat_Complete_P3
+				p3 tp XYZ(38.05470657348633, -1419.8187255859375, 101.52520751953125)
+				sleep 3
+				p3 sendkey ENTER, .5
+				sleep 10
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(6123.44580078125, 2934.329833984375, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(38.05470657348633, -1419.8187255859375, 101.52520751953125)
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to shalek the wise in entrance hall" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "retribution" {
+		if p3 tracking_goal "talk to shalek the wise in emperor's retreat" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call X_Interact_P3
+				call Dialogue_Complete_P3
+				p3 tp XYZ(-6507.53369140625, 38242.3984375, 0.0)
+				sleep 2
+				p3 tp XYZ(-6511.37255859375, 39343.3984375, -3.0517578125e-05)
+				call Combat_Complete_P3
+				p3 tp XYZ(-497.7257995605469, -1235.4468994140625, 16.42572021484375)
+				sleep 3
+				p3 sendkey ENTER, .5
+				call ZoneChange_P3
+				return
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					sendkey X, .3
+					sleep 2
+					tp XYZ(-6507.53369140625, 38242.3984375, 0.0)
+					sleep 2
+					tp XYZ(-6511.37255859375, 39343.3984375, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-497.7257995605469, -1235.4468994140625, 16.42572021484375)
+					sleep 3
+					sendkey ENTER, .5
+					waitforzonechange completion
+					sleep 2
+					return
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to shalek the wise in entrance hall" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "back to balance" {
+		if p3 tracking_goal "talk to alhazred in balance school" {
+			p3 tp XYZ(-600.8377685546875, 43.37891387939453, -3.0517578125e-05)
+			call ZoneChange_P3
+			p3 tp XYZ(14167.2255859375, 1965.301025390625, 1139.239013671875)
+			call X_Interact_P3
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p3 tp XYZ(-580.5025024414062, 19.410446166992188, 2.0)
+			call X_Interact_P3
+			call ZoneChange_P3
+			p3 tp XYZ(11743.2822265625, -187.52777099609375, 1219.797119140625)
+			call X_Interact_P3
+			sleep 5
+			call X_Interact_P3
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			sleep 2
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "tomb of storms" {
+		if p3 tracking_goal "talk to hetch al'dim in the oasis" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+		if p3 tracking_goal "go to the tomb of storms in well of spirits" {
+			p3 tp XYZ(-4225.654296875, -1348.303466796875, -35.353363037109375)
+			call X_Interact_P3
+			sleep 1
+			p3 tp XYZ(-4550.90234375, -2568.392822265625, -35.35382080078125)
+			call X_Interact_P3
+			sleep 1
+			p3 tp XYZ(-3302.143798828125, -2836.3349609375, -35.353057861328125)
+			call X_Interact_P3
+			sleep 1
+			p3 tp XYZ(-2632.9365234375, -1355.3267822265625, -118.40469360351562)
+			sleep 15
+			p3 tp XYZ(-3359.141357421875, -1785.3035888671875, -35.353973388671875)
+			call ZoneChange_P3
+			p3 tp XYZ(-10535.1640625, -8437.8017578125, -372.9991149902344)
+			call ZoneChange_P3
+			return
+		}
+		if p3 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "de-cipher the ahnics" {
+		if p3 tracking_goal "defeat king uro ahnic and collect cipher part 1 in ahnic family tomb" {	
+			p3 tp quest
+			call ZoneChange_P3
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+		}
+		if p3 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "de-cipher the djeserits" {
+		if p3 tracking_goal "defeat king shemet djeserit and collect cipher part 2 in djeserit family tomb" {
+			p3 tp quest
+			call ZoneChange_P3
+			until p3 incombat {
+				p3 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P3
+			call Combat_Complete_P3
+			p3 tp quest
+			call ZoneChange_P3
+			return
+		}
+		if p3 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "the key to the temple" {
+		if p3 tracking_goal "defeat prince mkhai karanahn in karanahn palace" {
+			if p3 inzone Krokotopia/KT_Tomb/KT_WellOfSpirits {
+				p3 tp quest
+				call ZoneChange_P3
+			}
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp quest
+				call Combat_Complete_P3
+				p3 tp quest
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p3 tp quest
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "temple dweller" {
+		if p3 tracking_goal "defeat krokopatra in temple of storms" {
+			p3 tp quest
+			call Teleport_Main_To_Help_P3
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P3
+				p3 tp XYZ(18338.630859375, 21024.689453125, -1000.0)
+				call Combat_Complete_P3
+				p3 tp XYZ(-25.568254470825195, 1338.7327880859375, 68.86993408203125)
+				sleep 3
+				p3 sendkey ENTER, .3
+				call ZoneChange_P3
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(18338.630859375, 21024.689453125, -1000.0)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-25.568254470825195, 1338.7327880859375, 68.86993408203125)
+					sleep 3
+					sendkey ENTER, .3
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p3 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "triumphant return!" {
+		if p3 tracking_goal "talk to sergeant major talbot in the oasis" {
+			until NOT p3 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			sleep 2
+			p3 sendkey END, .2
+			call ZoneChange_P3
+			p3 tp quest
+			call X_Interact_P3
+			call Dialogue_Complete_P3
+			return
+		}
+	}
+	if p3 tracking_quest "missing souls" {
+		if p3 tracking_goal "talk to private kinchley in wolfminster abbey" {
+			if NOT p3 inzone Marleybone/Interiors/MB_WolfminsterAbbey {
+				p3 tp XYZ(15.890161514282227, -95.3442153930664, -59.308319091796875)
+				call ZoneChange_P3
+				p3 tp XYZ(9.063953399658203, -140.64892578125, 134.36676025390625)
+				call X_Interact_P3
+				sleep 3
+				until NOT p3 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+					p3 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+					sleep .1
+				}
+				call ZoneChange_P3
+				call SpeedDelay
+				return
+			}
+		}
+	}
+} #End of P3 Quest Handler
+block P4QuestsHandler {
+	if p4 tracking_quest "a whole new world" {
+		if p4 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p4 tp XYZ(16.75507164001465, -2981.96826171875, 627.591796875)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "digging in the dirt" {
+		if p4 tracking_goal "talk to professor winthrop in altar of kings" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "make some rubbings" {
+		if p4 tracking_goal "rub obelisk in royal hall" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp XYZ(15133.115234375, -24907.416015625, 0.0)
+			call X_Interact_P4
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "talk to professor winthrop in altar of kings" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "fragments of a key" {
+		if p4 tracking_goal "defeat any nirini and collect key in royal hall" {
+			if p4 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p4 tp quest	
+				call ZoneChange_P4
+			}
+			while p4 tracking_goal "defeat any nirini and collect key in royal hall" {
+				until p4 incombat {
+					p4 tp quest
+					sleep .1
+				}
+				call Teleport_Main_To_Help_P4
+				call Combat_Complete_P4
+			}
+		}
+		if p4 tracking_goal "talk to professor winthrop in altar of kings" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "the final rubbing" {
+		if p4 tracking_goal "defeat biti nirini and collect tablet in biti's chamber" {
+			if p4 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				until p4 windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+					sleep .1
+				}
+				sleep 1
+				p4 sendkey X, .5
+				call ZoneChange_P4
+				p4 tp XYZ(16.449310302734375, -61.78489685058594, -222.02255249023438)
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					sleep 5
+					until windowvisible ['WorldView', 'NPCRangeWin', 'imgBackground'] {
+						sleep .1
+					}
+					sleep 1
+					sendkey X, .5
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(16.449310302734375, -61.78489685058594, -222.02255249023438)
+					waitforcombat completion
+					times 4 {
+						entitytp Health
+						entitytp Mana
+					}
+					tp quest
+					call ZoneChange_P4
+				} else {
+					print "Waiting for all clients to reach this sigil."
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to professor winthrop in altar of kings" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "speak to the assistant" {
+		if p4 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "find my colleague" {
+		if p4 tracking_goal "talk to robert lancaster in chamber of fire" {			
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "new digs" {
+		if p4 tracking_goal "find key stone pile of dirt in royal hall" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "talk to assistant danforth in chamber of fire" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "quarter master" { 
+		if p4 tracking_goal "defeat nirini quartermaster and collect key piece in chamber of fire" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp XYZ(-32.6485595703125, 162.5439453125, -222.02249145507812)
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-32.6485595703125, 162.5439453125, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to assistant danforth in chamber of fire" {	
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p4 tracking_quest "back to the archeologist" {
+		if p4 tracking_goal "talk to professor winthrop in altar of kings" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "assault on the palace" {
+		if p4 tracking_goal "talk to lieutenant standish in palace of fire" {
+			p4 tp XYZ(4557.80029296875, 7053.4970703125, 950.0)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			sleep 2
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			sleep 5
+			call Exit_Quest_Menu
+			return
+		}
+	}
+	if p4 tracking_quest "gather the troops" {
+		if p4 tracking_goal "talk to private farnsworth in palace of fire" {
+			return
+		}
+		if p4 tracking_goal "talk to private primwell in palace of fire" {
+			return
+		}
+		if p4 tracking_goal "talk to lieutenant standish in palace of fire" {
+			return
+		}
+	}
+	if p4 tracking_quest "payback" {
+		while p4 tracking_goal "defeat nirini warrior in palace of fire" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		while p4 tracking_goal "defeat flame guardian in palace of fire" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to lieutenant standish in palace of fire" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "give 'em another round" {
+		if p4 tracking_goal "defeat edo nirini in palace of fire" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp XYZ(162.13348388671875, -269.1477355957031, -222.02255249023438)
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(162.13348388671875, -269.1477355957031, -222.02255249023438)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "defeat akori nirini in akori's chamber" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp XYZ(-35.99755859375, 406.6820373535156, -222.02249145507812)
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-35.99755859375, 406.6820373535156, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "defeat nebit nirini in palace of fire" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp XYZ(-4.3842692375183105, 165.291015625, -222.02252197265625)
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-4.3842692375183105, 165.291015625, -222.02252197265625)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "defeat shai nirini in palace of fire" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp XYZ(-70.8246078491211, 266.0525207519531, -222.02249145507812)
+				call Combat_Complete_P4
+				p4 tp XYZ(2.408529281616211, 3191.078369140625, 99.99990844726562)
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-70.8246078491211, 266.0525207519531, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(2.408529281616211, 3191.078369140625, 99.99990844726562)
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to lieutenant standish in palace of fire" {	
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "back to winthrop" {
+		if p4 tracking_goal "talk to professor winthrop in altar of kings" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "into the map room" {
+		if p4 tracking_goal "talk to professor winthrop in throne room of fire" {	
+			if p4 inzone Krokotopia/KT_Pyramid/KT_AltarOfKings {
+				p4 tp XYZ(4555.5908203125, 7029.90576171875, 950.0)
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(-11916.955078125, 29935.68359375, -9.1552734375e-05)
+				call Combat_Complete_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(-17936.69140625, -6149.966796875, -9.1552734375e-05)
+				call Combat_Complete_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(-7369.02001953125, 4291.02978515625, -103.07530212402344)
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				sleep 2
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					sendkey X, .5
+					sleep 2
+					tp XYZ(-11916.955078125, 29935.68359375, -9.1552734375e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					sleep 3
+					sendkey X, .5
+					sleep 2
+					tp XYZ(-17936.69140625, -6149.966796875, -9.1552734375e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					sleep 3
+					sendkey X, .2
+					sleep 2
+					tp XYZ(-7369.02001953125, 4291.02978515625, -103.07530212402344)
+					sleep 3
+					sendkey X, .5
+					sleep 3
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to professor winthrop in altar of kings" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "permission to enter" {
+		if p4 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "fangdango" {
+		if p4 tracking_goal "go to the order of the fang in balance school" {	
+			p4 tp XYZ(4446.40576171875, 3151.96142578125, 25.792266845703125)
+			call X_Interact_P4
+			sleep 5
+			call X_Interact_P4
+			call ZoneChange_P4
+			p4 tp XYZ(14152.5576171875, 1961.5831298828125, 1139.239013671875)
+			until NOT p4 inzone Krokotopia/KT_Hub_Sphinx {
+				p4 sendkey X, .3
+			}
+			sleep 5
+			p4 tp quest
+			sleep 2
+			return
+		}
+		if p4 tracking_goal "talk to alhazred in balance school" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "order at last" {
+		if p4 tracking_goal "talk to shalek the wise in entrance hall" {
+			p4 tp XYZ(-589.76513671875, 28.27214813232422, 2.0)
+			call X_Interact_P4
+			call ZoneChange_P4
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "the great general" {
+		if p4 tracking_goal "talk to rami in hall of champions" {
+			p4 tp XYZ(4621.03173828125, -3939.093505859375, -0.019500732421875)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "minion massacre" {
+		while p4 tracking_goal "defeat any sphinx sokkwi in hall of champions" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to rami in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "search for the seal" {
+		if p4 tracking_goal "defeat nekhbet and collect seal of the fang in hall of champions" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp XYZ(-16.584186553955078, 378.44305419921875, -222.02249145507812)
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-16.584186553955078, 378.44305419921875, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to rami in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "general admission" {
+		if p4 tracking_goal "talk to general khaba in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "coin of destiny" {
+		if p4 tracking_goal "defeat soul scavenger and collect coin of destiny in hall of champions" {	
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp XYZ(-77.41630554199219, 237.56109619140625, -222.02249145507812)
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(-77.41630554199219, 237.56109619140625, -222.02249145507812)
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to general khaba in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "lay of the land" {
+		if p4 tracking_goal "talk to rami in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to general khaba in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "blades of ice" {
+		while p4 tracking_goal "defeat glacial avenger and collect ice shards in hall of champions" {	
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to general khaba in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "armor handle" {
+		while p4 tracking_goal "defeat ice weaver and collect carapace in grand arena" {
+			if p4 inzone Krokotopia/KT_Krokosphinx/KT_ChampHall {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+			if p4 inzone Krokotopia/KT_Krokosphinx/KT_EntranceHall {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to general khaba in hall of champions" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp XYZ(4616.3779296875, -3884.469970703125, -0.0194091796875)
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "get some bling" {
+		until NOT p4 tracking_goal "collect gemstones in hall of champions" {
+			p4 tp XYZ(-21724.84375, -5438.15966796875, 0.0)
+			p4 turncam 6.26
+			call X_Interact_P4
+			call SpeedDelay
+			p4 tp XYZ(-20420.736328125, -9709.4384765625, -9.1552734375e-05)
+			p4 turncam 2.83
+			call X_Interact_P4
+			call SpeedDelay
+		}
+		if p4 tracking_goal "talk to general khaba in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "grip it!" {
+		while p4 tracking_goal "defeat hall servant and collect leather straps in hall of champions" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to general khaba in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "forge key" {
+		while p4 tracking_goal "defeat sokkwi crusher and collect key in hall of champions" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to general khaba in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "taking it to the tuts" {
+		if p4 tracking_goal "defeat odji sokkwi in hall of champions" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				until p4 incombat {
+					p4 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P4
+				p4 tp XYZ(-268.22705078125, 1552.5489501953125, -222.02252197265625)
+				call X_Interact_P4
+				sleep 2
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-268.22705078125, 1552.5489501953125, -222.02252197265625)
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to general khaba in hall of champions" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "back among the fold" {
+		if p4 tracking_goal "talk to shalek the wise in entrance hall" {			
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "quest for the warrior" {
+		if p4 tracking_goal "talk to ako in grand arena" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "mark of the gladiator" {
+		while p4 tracking_goal "defeat any sokkwi in the arena and collect gladiator mark in grand arena" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to ako in grand arena" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "gladiator games" {
+		if p4 tracking_goal "talk to arena master in grand arena" {
+			p4 tp XYZ(-5988.65966796875, 24403.84765625, 0.5)
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "are you experienced?" {
+		while p4 tracking_goal "defeat sokkwi ripper in grand arena" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to arena master in grand arena" {
+			p4 tp XYZ(-5988.65966796875, 24403.84765625, 0.5)
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "battle of the sunbird" {
+		if p4 tracking_goal "defeat wild sunbird in grand arena" {
+			p4 tp quest
+			call ZoneChange_P4
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+			p4 tp quest
+			call ZoneChange_P4
+			return
+		}
+		if p4 tracking_goal "talk to arena master in grand arena" {
+			p4 tp XYZ(-5981.22412109375, 24403.171875, 0.5)
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "along came a spider" {
+		while p4 tracking_goal "defeat ice weavers and collect spider eyes in grand arena" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to arena master in grand arena" {
+			p4 tp XYZ(-6067.9697265625, 24403.84765625, 0.500030517578125)
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "stonechin" {
+		if p4 tracking_goal "defeat krag stonechin in grand arena" {
+			p4 tp quest
+			call ZoneChange_P4
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+			p4 tp quest
+			call ZoneChange_P4
+			return
+		}
+		if p4 tracking_goal "talk to arena master in grand arena" {
+			p4 tp XYZ(-5991.1376953125, 24403.509765625, 0.5)
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "enter sandman" {
+		while p4 tracking_goal "defeat sand stalkers in grand arena" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to arena master in grand arena" {
+			p4 tp XYZ(-6008.48681640625, 24403.228515625, 0.500030517578125)
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "malletmane" {
+		if p4 tracking_goal "defeat bort malletmane in grand arena" {
+			p4 tp quest
+			call ZoneChange_P4
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+			p4 tp quest
+			call ZoneChange_P4
+			return
+		}
+		if p4 tracking_goal "talk to arena master in grand arena" {
+			p4 tp XYZ(-6067.9697265625, 24404.185546875, 0.500030517578125)
+			call X_Interact_P4
+			sleep 2
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "krokotopian idol" {
+		while p4 tracking_goal "defeat sokkwi gougers in grand arena" {
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to arena master in grand arena" {
+			p4 tp XYZ(-6058.0556640625, 24403.509765625, 0.500030517578125)
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "who's more amazing?" {
+		if p4 tracking_goal "defeat itennu sokkwi in grand arena" {
+			p4 tp quest
+			call ZoneChange_P4
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+			p4 tp XYZ(-17.396953582763672, -3371.92236328125, 92.73086547851562)
+			call ZoneChange_P4
+			return
+		}
+		if p4 tracking_goal "talk to arena master in grand arena" {
+			p4 tp XYZ(-6065.4912109375, 24403.84765625, 0.500030517578125)
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "the ultimate battle" {
+		if p4 tracking_goal "defeat khai amahte the great in grand arena" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				until p4 incombat {
+					p4 tp quest
+					sleep .1
+				}
+				call Combat_Complete_P4
+				p4 tp XYZ(591.670654296875, -636.8513793945312, -222.0225372314453)
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+				return
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					until incombat {
+						tp quest
+						sleep .1
+					}
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(591.670654296875, -636.8513793945312, -222.0225372314453)
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					tp quest
+					waitforzonechange completion
+					sleep 2
+					return
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+	}
+	if p4 tracking_quest "return to shalek" {
+		if p4 tracking_goal "talk to shalek the wise in entrance hall" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			sleep 2
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "find the fang" {
+		if p4 tracking_goal "talk to shalek the wise in the vault of ice" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(6123.44580078125, 2934.329833984375, -3.0517578125e-05)
+				call Combat_Complete_P4
+				p4 tp XYZ(38.05470657348633, -1419.8187255859375, 101.52520751953125)
+				sleep 3
+				p4 sendkey ENTER, .5
+				sleep 10
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					times 50 {
+						sendkey X, .1
+					}
+					sleep 2
+					tp XYZ(6123.44580078125, 2934.329833984375, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(38.05470657348633, -1419.8187255859375, 101.52520751953125)
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to shalek the wise in entrance hall" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "retribution" {
+		if p4 tracking_goal "talk to shalek the wise in emperor's retreat" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call X_Interact_P4
+				call Dialogue_Complete_P4
+				p4 tp XYZ(-6507.53369140625, 38242.3984375, 0.0)
+				sleep 2
+				p4 tp XYZ(-6511.37255859375, 39343.3984375, -3.0517578125e-05)
+				call Combat_Complete_P4
+				p4 tp XYZ(-497.7257995605469, -1235.4468994140625, 16.42572021484375)
+				sleep 3
+				p4 sendkey ENTER, .5
+				call ZoneChange_P4
+				return
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					sleep 3
+					sendkey X, .3
+					sleep 2
+					tp XYZ(-6507.53369140625, 38242.3984375, 0.0)
+					sleep 2
+					tp XYZ(-6511.37255859375, 39343.3984375, -3.0517578125e-05)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-497.7257995605469, -1235.4468994140625, 16.42572021484375)
+					sleep 3
+					sendkey ENTER, .5
+					waitforzonechange completion
+					sleep 2
+					return
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to shalek the wise in entrance hall" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "back to balance" {
+		if p4 tracking_goal "talk to alhazred in balance school" {
+			p4 tp XYZ(-600.8377685546875, 43.37891387939453, -3.0517578125e-05)
+			call ZoneChange_P4
+			p4 tp XYZ(14167.2255859375, 1965.301025390625, 1139.239013671875)
+			call X_Interact_P4
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "talk to sergeant major talbot in the oasis" {
+			p4 tp XYZ(-580.5025024414062, 19.410446166992188, 2.0)
+			call X_Interact_P4
+			call ZoneChange_P4
+			p4 tp XYZ(11743.2822265625, -187.52777099609375, 1219.797119140625)
+			call X_Interact_P4
+			sleep 5
+			call X_Interact_P4
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			sleep 2
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "tomb of storms" {
+		if p4 tracking_goal "talk to hetch al'dim in the oasis" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+		if p4 tracking_goal "go to the tomb of storms in well of spirits" {
+			p4 tp XYZ(-4225.654296875, -1348.303466796875, -35.353363037109375)
+			call X_Interact_P4
+			sleep 1
+			p4 tp XYZ(-4550.90234375, -2568.392822265625, -35.35382080078125)
+			call X_Interact_P4
+			sleep 1
+			p4 tp XYZ(-3302.143798828125, -2836.3349609375, -35.353057861328125)
+			call X_Interact_P4
+			sleep 1
+			p4 tp XYZ(-2632.9365234375, -1355.3267822265625, -118.40469360351562)
+			sleep 15
+			p4 tp XYZ(-3359.141357421875, -1785.3035888671875, -35.353973388671875)
+			call ZoneChange_P4
+			p4 tp XYZ(-10535.1640625, -8437.8017578125, -372.9991149902344)
+			call ZoneChange_P4
+			return
+		}
+		if p4 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "de-cipher the ahnics" {
+		if p4 tracking_goal "defeat king uro ahnic and collect cipher part 1 in ahnic family tomb" {	
+			p4 tp quest
+			call ZoneChange_P4
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+		}
+		if p4 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "de-cipher the djeserits" {
+		if p4 tracking_goal "defeat king shemet djeserit and collect cipher part 2 in djeserit family tomb" {
+			p4 tp quest
+			call ZoneChange_P4
+			until p4 incombat {
+				p4 tp quest
+				sleep .1
+			}
+			call Teleport_Main_To_Help_P4
+			call Combat_Complete_P4
+			p4 tp quest
+			call ZoneChange_P4
+			return
+		}
+		if p4 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "the key to the temple" {
+		if p4 tracking_goal "defeat prince mkhai karanahn in karanahn palace" {
+			if p4 inzone Krokotopia/KT_Tomb/KT_WellOfSpirits {
+				p4 tp quest
+				call ZoneChange_P4
+			}
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp quest
+				call Combat_Complete_P4
+				p4 tp quest
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					call Combat_Dungeon_Complete_MASS
+					tp quest
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p4 tp quest
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "temple dweller" {
+		if p4 tracking_goal "defeat krokopatra in temple of storms" {
+			p4 tp quest
+			call Teleport_Main_To_Help_P4
+			if playercount 1 {
+				call Dungeon_X_Key_SOLO
+				call ZoneChange_P4
+				p4 tp XYZ(18338.630859375, 21024.689453125, -1000.0)
+				call Combat_Complete_P4
+				p4 tp XYZ(-25.568254470825195, 1338.7327880859375, 68.86993408203125)
+				sleep 3
+				p4 sendkey ENTER, .3
+				call ZoneChange_P4
+			} else {
+				if sameplace {
+					call Dungeon_X_Key_MASS
+					waitforzonechange completion
+					sleep 2
+					tp XYZ(18338.630859375, 21024.689453125, -1000.0)
+					call Combat_Dungeon_Complete_MASS
+					tp XYZ(-25.568254470825195, 1338.7327880859375, 68.86993408203125)
+					sleep 3
+					sendkey ENTER, .3
+					waitforzonechange completion
+					sleep 2
+				} else {
+					call Waiting_All_Arrival_Message
+				}
+			}
+			return
+		}
+		if p4 tracking_goal "talk to ghost of krokhotep in well of spirits" {
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "triumphant return!" {
+		if p4 tracking_goal "talk to sergeant major talbot in the oasis" {
+			until NOT p4 windowdisabled ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'GoHomeButton'] {
+				sleep .1
+			}
+			sleep 2
+			p4 sendkey END, .2
+			call ZoneChange_P4
+			p4 tp quest
+			call X_Interact_P4
+			call Dialogue_Complete_P4
+			return
+		}
+	}
+	if p4 tracking_quest "missing souls" {
+		if p4 tracking_goal "talk to private kinchley in wolfminster abbey" {
+			if NOT p4 inzone Marleybone/Interiors/MB_WolfminsterAbbey {
+				p4 tp XYZ(15.890161514282227, -95.3442153930664, -59.308319091796875)
+				call ZoneChange_P4
+				p4 tp XYZ(9.063953399658203, -140.64892578125, 134.36676025390625)
+				call X_Interact_P4
+				sleep 3
+				until NOT p4 windowvisible ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton'] {
+					p4 clickwindow ['WorldView', '', 'messageBoxBG', 'ControlSprite', 'teleportButton']
+					sleep .1
+				}
+				call ZoneChange_P4
+				call SpeedDelay
+				return
+			}
+		}
+	}
+} #End of P4 Quest Handler
+############################
+#    Main Quest Handler    #	
+############################
+	loop {
+		if playercount 1 {
+			if p1 loading {
+				sleep .01
+			} else {
+				break
+			}
+		} elif playercount 2 {
+			if p1 loading {
+				sleep .01
+			} elif p2 loading {
+				sleep .01
+			} else {
+				break
+			}
+		} elif playercount 3 {
+			if p1 loading {
+				sleep .01
+			} elif p2 loading {
+				sleep .01
+			} elif p3 loading {
+				sleep .01
+			} else {
+				break
+			}
+		} elif playercount 4 {
+			if p1 loading {
+				sleep .01
+			} elif p2 loading {
+				sleep .01
+			} elif p3 loading {
+				sleep .01
+			} elif p4 loading {
+				sleep .01
+			} else {
+				break
+			}
+		}
+	}
+	if playercount 1 {
+		call P1QuestsHandler
+		call Quest_Follow_Checker_P1
+	} elif playercount 2 {
+		call P2QuestsHandler
+		call Quest_Follow_Checker_P2
+	} elif playercount 3 {
+		call P2QuestsHandler
+		call Quest_Follow_Checker_P2
+		call P3QuestsHandler
+		call Quest_Follow_Checker_P3
+	} elif playercount 4 {
+		call P2QuestsHandler
+		call Quest_Follow_Checker_P2
+		call P3QuestsHandler
+		call Quest_Follow_Checker_P3
+		call P4QuestsHandler
+		call Quest_Follow_Checker_P4
+	}
+} #Ends the entire block of Auto Quester
+
+
+call Krokotopia_Main_Quest_Tree

@@ -1,0 +1,98 @@
+#First Oasis 
+mass waitforfree 
+sleep 2
+mass tp XYZ(-6105.0, 2132.0, -173.0)
+sleep 2
+
+#Second Oasis 
+mass tp XYZ(4506.0, 5356.0, -216.0) 
+sleep 2
+
+#Alter of Kings
+mass tp XYZ(29.0, 8053.0, 496.0)
+mass waitforzonechange completion 
+mass tp XYZ(-3084.0, 7798.0, -1000.0)
+sleep 2
+
+#Chamber of Fire 
+mass tp XYZ(-4782.0, 3667.0, -350.0) 
+mass waitforzonechange completion
+mass tp XYZ(-13226.0, -18929.0, 1500.0)
+sleep 2
+
+#To Krokoshinx 
+mass sendkey END, 0.1
+mass waitforzonechange completion
+sleep 2
+mass tp XYZ(4440.65576171875, 3188.330322265625, 25.792266845703125)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+sleep 1
+mass sendkey X, 1
+sleep 2
+mass sendkey X, 1
+mass waitforzonechange completion
+mass tp XYZ(18613.0, 5405.0, 1331.0)
+sleep 2
+
+#To Enterence Hall 
+mass tp XYZ(15870.0, 4075.0, 703.0)
+mass waitforzonechange completion
+mass tp XYZ(7708.0, 781.0, 850.0)
+sleep 2
+
+#To Emperors Retreat 
+mass tp XYZ(4617.0, 3654.0, 0.0)
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 2
+mass tp XYZ(10551.0, 23805.0, 21.0)
+mass sendkey END, 0.1
+mass waitforzonechange completion
+sleep 2
+
+#Tomb of Storms 
+mass Tp XYZ(-3266.0, -2813.0, -35.0)
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+sleep 2
+mass tp XYZ(-4550.0, -2567.0, -35.0)
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+sleep 2
+mass tp XYZ(-4254.0, -1359.0, -35.0)
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+sleep 2
+mass tp XYZ(-2973.0, -1520.0, -65.0)
+sleep 2 
+mass tp XYZ(-2861.0, -1468.0, -115.0)
+sleep 13
+mass tp XYZ(-3352, -1813, -35)
+mass waitforzonechange completion
+mass tp  XYZ(-7337.0, -5522.0, -372.0)
+sleep 2
+
+#Well of Spirits 
+mass tp XYZ(-10566.0, -8466.0, -372.0)
+mass waitforzonechange completion
+mass tp XYZ(-586.0, 7967.0, 3.0)
+sleep 2
+
+#Karanahn Barracks
+mass tp XYZ(1577.0, 7755.0, -995.0)
+mass waitforzonechange completion
+mass tp XYZ(-8830.0, 22643.0, -7.0)
+sleep 2
+
+#Back to Zeke 
+mass sendkey END, 0.1
+mass waitforzonechange completion
+mass tp XYZ(1825.7154541015625, 5120.96923828125, -220.22213745117188)
+sleep 2
+
+kill

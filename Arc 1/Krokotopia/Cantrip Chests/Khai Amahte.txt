@@ -1,0 +1,748 @@
+#Enter Krokopatra Dungeon And Set Marker
+except p1 tp XYZ(4.179192066192627, 6453.201171875, -506.8163757324219)
+except p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton'] 
+mass clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'MarkButton']
+except p1 sendkey X, 0.1
+sleep 7
+except p1 sendkey X, 0.1
+except p1 sendkey X, 0.1
+except p1 waitforzonechange completion
+sleep 1
+
+#Teleport To Scaling Elixir And Interact 
+except p1 tp XYZ(-683.9820556640625, 662.0706787109375, 0.623870849609375)
+except p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+except p1 sendkey X, 0.1
+except p1 waitforpath ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+except p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+
+#Go Krok Commons
+mass sendkey END, 0.1
+mass waitforzonechange completion
+sleep 1
+
+#Go Krokosphinx
+mass tp XYZ(4526.96337890625, 3172.588623046875, 25.79217529296875)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground']
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+
+#Go Entrance Hall
+mass tp XYZ(15610.7373046875, 3931.75439453125, 703.1414794921875)
+mass waitforzonechange completion
+sleep 1
+
+#Go Grand Arena
+mass tp XYZ(7425.86865234375, 127.61929321289062, 20.302154541015625)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#KHAI ENTER SIGIL AND COMBAT 
+mass tp XYZ(12008.763671875, 29075.65625, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+mass sendkey X, 0.1
+sleep 7
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+sleep 1
+except p1 tp closestmob
+sleep 1
+p1 tp p2
+mass waitforcombat completion
+sleep 1
+mass tp XYZ(67.5255355834961, 114.58976745605469, -222.0225067138672)
+sleep 1
+mass tp XYZ(-3.072327136993408, 3213.2841796875, 99.99990844726562)
+mass waitforzonechange completion
+sleep 1
+
+#Marker back
+mass clickwindow ['WorldView', 'windowHUD', 'compassAndTeleporterButtons', 'RecallButton']
+mass waitforzonechange completion
+sleep 1

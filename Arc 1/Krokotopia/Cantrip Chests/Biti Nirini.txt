@@ -1,0 +1,1394 @@
+#START THIS BOT IN THE OASIS
+
+#GO TO KROKPATRA
+mass tp XYZ(-2526.342041015625, -1618.063232421875, -118.61517333984375)
+mass waitforfree
+sleep 1
+mass tp XYZ(-3217.97998046875, -2777.692626953125, -35.352874755859375)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+p1 sendkey X, 0.1
+sleep 0.5
+mass tp XYZ(-4448.712890625, -2718.9306640625, -35.353729248046875)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+p1 sendkey X, 0.1
+sleep 0.5
+mass tp XYZ(-4289.537109375, -1434.427490234375, -35.351043701171875)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+p1 sendkey X, 0.1
+sleep 0.5
+mass tp XYZ(-2816.25341796875, -1494.8035888671875, -117.04379272460938)
+sleep 15
+mass walkto XYZ(-3348.8876953125, -1825.640625, -35.35443115234375)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+mass tp XYZ(-10582.728515625, -8483.5634765625, -372.9990539550781)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+mass tp XYZ(14.108641624450684, 6402.46435546875, -506.39593505859375)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 0.1
+mass sendkey X, 0.1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#SCALES
+p1 walkto XYZ(-716.6441040039062, 626.4205932617188, 0.502655029296875)
+p1 waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground'] 
+sleep 1
+p1 sendkey X, 0.1
+p1 waitforpath ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+p1 clickwindow ['WorldView', 'NPCServicesWin', 'ControlSprite', 'optionsLayout', 'NPCServicesOptionWindow', 'OptionButton']
+mass waitforfree
+sleep 2
+
+#GO TO NIRNI
+mass sendkey END, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+mass tp XYZ(-36.0079231262207, 7948.02490234375, 496.31005859375)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+mass tp XYZ(1761.527587890625, 2074.134521484375, 3.0517578125e-05)
+mass waitforzonechange completion
+sleep 1
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 2
+
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+#ENTERDUNGEON
+mass tp XYZ(37739.0078125, -26952.908203125, 0.0)
+sleep 1
+mass walkto XYZ(38085.359375, -26986.892578125, 0.0)
+mass waitforpath ['WorldView', 'NPCRangeWin', 'imgBackground', 'TeamUpButton']
+sleep 1
+mass sendkey X, 1
+mass sendkey X, 1
+mass waitforzonechange completion
+mass waitforfree
+sleep 1
+
+#COMBAT
+mass tp closestmob
+mass waitforcombat completion
+mass waitforfree
+sleep 1
+
+#EXIT
+mass tp XYZ(16.449731826782227, -2887.784912109375, 28.453033447265625)
+mass waitforfree
+sleep 1
+mass walkto XYZ(65.43272399902344, -3284.47998046875, 99.99990844726562)
+mass waitforzonechange completion
+mass waitforfree
+sleep 1

@@ -1,0 +1,21 @@
+#Enter the Dungeon: begin in Palace of Fire
+#Open Dialogue
+#Author: lord_starscream.
+sleep 0.1
+mass tp XYZ(-19553.14453125, -9302.76171875, 0.0)
+sleep 0.1
+mass walkto XYZ(-20159.669921875, -9034.638671875, -3.0517578125e-05)
+sleep 1
+mass sendkey X,0.1
+mass waitforzonechange completion
+
+#Into the Dungeon
+sleep 0.1
+mass tp XYZ(-388.92864990234375, 420.0563659667969, -222.0225067138672)
+mass waitforcombat completion
+sleep 0.1
+mass tp XYZ(-17.36104393005371, 2589.45166015625, 0.0)
+sleep 0.1
+mass walkto XYZ(-22.943634033203125, 3287.77392578125, 99.99990844726562)
+mass waitforzonechange completion
+sleep 0.1
